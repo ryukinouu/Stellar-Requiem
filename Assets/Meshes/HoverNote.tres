@@ -1,0 +1,7 @@
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://jyaeck3p4we6"]
+
+[ext_resource type="Material" uid="uid://dxbredb5rqo4o" path="res://Assets/Materials/HoverNote.tres" id="1_phaig"]
+
+[resource]
+material = ExtResource("1_phaig")
+radius = 10.0

@@ -2,7 +2,6 @@ extends Node3D
 
 @onready var anim_tree = $AnimationTree
 @onready var circle = $Circle
-@onready var ring = $Circle/Ring as MeshInstance3D
 
 var number_of_tabs = 10
 
@@ -16,7 +15,6 @@ func generate_tabs_around_ring(number):
 		var angle = i * angle_step
 		var tab_scene = load("res://Game/Scenes/Tab.tscn")
 		var tab_instance = tab_scene.instantiate()
-		var torus_mesh = ring.mesh as TorusMesh
 		var x = 4 * cos(angle)
 		var z = 4 * sin(angle)
 		tab_instance.position = circle.position + Vector3(x, z, 0)
