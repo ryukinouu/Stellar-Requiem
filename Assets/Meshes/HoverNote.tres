@@ -1,7 +1,33 @@
-[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://jyaeck3p4we6"]
+[gd_resource type="SphereMesh" load_steps=8 format=3 uid="uid://jyaeck3p4we6"]
 
-[ext_resource type="Material" uid="uid://dxbredb5rqo4o" path="res://Assets/Materials/HoverNote.tres" id="1_phaig"]
+[ext_resource type="Shader" path="res://Assets/Shaders/Star.gdshader" id="1_4xa06"]
+[ext_resource type="Texture2D" uid="uid://u5slbx6d68oe" path="res://Assets/Textures/Sun.jpg" id="2_8t5pi"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fy6ov"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v0urq"]
+seamless = true
+noise = SubResource("FastNoiseLite_fy6ov")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i16r5"]
+seed = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_db3sb"]
+seamless = true
+noise = SubResource("FastNoiseLite_i16r5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d3i4b"]
+render_priority = 0
+shader = ExtResource("1_4xa06")
+shader_parameter/distortion_factor = 0.1
+shader_parameter/distortion_speed = 0.05
+shader_parameter/saturation = 0.5
+shader_parameter/pulse_rate = 4.0
+shader_parameter/pulse_intensity = 0.04
+shader_parameter/opacity = 1.0
+shader_parameter/albedo_tex = ExtResource("2_8t5pi")
+shader_parameter/noise_tex_1 = SubResource("NoiseTexture2D_v0urq")
+shader_parameter/noise_tex_2 = SubResource("NoiseTexture2D_db3sb")
 
 [resource]
-material = ExtResource("1_phaig")
-radius = 10.0
+material = SubResource("ShaderMaterial_d3i4b")

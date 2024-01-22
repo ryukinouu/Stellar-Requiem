@@ -1,0 +1,220 @@
+[gd_scene load_steps=18 format=3 uid="uid://cgcvnb0csh4yd"]
+
+[ext_resource type="Shader" path="res://Assets/Shaders/Decal.gdshader" id="1_q1vmp"]
+[ext_resource type="Texture2D" uid="uid://pfnhdul7p7ns" path="res://Assets/Textures/Circle/Asset_8.png" id="2_cdr7n"]
+[ext_resource type="Texture2D" uid="uid://d0f1cb5qjjoky" path="res://Assets/Textures/Circle/Asset_22.png" id="3_d8pid"]
+[ext_resource type="Texture2D" uid="uid://dsaci7adhg1j6" path="res://Assets/Textures/Circle/Asset_25.png" id="4_2ponb"]
+[ext_resource type="Texture2D" uid="uid://bqphyt43mmfb5" path="res://Assets/Textures/Circle/Asset_24.png" id="4_utc71"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wgsv1"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.1
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("4_2ponb")
+
+[sub_resource type="QuadMesh" id="QuadMesh_6gm1j"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_wgsv1")
+size = Vector2(8, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ylmu"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.1
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("4_utc71")
+
+[sub_resource type="QuadMesh" id="QuadMesh_yrfy6"]
+material = SubResource("ShaderMaterial_5ylmu")
+size = Vector2(6.5, 6.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hdo8d"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 1.0
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("3_d8pid")
+
+[sub_resource type="QuadMesh" id="QuadMesh_8oqcj"]
+material = SubResource("ShaderMaterial_hdo8d")
+size = Vector2(8, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bc8j1"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.03
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("2_cdr7n")
+
+[sub_resource type="QuadMesh" id="QuadMesh_4g5et"]
+material = SubResource("ShaderMaterial_bc8j1")
+size = Vector2(7, 7)
+
+[sub_resource type="Animation" id="Animation_2ielc"]
+resource_name = "Idle"
+length = 64.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 12.5664)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Front:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0), Vector3(0, 3.14159, 62.8319)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Behind:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0), Vector3(0, 3.14159, 18.8496)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("Ring:scale")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.99, 1, 1.01),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(1.05, 1.05, 1.05), Vector3(1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Ring:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 6.28319)]
+}
+
+[sub_resource type="Animation" id="Animation_brlnt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Front:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Behind:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Ring:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Ring:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 6.28319)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_70jht"]
+_data = {
+"Idle": SubResource("Animation_2ielc"),
+"RESET": SubResource("Animation_brlnt")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_stn0e"]
+animation = &"Idle"
+
+[node name="Circle" type="Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Back" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0.5)
+mesh = SubResource("QuadMesh_6gm1j")
+
+[node name="Front" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0.75)
+mesh = SubResource("QuadMesh_yrfy6")
+
+[node name="Ring" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 1.74846e-07, 8.74228e-08, 1.74846e-07, 1, 0, -8.74228e-08, 1.52855e-14, -1, 0, 0, -0.1)
+mesh = SubResource("QuadMesh_8oqcj")
+
+[node name="Behind" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 1)
+mesh = SubResource("QuadMesh_4g5et")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_70jht")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_70jht")
+}
+tree_root = SubResource("AnimationNodeAnimation_stn0e")
+anim_player = NodePath("../AnimationPlayer")

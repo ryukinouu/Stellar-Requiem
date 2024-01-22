@@ -17,7 +17,7 @@ func generate_tabs_around_ring(number):
 		var tab_instance = tab_scene.instantiate()
 		var x = 4 * cos(angle)
 		var z = 4 * sin(angle)
-		tab_instance.position = circle.position + Vector3(x, z, 0)
+		tab_instance.position = circle.position + Vector3(x, z - 0.1, 0)
 		tab_instance.rotation_degrees = Vector3(0, 0, rad_to_deg(atan2(z, x)))
 		circle.add_child(tab_instance)
 

@@ -245,13 +245,8 @@ mesh = SubResource("ArrayMesh_vtcdp")
 skin = SubResource("Skin_hede0")
 skeleton = NodePath("")
 
-[node name="Point" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 3.5, -1)
-light_energy = 5.0
-omni_range = 4096.0
-
-[node name="Point_001" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 3, 1)
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1, 0)
 light_energy = 0.543514
 omni_range = 4096.0
 
