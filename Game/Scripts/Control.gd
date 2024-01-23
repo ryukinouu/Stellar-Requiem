@@ -7,7 +7,7 @@ extends CharacterBody3D
 @onready var anim_tree = $AnimationTree
 
 const MOVE_SPEED : float = 10.0
-const EASING_FACTOR : float = 5.0
+const EASING_FACTOR : float = 2.0
 
 var target_position : Vector3
 var target_rotation : Vector3

@@ -192,19 +192,19 @@ animation = &"Idle"
 transform = Transform3D(1.93185, -0.517638, 0, 0.517638, 1.93185, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="Back" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 2)
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0, 0, 2)
 mesh = SubResource("QuadMesh_6gm1j")
 
 [node name="Front" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 2.1)
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0, 0, 2.1)
 mesh = SubResource("QuadMesh_yrfy6")
 
 [node name="Ring" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 1.74846e-07, 8.74228e-08, 1.74846e-07, 1, 0, -8.74228e-08, 1.52855e-14, -1, 0, 0, -0.1)
+transform = Transform3D(-1, 4.46638e-06, -2.53518e-06, 4.46638e-06, 1, 0, 2.53518e-06, -1.13231e-11, -1, 0, 0, -0.1)
 mesh = SubResource("QuadMesh_8oqcj")
 
 [node name="Behind" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 2.5)
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0, 0, 2.5)
 mesh = SubResource("QuadMesh_4g5et")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
