@@ -246,7 +246,12 @@ skin = SubResource("Skin_hede0")
 skeleton = NodePath("")
 
 [node name="Light" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 2, 0)
+light_energy = 0.543514
+omni_range = 4096.0
+
+[node name="Light2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -2, 0)
 light_energy = 0.543514
 omni_range = 4096.0
 
@@ -257,6 +262,7 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+active = false
 libraries = {
 "": SubResource("AnimationLibrary_cdysp")
 }

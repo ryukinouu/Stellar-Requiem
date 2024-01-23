@@ -204,10 +204,9 @@ current = true
 volume_db = -20.0
 
 [node name="Character" parent="." instance=ExtResource("2_30aq7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
 [node name="Circle" parent="." instance=ExtResource("5_ljsy6")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.1, 0.1)
+transform = Transform3D(1.93185, -0.517638, 0, 0.517638, 1.93185, 0, 0, 0, 2, 0, 0.1, 0.1)
 
 [node name="Beat Map" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

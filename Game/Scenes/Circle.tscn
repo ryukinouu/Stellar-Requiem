@@ -29,7 +29,7 @@ shader_parameter/albedo_texture = ExtResource("4_utc71")
 material = SubResource("ShaderMaterial_5ylmu")
 size = Vector2(6.5, 6.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hdo8d"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5tnw2"]
 render_priority = 0
 shader = ExtResource("1_q1vmp")
 shader_parameter/transparency = 1.0
@@ -37,7 +37,7 @@ shader_parameter/neon_color = Vector4(1, 1, 1, 1)
 shader_parameter/albedo_texture = ExtResource("3_d8pid")
 
 [sub_resource type="QuadMesh" id="QuadMesh_8oqcj"]
-material = SubResource("ShaderMaterial_hdo8d")
+material = SubResource("ShaderMaterial_5tnw2")
 size = Vector2(8, 8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bc8j1"]
@@ -189,7 +189,7 @@ _data = {
 animation = &"Idle"
 
 [node name="Circle" type="Node3D"]
-transform = Transform3D(1.9563, -0.415823, 0, 0.415823, 1.9563, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(1.93185, -0.517638, 0, 0.517638, 1.93185, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="Back" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 2)
