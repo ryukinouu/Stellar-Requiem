@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var progress_bar = $TextureProgressBar
+@onready var progress_bar = $ProgressBar
 
 # Variables for Score
 var score = 0
