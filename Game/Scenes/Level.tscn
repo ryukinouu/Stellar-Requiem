@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://c03w0642gq8b4" path="res://Assets/Music/Tutorial.wav" id="2_luk3l"]
 [ext_resource type="Texture2D" uid="uid://b7q0p7rlyyfjv" path="res://Assets/Skybox/2.jpg" id="3_nl34o"]
 [ext_resource type="PackedScene" uid="uid://3w1iq85v6hsa" path="res://Game/Scenes/UI.tscn" id="5_5lkjn"]
-[ext_resource type="PackedScene" uid="uid://cgcvnb0csh4yd" path="res://Game/Scenes/Circle.tscn" id="5_ljsy6"]
+[ext_resource type="PackedScene" path="res://Game/Scenes/Circle.tscn" id="5_ljsy6"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_v5mw6"]
 
