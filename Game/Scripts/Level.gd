@@ -21,7 +21,7 @@ func _ready():
 	var last_tick = 0
 	var min_tick = 0
 	var max_tick = Global.CIRCLE_MEASURES - 1
-	for i in range(54):
+	for i in range(14):
 		var note = load("res://Game/Scenes/Notes/HoverNote.tscn")
 		var note_instance = note.instantiate()
 		if last_tick == 0:
@@ -44,7 +44,7 @@ func _ready():
 		note_instance.position.x = pos.x
 		note_instance.position.y = pos.y
 		note_instance.position.z = last_z
-		last_z += 0.16625 * 100
+		last_z += 0.665 * 100
 		last_tick = chosen_tick
 		beatmap.add_child(note_instance)
 
