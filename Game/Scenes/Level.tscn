@@ -1,11 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://o1qxbywubsux"]
+[gd_scene load_steps=23 format=3 uid="uid://o1qxbywubsux"]
 
 [ext_resource type="Script" path="res://Game/Scripts/Level.gd" id="1_wqrga"]
 [ext_resource type="PackedScene" uid="uid://diw82ehqh1dy5" path="res://Game/Scenes/Character.tscn" id="2_30aq7"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Star.gdshader" id="2_k7h1r"]
 [ext_resource type="AudioStream" uid="uid://c03w0642gq8b4" path="res://Assets/Music/Tutorial.wav" id="2_luk3l"]
 [ext_resource type="Texture2D" uid="uid://b7q0p7rlyyfjv" path="res://Assets/Skybox/2.jpg" id="3_nl34o"]
-[ext_resource type="PackedScene" uid="uid://cjahidltf0whj" path="res://Game/Scenes/HoverNote.tscn" id="4_wmlvo"]
 [ext_resource type="PackedScene" uid="uid://3w1iq85v6hsa" path="res://Game/Scenes/UI.tscn" id="5_5lkjn"]
 [ext_resource type="PackedScene" uid="uid://cgcvnb0csh4yd" path="res://Game/Scenes/Circle.tscn" id="5_ljsy6"]
 
@@ -210,9 +209,6 @@ transform = Transform3D(1.93185, -0.517638, 0, 0.517638, 1.93185, 0, 0, 0, 2, 0,
 
 [node name="Beat Map" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-
-[node name="Note" parent="Beat Map" instance=ExtResource("4_wmlvo")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 303.75)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
