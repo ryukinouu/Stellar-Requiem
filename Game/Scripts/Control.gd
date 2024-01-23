@@ -37,9 +37,9 @@ func _input(event):
 		0
 	)
 	target_rotation = Vector3(
-		Global.positions[measure]["rotation"].x, 
-		Global.positions[measure]["rotation"].y, 
-		0
+		0,
+		0,
+		Global.positions[measure]["rotation"].z, 
 	)
 	#anim_tree.set(AnimationHandler.blend_pos(animation_state), direction)
 	
@@ -57,8 +57,7 @@ func _process(delta):
 	# Move the character smoothly towards the target position
 	position.x = lerp(position.x, target_position.x * 2, MOVE_SPEED * delta * EASING_FACTOR)
 	position.y = lerp(position.y, target_position.y * 2, MOVE_SPEED * delta * EASING_FACTOR)
-	rotation_degrees.x = lerp(rotation_degrees.x, target_rotation.x, MOVE_SPEED * delta * EASING_FACTOR)
-	rotation_degrees.y = lerp(rotation_degrees.y, target_rotation.y, MOVE_SPEED * delta * EASING_FACTOR)
+	rotation_degrees.z = lerp(rotation_degrees.z, target_rotation.z + 90, MOVE_SPEED * delta * EASING_FACTOR)
 	
 	if !Input.is_action_pressed("left") and !Input.is_action_pressed("right") and on_cd:
 		has_pressed = false
