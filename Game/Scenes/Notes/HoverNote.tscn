@@ -1,15 +1,39 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjahidltf0whj"]
+[gd_scene load_steps=8 format=3 uid="uid://cjahidltf0whj"]
 
-[ext_resource type="SphereMesh" uid="uid://jyaeck3p4we6" path="res://Assets/Meshes/HoverNote.tres" id="1_lswj7"]
+[ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="1_myhyd"]
+[ext_resource type="Texture2D" uid="uid://btxbinpuhpbm1" path="res://Assets/Textures/Glow.png" id="3_3rmak"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ch5ml"]
+render_priority = 0
+shader = ExtResource("1_myhyd")
+shader_parameter/neon_color = Vector4(0.87, 0.675, 0.135, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_iqnfk"]
+material = SubResource("ShaderMaterial_ch5ml")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_osi20"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mohdn"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("3_3rmak")
+disable_receive_shadows = true
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_awigl"]
+material = SubResource("StandardMaterial3D_mohdn")
+
 [node name="Note" type="MeshInstance3D"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
-mesh = ExtResource("1_lswj7")
+mesh = SubResource("SphereMesh_iqnfk")
 skeleton = NodePath("../../Circle")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_osi20")
+
+[node name="Glow2" type="MeshInstance3D" parent="."]
+sorting_offset = 1.0
+mesh = SubResource("QuadMesh_awigl")

@@ -1,0 +1,551 @@
+[gd_scene load_steps=13 format=3 uid="uid://bcmqr1u3poavk"]
+
+[ext_resource type="Script" path="res://Game/Scripts/Beatmap.gd" id="1_h5mis"]
+[ext_resource type="PackedScene" uid="uid://ettssg3oddlu" path="res://Game/Scenes/Notes/HitNote.tscn" id="1_te4nb"]
+[ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="3_csgu4"]
+[ext_resource type="PackedScene" uid="uid://cjahidltf0whj" path="res://Game/Scenes/Notes/HoverNote.tscn" id="3_rhujv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkvsq"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w38n0"]
+material = SubResource("ShaderMaterial_jkvsq")
+size = Vector2(0.1, 10000.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uaxf6"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3e4fk"]
+material = SubResource("ShaderMaterial_uaxf6")
+size = Vector2(0.1, 32.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1262k"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(0, 1, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pyoxy"]
+material = SubResource("ShaderMaterial_1262k")
+size = Vector2(0.1, 32.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rbo60"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(0, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_76v5t"]
+material = SubResource("ShaderMaterial_rbo60")
+size = Vector2(0.1, 32.1)
+
+[node name="Tutorial" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+script = ExtResource("1_h5mis")
+
+[node name="Ht_Note" parent="." instance=ExtResource("1_te4nb")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 24, 0, 32)
+
+[node name="Ht_Note2" parent="." instance=ExtResource("1_te4nb")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 24, 0, 64)
+
+[node name="Ht_Note3" parent="." instance=ExtResource("1_te4nb")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 24, 0, 96)
+
+[node name="Hv_Note" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 128)
+
+[node name="Hv_Note2" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 144)
+
+[node name="Hv_Note3" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 160)
+
+[node name="Hv_Note4" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 176)
+
+[node name="Hv_Note5" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 26, 0, 192)
+
+[node name="Hv_Note6" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 208)
+
+[node name="Hv_Note7" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 22, 0, 224)
+
+[node name="Hv_Note8" parent="." instance=ExtResource("3_rhujv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 240)
+
+[node name="Visual" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -1)
+metadata/_edit_lock_ = true
+
+[node name="Straight" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight2" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight3" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight4" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight5" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight6" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight7" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight8" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight9" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight10" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight11" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight12" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight13" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight14" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight15" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight16" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Straight17" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, -0.1, 5000)
+mesh = SubResource("PlaneMesh_w38n0")
+
+[node name="Start" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 0)
+mesh = SubResource("PlaneMesh_3e4fk")
+
+[node name="Downbeat" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 16)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat2" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 32)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat3" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 48)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat4" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 64)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat5" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 80)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat6" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 96)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat7" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 112)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat8" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 128)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat9" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 144)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat10" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 160)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat11" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 176)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat12" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 192)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat13" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 208)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat14" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 224)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat15" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 240)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat16" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 256)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat17" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 272)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat18" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 288)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat19" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 304)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat20" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 320)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat21" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 336)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat22" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 352)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat23" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 368)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat24" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 384)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat25" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 400)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat26" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 416)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat27" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 432)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat28" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 448)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat29" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 464)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat30" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 480)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat31" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 496)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat32" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 512)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat33" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 528)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat34" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 544)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat35" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 560)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat36" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 576)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat37" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 592)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat38" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 608)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat39" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 624)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat40" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 640)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat41" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 656)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat42" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 672)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat43" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 688)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat44" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 704)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat45" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 720)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat46" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 752)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat47" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 768)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat48" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 784)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Downbeat49" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 800)
+mesh = SubResource("PlaneMesh_pyoxy")
+
+[node name="Upbeat" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 8)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat2" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 24)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat3" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 40)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat4" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 56)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat5" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 72)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat6" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 88)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat7" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 104)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat8" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 120)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat9" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 136)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat10" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 152)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat11" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 168)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat12" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 184)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat13" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 200)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat14" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 216)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat15" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 232)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat16" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 248)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat17" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 264)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat18" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 280)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat19" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 296)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat20" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 312)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat21" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 328)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat22" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 344)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat23" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 360)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat24" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 376)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat25" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 392)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat26" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 408)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat27" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 424)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat28" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 440)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat29" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 456)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat30" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 472)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat31" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 488)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat32" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 504)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat33" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 520)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat34" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 536)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat35" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 552)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat36" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 568)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat37" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 584)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat38" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 600)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat39" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 616)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat40" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 632)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat41" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 648)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat42" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 664)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat43" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 680)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat44" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 696)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat45" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 712)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat46" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 728)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat47" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 744)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat48" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 760)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat49" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 776)
+mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Upbeat50" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 792)
+mesh = SubResource("PlaneMesh_76v5t")

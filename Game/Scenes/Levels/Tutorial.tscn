@@ -1,0 +1,229 @@
+[gd_scene load_steps=24 format=3 uid="uid://o1qxbywubsux"]
+
+[ext_resource type="Script" path="res://Game/Scripts/Level.gd" id="1_s3lun"]
+[ext_resource type="Shader" path="res://Game/Shaders/Star.gdshader" id="2_6mlau"]
+[ext_resource type="Texture2D" uid="uid://b7q0p7rlyyfjv" path="res://Assets/Skybox/2.jpg" id="3_so01s"]
+[ext_resource type="PackedScene" uid="uid://diw82ehqh1dy5" path="res://Game/Scenes/Core/Character.tscn" id="4_81tt1"]
+[ext_resource type="PackedScene" uid="uid://cgcvnb0csh4yd" path="res://Game/Scenes/Core/Circle.tscn" id="5_421b6"]
+[ext_resource type="PackedScene" uid="uid://bcmqr1u3poavk" path="res://Game/Scenes/Beatmaps/Tutorial.tscn" id="6_0scy4"]
+[ext_resource type="AudioStream" uid="uid://c03w0642gq8b4" path="res://Assets/Music/Tutorial.wav" id="6_jgaer"]
+[ext_resource type="PackedScene" uid="uid://3w1iq85v6hsa" path="res://Game/Scenes/Core/UI.tscn" id="7_8klna"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v5mw6"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tqcm0"]
+in_3d_space = true
+noise = SubResource("FastNoiseLite_v5mw6")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fy6ov"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v0urq"]
+seamless = true
+noise = SubResource("FastNoiseLite_fy6ov")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i16r5"]
+seed = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_db3sb"]
+seamless = true
+noise = SubResource("FastNoiseLite_i16r5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uu5bi"]
+render_priority = 0
+shader = ExtResource("2_6mlau")
+shader_parameter/distortion_factor = 0.1
+shader_parameter/distortion_speed = 0.05
+shader_parameter/R = 0.0
+shader_parameter/G = 0.0
+shader_parameter/B = 0.0
+shader_parameter/saturation = 0.5
+shader_parameter/pulse_rate = 4.0
+shader_parameter/pulse_intensity = 0.04
+shader_parameter/opacity = 0.01
+shader_parameter/albedo_tex = SubResource("NoiseTexture2D_tqcm0")
+shader_parameter/noise_tex_1 = SubResource("NoiseTexture2D_v0urq")
+shader_parameter/noise_tex_2 = SubResource("NoiseTexture2D_db3sb")
+
+[sub_resource type="TorusMesh" id="TorusMesh_x1ybk"]
+material = SubResource("ShaderMaterial_uu5bi")
+inner_radius = 20.921
+outer_radius = 0.01
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_momxu"]
+panorama = ExtResource("3_so01s")
+
+[sub_resource type="Sky" id="Sky_mtgcp"]
+sky_material = SubResource("PanoramaSkyMaterial_momxu")
+
+[sub_resource type="Environment" id="Environment_up65r"]
+background_mode = 2
+sky = SubResource("Sky_mtgcp")
+
+[sub_resource type="Animation" id="Animation_gpalc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.1, 0.1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Effects:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WorldEnvironment:environment:sky_custom_fov")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_oixxc"]
+resource_name = "World"
+length = 117.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 117),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 11700)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Character:position:z")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 117),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 11700.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 117),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-15.0, 11685.0]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D/Music")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_jgaer")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Effects:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 117),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 20), Vector3(0, 0, 11680)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WorldEnvironment:environment:sky_custom_fov")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 117),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [120.0, 90.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vr5ta"]
+_data = {
+"RESET": SubResource("Animation_gpalc"),
+"World": SubResource("Animation_oixxc")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l0mem"]
+animation = &"World"
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_s3lun")
+
+[node name="Effects" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, -1.31134e-07, -3, 0, 3, -1.31134e-07, 0, 0, 20)
+
+[node name="Hyperspace" type="MeshInstance3D" parent="Effects"]
+mesh = SubResource("TorusMesh_x1ybk")
+skeleton = NodePath("../../Circle")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_up65r")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -15)
+current = true
+
+[node name="Music" type="AudioStreamPlayer" parent="Camera3D"]
+volume_db = -20.0
+
+[node name="Character" parent="." instance=ExtResource("4_81tt1")]
+
+[node name="Circle" parent="." instance=ExtResource("5_421b6")]
+transform = Transform3D(1.96123, -0.391892, 0, 0.391892, 1.96123, 0, 0, 0, 2, 0, 0.1, 0.1)
+
+[node name="Tutorial" parent="." instance=ExtResource("6_0scy4")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vr5ta")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+active = false
+libraries = {
+"": SubResource("AnimationLibrary_vr5ta")
+}
+tree_root = SubResource("AnimationNodeAnimation_l0mem")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="Node2D" parent="." instance=ExtResource("7_8klna")]

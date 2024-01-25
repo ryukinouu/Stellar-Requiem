@@ -1,7 +1,7 @@
 extends Node
 
 const CIRCLE_DIAMETER = 8
-const CIRCLE_MEASURES = 12
+const CIRCLE_MEASURES = 16
 
 func cooldown(time, exe):
 	get_tree().create_timer(time).connect("timeout", exe)

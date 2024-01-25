@@ -1,13 +1,13 @@
 extends CharacterBody3D
 
-@export var measure : int = 0
+@export var measure : int = 12
 @export var direction : int = 0
 @export var animation_state : String = "Default"
 
 @onready var anim_tree = $AnimationTree
 
-const MOVE_SPEED : float = 10.0
-const EASING_FACTOR : float = 2.0
+const MOVE_SPEED : float = 30.0
+const EASING_FACTOR : float = 1.0
 
 var target_position : Vector3
 var target_rotation : Vector3
@@ -18,6 +18,19 @@ var on_cd : bool
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	AnimationHandler.init_animations(anim_tree, direction, animation_state)
+	target_position = Vector3(
+		Global.positions[measure]["position"].x, 
+		Global.positions[measure]["position"].y, 
+		0
+	)
+	target_rotation = Vector3(
+		0,
+		0,
+		Global.positions[measure]["rotation"].z, 
+	)
+	position.x = target_position.x * 2
+	position.y = target_position.y * 2
+	rotation_degrees.z = target_rotation.z + 90
 
 func _input(event):
 	if event.is_action_pressed("left"):
