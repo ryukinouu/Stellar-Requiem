@@ -73,7 +73,15 @@ func move_direction(event):
 	#)
 
 func _input(event):
-	move_direction(event)
+	if event.is_action_pressed("action"):
+		var state_machine = anim_tree.get("parameters/playback")
+		state_machine.travel("click")
+		Global.cooldown(anim_player.get_animation("click").length, 
+			func(): 
+				state_machine.travel("normal")
+		)
+	else:
+		move_direction(event)
 
 func _process(delta):
 	# Move the character smoothly towards the target position
