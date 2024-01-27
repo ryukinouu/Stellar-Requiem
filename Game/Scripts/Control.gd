@@ -54,7 +54,7 @@ func _input(event):
 		0,
 		Global.positions[measure]["rotation"].z, 
 	)
-	#anim_tree.set(AnimationHandler.blend_pos(animation_state), direction)
+	anim_tree.set(AnimationHandler.blend_pos(animation_state), direction)
 	
 	has_pressed = true
 	on_cd = true
@@ -63,7 +63,7 @@ func _input(event):
 			on_cd = false
 			if has_pressed == false:
 				direction = 0
-				#anim_tree.set(AnimationHandler.blend_pos(animation_state), direction)
+				anim_tree.set(AnimationHandler.blend_pos(animation_state), direction)
 	)
 
 func _process(delta):

@@ -214,6 +214,7 @@ transform = Transform3D(1.96123, -0.391892, 0, 0.391892, 1.96123, 0, 0, 0, 2, 0,
 [node name="Tutorial" parent="." instance=ExtResource("6_0scy4")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+active = false
 libraries = {
 "": SubResource("AnimationLibrary_vr5ta")
 }
