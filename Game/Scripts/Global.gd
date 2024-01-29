@@ -14,10 +14,21 @@ func _ready():
 		var angle = i * angle_step
 		var x = (CIRCLE_DIAMETER - 0.5) / 2 * cos(angle)
 		var y = (CIRCLE_DIAMETER - 0.5) / 2 * sin(angle)
-		var note_x = (CIRCLE_DIAMETER) / 2 * cos(angle)
-		var note_y = (CIRCLE_DIAMETER) / 2 * sin(angle)
 		positions[i] = {}
 		positions[i]["position"] = Vector3(x, y - 0.1, 0)
-		positions[i]["note_pos"] = Vector3(note_x, note_y - 0.1, 0)
 		positions[i]["rotation"] = Vector3(0, 0, rad_to_deg(atan2(y, x)))
-	print(positions)
+
+var animations = {
+	"normal": {
+		speed = 1
+	},
+	"click": {
+		speed = 2
+	},
+	"left": {
+		speed = 1
+	},
+	"right": {
+		speed = 1
+	},
+}

@@ -1,14 +1,13 @@
 [gd_scene load_steps=13 format=3 uid="uid://bcmqr1u3poavk"]
 
 [ext_resource type="Script" path="res://Game/Scripts/Beatmap.gd" id="1_h5mis"]
-[ext_resource type="PackedScene" uid="uid://ettssg3oddlu" path="res://Game/Scenes/Notes/HitNote.tscn" id="1_te4nb"]
 [ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="3_csgu4"]
-[ext_resource type="PackedScene" uid="uid://cjahidltf0whj" path="res://Game/Scenes/Notes/HoverNote.tscn" id="3_rhujv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkvsq"]
 render_priority = 0
 shader = ExtResource("3_csgu4")
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/transparency = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_w38n0"]
 material = SubResource("ShaderMaterial_jkvsq")
@@ -18,6 +17,7 @@ size = Vector2(0.1, 10000.1)
 render_priority = 0
 shader = ExtResource("3_csgu4")
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/transparency = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3e4fk"]
 material = SubResource("ShaderMaterial_uaxf6")
@@ -27,6 +27,7 @@ size = Vector2(0.1, 32.1)
 render_priority = 0
 shader = ExtResource("3_csgu4")
 shader_parameter/neon_color = Vector4(0, 1, 0, 1)
+shader_parameter/transparency = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pyoxy"]
 material = SubResource("ShaderMaterial_1262k")
@@ -36,50 +37,24 @@ size = Vector2(0.1, 32.1)
 render_priority = 0
 shader = ExtResource("3_csgu4")
 shader_parameter/neon_color = Vector4(0, 1, 1, 1)
+shader_parameter/transparency = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_76v5t"]
 material = SubResource("ShaderMaterial_rbo60")
 size = Vector2(0.1, 32.1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_anudk"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(0.87, 0.675, 0.135, 1)
+shader_parameter/transparency = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_uvyyy"]
+material = SubResource("ShaderMaterial_anudk")
+
 [node name="Tutorial" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 script = ExtResource("1_h5mis")
-
-[node name="Ht_Note" parent="." instance=ExtResource("1_te4nb")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 24, 0, 32)
-
-[node name="Ht_Note2" parent="." instance=ExtResource("1_te4nb")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 24, 0, 64)
-
-[node name="Ht_Note3" parent="." instance=ExtResource("1_te4nb")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 24, 0, 96)
-
-[node name="Hv_Note" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 128)
-
-[node name="Hv_Note2" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 144)
-
-[node name="Hv_Note3" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 160)
-
-[node name="Hv_Note4" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 176)
-
-[node name="Hv_Note5" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 26, 0, 192)
-
-[node name="Hv_Note6" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 208)
-
-[node name="Hv_Note7" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 22, 0, 224)
-
-[node name="Hv_Note8" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 24, 0, 240)
-
-[node name="Hv_Note9" parent="." instance=ExtResource("3_rhujv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 22, 0, 256)
 
 [node name="Visual" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, -1)
@@ -552,3 +527,27 @@ mesh = SubResource("PlaneMesh_76v5t")
 [node name="Upbeat50" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 792)
 mesh = SubResource("PlaneMesh_76v5t")
+
+[node name="Hover" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 32)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 48)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover2"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 64)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover3"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 80)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover4"]
+mesh = SubResource("SphereMesh_uvyyy")

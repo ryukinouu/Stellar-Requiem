@@ -7,6 +7,7 @@
 render_priority = 0
 shader = ExtResource("1_c8yim")
 shader_parameter/neon_color = Vector4(0.55, 1, 1, 1)
+shader_parameter/transparency = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_wohtj"]
 material = SubResource("ShaderMaterial_poal7")
