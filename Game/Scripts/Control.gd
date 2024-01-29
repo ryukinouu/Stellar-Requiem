@@ -79,9 +79,27 @@ func animate(animation, next):
 			state_machine.travel(next)
 	)
 
+func note_hit(hit):
+	hit.get_node("Area3D").free()
+	hit.get_parent().remove_child(hit)
+	effects.add_child(hit)
+	var anim_tree = hit.get_node("AnimationTree")
+	anim_tree.active = true
+	Global.cooldown(0.1,
+		func():
+			hit.queue_free()
+	)
+
 func _input(event):
 	if event.is_action_pressed("action"):
 		animate("click", "normal")
+		var notes = get_overlapping_areas()
+		for area in notes:
+			var hit = area.get_parent()
+			print(hit.name)
+			var prefix = hit.name.substr(0, 2)
+			if prefix == "Ht":
+				note_hit(hit)
 	else:
 		move_direction(event)
 
@@ -102,12 +120,4 @@ func _on_area_entered(area):
 	var hit = area.get_parent()
 	var prefix = hit.name.substr(0, 2)
 	if prefix == "Hv":
-		hit.get_node("Area3D").free()
-		hit.get_parent().remove_child(hit)
-		effects.add_child(hit)
-		var anim_tree = hit.get_node("AnimationTree")
-		anim_tree.active = true
-		Global.cooldown(0.1,
-			func():
-				hit.queue_free()
-		)
+		note_hit(hit)

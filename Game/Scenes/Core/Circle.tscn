@@ -11,6 +11,7 @@ render_priority = 0
 shader = ExtResource("1_q1vmp")
 shader_parameter/transparency = 0.1
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
 shader_parameter/albedo_texture = ExtResource("4_2ponb")
 
 [sub_resource type="QuadMesh" id="QuadMesh_6gm1j"]
@@ -23,6 +24,7 @@ render_priority = 0
 shader = ExtResource("1_q1vmp")
 shader_parameter/transparency = 0.1
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
 shader_parameter/albedo_texture = ExtResource("4_utc71")
 
 [sub_resource type="QuadMesh" id="QuadMesh_yrfy6"]
@@ -34,6 +36,7 @@ render_priority = 0
 shader = ExtResource("1_q1vmp")
 shader_parameter/transparency = 1.0
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
 shader_parameter/albedo_texture = ExtResource("3_d8pid")
 
 [sub_resource type="QuadMesh" id="QuadMesh_8oqcj"]
@@ -45,6 +48,7 @@ render_priority = 0
 shader = ExtResource("1_q1vmp")
 shader_parameter/transparency = 0.03
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
 shader_parameter/albedo_texture = ExtResource("2_cdr7n")
 
 [sub_resource type="QuadMesh" id="QuadMesh_4g5et"]

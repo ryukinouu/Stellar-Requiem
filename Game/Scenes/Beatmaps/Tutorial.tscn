@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bcmqr1u3poavk"]
+[gd_scene load_steps=15 format=3 uid="uid://bcmqr1u3poavk"]
 
 [ext_resource type="Script" path="res://Game/Scripts/Beatmap.gd" id="1_h5mis"]
 [ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="3_csgu4"]
@@ -51,6 +51,15 @@ shader_parameter/transparency = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_uvyyy"]
 material = SubResource("ShaderMaterial_anudk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fu2gx"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(0.55, 1, 1, 1)
+shader_parameter/transparency = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_tp828"]
+material = SubResource("ShaderMaterial_fu2gx")
 
 [node name="Tutorial" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
@@ -624,12 +633,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 224)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hover16"]
 mesh = SubResource("SphereMesh_uvyyy")
 
-[node name="Hover21" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 240)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover21"]
-mesh = SubResource("SphereMesh_uvyyy")
-
 [node name="Hover17" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 242)
 
@@ -653,3 +656,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 228)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hover20"]
 mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover21" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 240)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover21"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hit" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 24)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hit"]
+mesh = SubResource("SphereMesh_tp828")
+
+[node name="Hit2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 40)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hit2"]
+mesh = SubResource("SphereMesh_tp828")
+
+[node name="Hit3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 56)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hit3"]
+mesh = SubResource("SphereMesh_tp828")
+
+[node name="Hit4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 72)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hit4"]
+mesh = SubResource("SphereMesh_tp828")
