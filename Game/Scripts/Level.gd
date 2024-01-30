@@ -45,8 +45,8 @@ func _on_animation_tree_animation_finished(anim_name):
 		UI.get_node("Menu/HighScore").text = "HIGH SCORE: " + str(high_score)
 		UI.get_node("Menu").visible = true
 		UI.get_node("Score").visible = false
-		get_node("Tutorial").queue_free()
+		get_node("Tutorial").free()
 		var bm_scene = load("res://Game/Scenes/Beatmaps/Tutorial.tscn")
 		var bm_instance = bm_scene.instantiate()
-		bm_instance.name = "Tutorial"
 		add_child(bm_instance)
+		bm_instance.name = "Tutorial"
