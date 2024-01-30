@@ -80,6 +80,7 @@ func animate(animation, next):
 	)
 
 func note_hit(hit):
+	get_parent().score += 100
 	hit.get_node("Area3D").free()
 	hit.get_parent().remove_child(hit)
 	effects.add_child(hit)
@@ -96,7 +97,6 @@ func _input(event):
 		var notes = get_overlapping_areas()
 		for area in notes:
 			var hit = area.get_parent()
-			print(hit.name)
 			var prefix = hit.name.substr(0, 2)
 			if prefix == "Ht":
 				note_hit(hit)
@@ -118,6 +118,12 @@ func _process(delta):
 
 func _on_area_entered(area):
 	var hit = area.get_parent()
-	var prefix = hit.name.substr(0, 2)
-	if prefix == "Hv":
+	if hit.name.substr(0, 2) == "Hv":
 		note_hit(hit)
+	elif hit.name.substr(0, 2) == "Ht":
+		print("CAN HIT: " + hit.name)
+
+func _on_area_exited(area):
+	var hit = area.get_parent()
+	if hit.name.substr(0, 2) == "Ht":
+		print("CAN'T HIT: " + hit.name)

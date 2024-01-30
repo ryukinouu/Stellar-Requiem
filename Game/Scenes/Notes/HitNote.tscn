@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ettssg3oddlu"]
+[gd_scene load_steps=14 format=3 uid="uid://ettssg3oddlu"]
 
 [ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="1_c8yim"]
 [ext_resource type="Texture2D" uid="uid://btxbinpuhpbm1" path="res://Assets/Textures/Glow.png" id="2_xmipf"]
@@ -15,6 +15,17 @@ resource_local_to_scene = true
 material = SubResource("ShaderMaterial_poal7")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_osi20"]
+margin = 10.0
+size = Vector3(2, 2, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u81t2"]
+render_priority = 0
+shader = ExtResource("1_c8yim")
+shader_parameter/neon_color = Vector4(1, 0, 1, 1)
+shader_parameter/transparency = 0.05
+
+[sub_resource type="BoxMesh" id="BoxMesh_swx5o"]
+material = SubResource("ShaderMaterial_u81t2")
 size = Vector3(2, 2, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ewvy"]
@@ -197,9 +208,14 @@ mesh = SubResource("SphereMesh_wohtj")
 skeleton = NodePath("../../Circle")
 
 [node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_osi20")
+
+[node name="Visualizer" type="MeshInstance3D" parent="Area3D/CollisionShape3D"]
+visible = false
+mesh = SubResource("BoxMesh_swx5o")
 
 [node name="Glow" type="MeshInstance3D" parent="."]
 sorting_offset = 1.0
