@@ -51,12 +51,12 @@ outer_radius = 0.01
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_momxu"]
 panorama = ExtResource("3_iy2oq")
 
-[sub_resource type="Sky" id="Sky_mtgcp"]
+[sub_resource type="Sky" id="Sky_e7hw3"]
 sky_material = SubResource("PanoramaSkyMaterial_momxu")
 
 [sub_resource type="Environment" id="Environment_up65r"]
 background_mode = 2
-sky = SubResource("Sky_mtgcp")
+sky = SubResource("Sky_e7hw3")
 
 [sub_resource type="Animation" id="Animation_gpalc"]
 length = 0.001
