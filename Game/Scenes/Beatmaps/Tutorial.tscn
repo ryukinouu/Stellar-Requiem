@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bcmqr1u3poavk"]
 
-[ext_resource type="Script" path="res://Game/Scripts/Beatmap.gd" id="1_h5mis"]
+[ext_resource type="Script" path="res://Game/Scripts/Core/Beatmap.gd" id="1_h5mis"]
 [ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="3_csgu4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkvsq"]

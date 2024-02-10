@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=3 uid="uid://o1qxbywubsux"]
 
-[ext_resource type="Script" path="res://Game/Scripts/Level.gd" id="1_s3lun"]
+[ext_resource type="Script" path="res://Game/Scripts/Core/Level.gd" id="1_s3lun"]
 [ext_resource type="Shader" path="res://Game/Shaders/Star.gdshader" id="2_6mlau"]
 [ext_resource type="Texture2D" uid="uid://dqh654tvv5ikc" path="res://Assets/Skybox/1.jpg" id="3_iy2oq"]
 [ext_resource type="PackedScene" uid="uid://diw82ehqh1dy5" path="res://Game/Scenes/Core/Character.tscn" id="4_81tt1"]
