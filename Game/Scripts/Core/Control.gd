@@ -19,7 +19,7 @@ var on_cd : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	AnimationHandler.init_animations(anim_tree, animation_state)
+	anim_tree.active = true
 	target_position = Vector3(
 		Global.positions[measure]["position"].x, 
 		Global.positions[measure]["position"].y, 
@@ -61,12 +61,12 @@ func move_direction(event):
 	if direction != "none":
 		animate(direction, "normal")
 	
-	#anim_tree.set(AnimationHandler.blend_pos(animation_state), direction)
+	#anim_tree.set("parameters/" + animation_state + "/blend_position", direction)
 	
 	#Global.cooldown(anim_player.get_animation("left").length, 
 		#func(): 
 			#direction = 0
-			#anim_tree.set(AnimationHandler.blend_pos(animation_state), direction)
+			#anim_tree.set(parameters/" + animation_state + "/blend_position", direction)
 	#)
 
 func animate(animation, next):
@@ -79,8 +79,11 @@ func animate(animation, next):
 			state_machine.travel(next)
 	)
 
-func note_hit(hit):
-	get_parent().score += 100
+func note_hit(hit, type):
+	if type != "Bomb":
+		get_parent().score += 100
+	else:
+		get_parent().score -= 100
 	hit.get_node("Area3D").free()
 	hit.get_parent().remove_child(hit)
 	effects.add_child(hit)
@@ -99,7 +102,7 @@ func _input(event):
 			var hit = area.get_parent()
 			var prefix = hit.name.substr(0, 2)
 			if prefix == "Ht":
-				note_hit(hit)
+				note_hit(hit, "Hit")
 	else:
 		move_direction(event)
 
@@ -119,7 +122,9 @@ func _process(delta):
 func _on_area_entered(area):
 	var hit = area.get_parent()
 	if hit.name.substr(0, 2) == "Hv":
-		note_hit(hit)
+		note_hit(hit, "Hover")
+	elif hit.name.substr(0, 2) == "Bm":
+		note_hit(hit, "Bomb")
 	elif hit.name.substr(0, 2) == "Ht":
 		print("CAN HIT: " + hit.name)
 

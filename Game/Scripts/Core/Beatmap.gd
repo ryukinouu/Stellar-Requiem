@@ -23,6 +23,15 @@ func _ready():
 			note_instance.name = "Hv_Note"
 			note.queue_free()
 			note = note_instance
+		elif note.name.substr(0, 4) == "Bomb":
+			var note_scene = load("res://Game/Scenes/Notes/BombNote.tscn")
+			var note_instance = note_scene.instantiate()
+			add_child(note_instance)
+
+			note_instance.position = note.position
+			note_instance.name = "Bm_Note"
+			note.queue_free()
+			note = note_instance
 		elif note.name.substr(0, 3) == "Hit":
 			var note_scene = load("res://Game/Scenes/Notes/HitNote.tscn")
 			var note_instance = note_scene.instantiate()

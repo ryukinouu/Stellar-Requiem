@@ -17,7 +17,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-AnimationHandler="*res://Game/Scripts/Core/AnimationHandler.gd"
 Global="*res://Game/Scripts/Core/Global.gd"
 
 [filesystem]

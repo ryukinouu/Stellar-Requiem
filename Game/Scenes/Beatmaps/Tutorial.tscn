@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bcmqr1u3poavk"]
+[gd_scene load_steps=17 format=3 uid="uid://bcmqr1u3poavk"]
 
 [ext_resource type="Script" path="res://Game/Scripts/Core/Beatmap.gd" id="1_h5mis"]
 [ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="3_csgu4"]
@@ -51,6 +51,15 @@ shader_parameter/transparency = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_uvyyy"]
 material = SubResource("ShaderMaterial_anudk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n8rq3"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(1, 0, 0, 1)
+shader_parameter/transparency = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_xdqn8"]
+material = SubResource("ShaderMaterial_n8rq3")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fu2gx"]
 render_priority = 0
@@ -560,6 +569,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 128)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hover4"]
 mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Bomb" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 144)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 176)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb2"]
+mesh = SubResource("SphereMesh_xdqn8")
 
 [node name="Hover5" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 130)
