@@ -1,45 +1,48 @@
-[gd_scene load_steps=14 format=3 uid="uid://ettssg3oddlu"]
+[gd_scene load_steps=12 format=3 uid="uid://c7my6hm1rp1y5"]
 
-[ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="1_c8yim"]
-[ext_resource type="Texture2D" uid="uid://btxbinpuhpbm1" path="res://Assets/Textures/Glow.png" id="2_xmipf"]
+[sub_resource type="Shader" id="Shader_rvyc8"]
+code = "shader_type spatial;
+render_mode unshaded; // Ensure the material is unaffected by lighting
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_poal7"]
+uniform vec4 neon_color = vec4(1.0, 1.0, 1.0, 1.0); // Neon green as an example
+uniform float transparency : hint_range(0.0, 1.0) = 1.0;
+
+void fragment() {
+	ALBEDO = neon_color.rgb;
+    EMISSION = neon_color.rgb; // The material will glow with this color
+    ALPHA = neon_color.a * transparency; // Set the alpha to the alpha of the neon color
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3qcpf"]
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("1_c8yim")
-shader_parameter/neon_color = Vector4(0.55, 1, 1, 1)
+shader = SubResource("Shader_rvyc8")
+shader_parameter/neon_color = Vector4(1.1, 0.4, 0.1, 1)
 shader_parameter/transparency = 1.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_wohtj"]
+[sub_resource type="SphereMesh" id="SphereMesh_4ncte"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_poal7")
+material = SubResource("ShaderMaterial_3qcpf")
+is_hemisphere = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_osi20"]
-margin = 10.0
-size = Vector3(2, 2, 4)
+size = Vector3(0.2, 0.2, 0.2)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_whvbm"]
-render_priority = 0
-shader = ExtResource("1_c8yim")
-shader_parameter/neon_color = Vector4(1, 0, 1, 1)
-shader_parameter/transparency = 0.05
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qrj56"]
+load_path = "res://.godot/imported/Glow.png-6f9c7ea0e2ff8ffb9e0042a64a869a67.s3tc.ctex"
 
-[sub_resource type="BoxMesh" id="BoxMesh_swx5o"]
-material = SubResource("ShaderMaterial_whvbm")
-size = Vector3(2, 2, 4)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ewvy"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_re114"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
-albedo_texture = ExtResource("2_xmipf")
+albedo_texture = SubResource("CompressedTexture2D_qrj56")
 disable_receive_shadows = true
 billboard_mode = 1
 billboard_keep_scale = true
 
-[sub_resource type="QuadMesh" id="QuadMesh_3qpey"]
+[sub_resource type="QuadMesh" id="QuadMesh_aud2r"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_4ewvy")
+material = SubResource("StandardMaterial3D_re114")
 
 [sub_resource type="Animation" id="Animation_en4j8"]
 length = 0.001
@@ -198,27 +201,23 @@ _data = {
 "hit": SubResource("Animation_s1363")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yl8oh"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_iglg7"]
 resource_local_to_scene = true
 animation = &"hit"
 
-[node name="Ht_Note" type="MeshInstance3D"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-mesh = SubResource("SphereMesh_wohtj")
+[node name="100100" type="MeshInstance3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.78873e-08, 1.5, 0, -1.5, 1.78873e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_4ncte")
 skeleton = NodePath("../../Circle")
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_osi20")
 
-[node name="Visualizer" type="MeshInstance3D" parent="Area3D/CollisionShape3D"]
-mesh = SubResource("BoxMesh_swx5o")
-
 [node name="Glow" type="MeshInstance3D" parent="."]
 sorting_offset = 1.0
-mesh = SubResource("QuadMesh_3qpey")
+mesh = SubResource("QuadMesh_aud2r")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -231,5 +230,5 @@ reset_on_save = false
 libraries = {
 "": SubResource("AnimationLibrary_2s0o8")
 }
-tree_root = SubResource("AnimationNodeAnimation_yl8oh")
+tree_root = SubResource("AnimationNodeAnimation_iglg7")
 anim_player = NodePath("../AnimationPlayer")

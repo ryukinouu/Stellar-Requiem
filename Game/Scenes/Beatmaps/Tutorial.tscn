@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bcmqr1u3poavk"]
+[gd_scene load_steps=21 format=3 uid="uid://bcmqr1u3poavk"]
 
 [ext_resource type="Script" path="res://Game/Scripts/Core/Beatmap.gd" id="1_h5mis"]
 [ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="3_csgu4"]
@@ -51,6 +51,28 @@ shader_parameter/transparency = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_uvyyy"]
 material = SubResource("ShaderMaterial_anudk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q044i"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(1.1, 0.4, 0.1, 1)
+shader_parameter/transparency = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_y30fx"]
+material = SubResource("ShaderMaterial_q044i")
+height = 0.5
+is_hemisphere = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mr63m"]
+render_priority = 0
+shader = ExtResource("3_csgu4")
+shader_parameter/neon_color = Vector4(1.1, 0.4, 0.1, 1)
+shader_parameter/transparency = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_7b43m"]
+material = SubResource("ShaderMaterial_mr63m")
+height = 0.5
+is_hemisphere = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n8rq3"]
 render_priority = 0
@@ -546,16 +568,32 @@ mesh = SubResource("PlaneMesh_76v5t")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, -0.1, 792)
 mesh = SubResource("PlaneMesh_76v5t")
 
-[node name="Hover" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 32)
+[node name="Hover104" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 912)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover104"]
+visible = false
 mesh = SubResource("SphereMesh_uvyyy")
 
-[node name="Hover2" type="Node3D" parent="."]
+[node name="ChordStart" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 32)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordStart"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_y30fx")
+
+[node name="ChordEnd" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 64)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordEnd"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("SphereMesh_7b43m")
+
+[node name="Hover105" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 976)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover105"]
 mesh = SubResource("SphereMesh_uvyyy")
 
 [node name="Hover3" type="Node3D" parent="."]

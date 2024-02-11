@@ -14,8 +14,13 @@ var target_position : Vector3
 var target_rotation : Vector3
 var current_anim = "normal"
 
-var has_pressed : bool
-var on_cd : bool
+var has_pressed: bool = false
+var on_cd: bool = false
+
+var chord_active: bool = false
+var chord_start_time = 0.0
+var chord_end_time = 0.0
+var chord_note_id: String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -80,10 +85,13 @@ func animate(animation, next):
 	)
 
 func note_hit(hit, type):
-	if type != "Bomb":
-		get_parent().score += 100
-	else:
+	if type == "Bomb":
 		get_parent().score -= 100
+	elif type == "Chord":
+		var time_held = ceil(chord_end_time - chord_start_time / 1000)
+		get_parent().score += 10 * time_held
+	else:
+		get_parent().score += 100
 	hit.get_node("Area3D").free()
 	hit.get_parent().remove_child(hit)
 	effects.add_child(hit)
@@ -97,12 +105,60 @@ func note_hit(hit, type):
 func _input(event):
 	if event.is_action_pressed("action"):
 		animate("click", "normal")
+		has_pressed = true
 		var notes = get_overlapping_areas()
 		for area in notes:
 			var hit = area.get_parent()
 			var prefix = hit.name.substr(0, 2)
-			if prefix == "Ht":
+			
+			if prefix == "Cs":
+				print("Found Start")
+				chord_active = true
+				chord_note_id = hit.name.substr(3)
+				chord_start_time = Time.get_ticks_msec()
+			elif prefix == "Cm":
+				print("Found Middle")
+				if !chord_active:
+					chord_active = true
+					chord_note_id = hit.name.substr(3)
+					chord_start_time = Time.get_ticks_msec()
+				elif chord_active and chord_note_id == hit.name.substr(3):
+					pass
+				else:
+					print("Error! Chord is active but current Chord ID is different.")
+			elif prefix == "Ce":
+				print("Found End")
+				if !chord_active:
+					pass
+				elif chord_active and chord_note_id == hit.name.substr(3):
+					chord_active = false
+					chord_note_id = ""
+					chord_end_time = Time.get_ticks_msec()
+					note_hit(hit, "Chord")
+				else:
+					print("Error! Chord is active but current Chord ID is different.")
+			elif prefix == "Ht":
 				note_hit(hit, "Hit")
+	
+	if event.is_action_released("action"):
+		has_pressed = false
+		var notes = get_overlapping_areas()
+		for area in notes:
+			var hit = area.get_parent()
+			var prefix = hit.name.substr(0, 2)
+			
+			if prefix == "Cs" or prefix == "Cm" or prefix == "Ce":
+				if !chord_active:
+					pass
+				elif chord_active and chord_note_id == hit.name.substr(3):
+					chord_active = false
+					chord_note_id = ""
+					chord_end_time = Time.get_ticks_msec()
+					note_hit(hit, "Chord")
+				else:
+					print("Error! Chord is active but current Chord ID is different.")
+			else:
+				pass
 	else:
 		move_direction(event)
 
@@ -130,5 +186,5 @@ func _on_area_entered(area):
 
 func _on_area_exited(area):
 	var hit = area.get_parent()
-	if hit.name.substr(0, 2) == "Ht":
+	if hit.name.substr(0, 2) == "Ht" or hit.name.substr(0, 1) == "C":
 		print("CAN'T HIT: " + hit.name)
