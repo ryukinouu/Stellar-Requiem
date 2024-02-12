@@ -12,6 +12,7 @@ var high_score = 0
 func _ready():
 	generate_tabs_around_ring(Global.CIRCLE_MEASURES)
 	$CanvasLayer/AnimationPlayer.play("fade_in")
+	
 
 func _process(delta):
 	UI.get_node("Score/Label").text = "SCORE: " + str(score)

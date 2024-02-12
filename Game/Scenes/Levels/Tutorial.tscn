@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://o1qxbywubsux"]
+[gd_scene load_steps=32 format=3 uid="uid://o1qxbywubsux"]
 
 [ext_resource type="Script" path="res://Game/Scripts/Core/Level.gd" id="1_s3lun"]
 [ext_resource type="Shader" path="res://Game/Shaders/Star.gdshader" id="2_6mlau"]
@@ -283,6 +283,9 @@ states/World/position = Vector2(531, 100)
 transitions = ["Start", "World", SubResource("AnimationNodeStateMachineTransition_60gug"), "World", "RESET", SubResource("AnimationNodeStateMachineTransition_n2lxn"), "RESET", "World", SubResource("AnimationNodeStateMachineTransition_fslgt")]
 graph_offset = Vector2(27, 49)
 
+[sub_resource type="Theme" id="Theme_tc0kg"]
+Label/fonts/font = null
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skot7"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 5
@@ -400,6 +403,7 @@ offset_right = 55.0
 offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = SubResource("Theme_tc0kg")
 text = "SCORE:
 "
 horizontal_alignment = 1

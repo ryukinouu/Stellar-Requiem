@@ -1,22 +1,139 @@
-[gd_scene load_steps=18 format=3 uid="uid://cgcvnb0csh4yd"]
+[gd_scene load_steps=50 format=3 uid="uid://cgcvnb0csh4yd"]
 
+[ext_resource type="Script" path="res://Game/Scenes/Core/Circle.gd" id="1_0ooju"]
 [ext_resource type="Shader" path="res://Game/Shaders/Decal.gdshader" id="1_q1vmp"]
 [ext_resource type="Texture2D" uid="uid://pfnhdul7p7ns" path="res://Assets/Textures/Circle/Asset_8.png" id="2_cdr7n"]
-[ext_resource type="Texture2D" uid="uid://d0f1cb5qjjoky" path="res://Assets/Textures/Circle/Asset_22.png" id="3_d8pid"]
+[ext_resource type="Texture2D" uid="uid://btdx73bjyo16o" path="res://Assets/Textures/Circle/1.png" id="3_7d1ic"]
 [ext_resource type="Texture2D" uid="uid://dsaci7adhg1j6" path="res://Assets/Textures/Circle/Asset_25.png" id="4_2ponb"]
 [ext_resource type="Texture2D" uid="uid://bqphyt43mmfb5" path="res://Assets/Textures/Circle/Asset_24.png" id="4_utc71"]
+[ext_resource type="Texture2D" uid="uid://dlndrqo0anqur" path="res://Assets/Textures/Circle/2.png" id="4_uya1e"]
+[ext_resource type="Texture2D" uid="uid://clhx4l6nkfor3" path="res://Assets/Textures/Circle/4.png" id="5_vmtov"]
+[ext_resource type="Texture2D" uid="uid://nig00sttlxl2" path="res://Assets/Textures/Circle/5.png" id="6_65psq"]
+[ext_resource type="Texture2D" uid="uid://bwf58jtv0ihao" path="res://Assets/Textures/Circle/6.png" id="7_5w4e7"]
+[ext_resource type="Texture2D" uid="uid://cpxocc4fxnv6g" path="res://Assets/Textures/Circle/7.png" id="8_jgjjc"]
+[ext_resource type="Texture2D" uid="uid://bo3q6thpu2tp1" path="res://Assets/Textures/Circle/8.png" id="9_sdra4"]
+[ext_resource type="Texture2D" uid="uid://cd8em06ie8x0" path="res://Assets/Textures/Circle/9.png" id="10_jx2pf"]
+[ext_resource type="Texture2D" uid="uid://tihvp07piy8y" path="res://Assets/Textures/Circle/10.png" id="11_swty4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wgsv1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wit8m"]
 render_priority = 0
 shader = ExtResource("1_q1vmp")
-shader_parameter/transparency = 0.1
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 0.0
+shader_parameter/albedo_texture = ExtResource("3_7d1ic")
+
+[sub_resource type="QuadMesh" id="QuadMesh_emim8"]
+material = SubResource("ShaderMaterial_wit8m")
+size = Vector2(0.5, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p2vif"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 0.0
+shader_parameter/albedo_texture = ExtResource("4_uya1e")
+
+[sub_resource type="QuadMesh" id="QuadMesh_u5jyt"]
+material = SubResource("ShaderMaterial_p2vif")
+size = Vector2(0.8, 0.8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ikff"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 0.0
+shader_parameter/albedo_texture = ExtResource("5_vmtov")
+
+[sub_resource type="QuadMesh" id="QuadMesh_yis7r"]
+material = SubResource("ShaderMaterial_1ikff")
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gc31x"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 0.0
+shader_parameter/albedo_texture = ExtResource("6_65psq")
+
+[sub_resource type="QuadMesh" id="QuadMesh_4w1fj"]
+material = SubResource("ShaderMaterial_gc31x")
+size = Vector2(2.3, 2.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tjk6t"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
 shader_parameter/radius = 1.0
+shader_parameter/albedo_texture = ExtResource("7_5w4e7")
+
+[sub_resource type="QuadMesh" id="QuadMesh_1abc5"]
+material = SubResource("ShaderMaterial_tjk6t")
+size = Vector2(2.6, 2.6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_535ld"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
+shader_parameter/albedo_texture = ExtResource("8_jgjjc")
+
+[sub_resource type="QuadMesh" id="QuadMesh_10b7b"]
+material = SubResource("ShaderMaterial_535ld")
+size = Vector2(3.5, 3.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uy6st"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
+shader_parameter/albedo_texture = ExtResource("9_sdra4")
+
+[sub_resource type="QuadMesh" id="QuadMesh_l88qj"]
+material = SubResource("ShaderMaterial_uy6st")
+size = Vector2(4, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pqdqr"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
+shader_parameter/albedo_texture = ExtResource("10_jx2pf")
+
+[sub_resource type="QuadMesh" id="QuadMesh_c48us"]
+material = SubResource("ShaderMaterial_pqdqr")
+size = Vector2(5, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hynlg"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 1.0
+shader_parameter/albedo_texture = ExtResource("11_swty4")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ef6o0"]
+material = SubResource("ShaderMaterial_hynlg")
+size = Vector2(5.5, 5.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6oeem"]
+render_priority = 0
+shader = ExtResource("1_q1vmp")
+shader_parameter/transparency = 0.05
+shader_parameter/neon_color = Vector4(1, 1, 1, 1)
+shader_parameter/radius = 0.0
 shader_parameter/albedo_texture = ExtResource("4_2ponb")
 
 [sub_resource type="QuadMesh" id="QuadMesh_6gm1j"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_wgsv1")
+material = SubResource("ShaderMaterial_6oeem")
 size = Vector2(8, 8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ylmu"]
@@ -24,31 +141,31 @@ render_priority = 0
 shader = ExtResource("1_q1vmp")
 shader_parameter/transparency = 0.1
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
-shader_parameter/radius = 1.0
+shader_parameter/radius = 0.0
 shader_parameter/albedo_texture = ExtResource("4_utc71")
 
 [sub_resource type="QuadMesh" id="QuadMesh_yrfy6"]
 material = SubResource("ShaderMaterial_5ylmu")
 size = Vector2(6.5, 6.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5tnw2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkfdg"]
 render_priority = 0
 shader = ExtResource("1_q1vmp")
-shader_parameter/transparency = 1.0
+shader_parameter/transparency = 0.341
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
-shader_parameter/radius = 1.0
-shader_parameter/albedo_texture = ExtResource("3_d8pid")
+shader_parameter/radius = 0.0
+shader_parameter/albedo_texture = ExtResource("4_utc71")
 
 [sub_resource type="QuadMesh" id="QuadMesh_8oqcj"]
-material = SubResource("ShaderMaterial_5tnw2")
-size = Vector2(8, 8)
+material = SubResource("ShaderMaterial_nkfdg")
+size = Vector2(7.8, 7.8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bc8j1"]
 render_priority = 0
 shader = ExtResource("1_q1vmp")
 shader_parameter/transparency = 0.03
 shader_parameter/neon_color = Vector4(1, 1, 1, 1)
-shader_parameter/radius = 1.0
+shader_parameter/radius = 0.0
 shader_parameter/albedo_texture = ExtResource("2_cdr7n")
 
 [sub_resource type="QuadMesh" id="QuadMesh_4g5et"]
@@ -102,10 +219,10 @@ tracks/3/path = NodePath("CircleDesign/Ring:scale")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.99, 1, 1.01),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(1.05, 1.05, 1.05), Vector3(1, 1, 1)]
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -118,6 +235,210 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 6.28319)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CircleDesign/Back:mesh:material:shader_parameter/radius")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CircleDesign/Front:mesh:material:shader_parameter/radius")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CircleDesign/Ring:mesh:material:shader_parameter/radius")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CircleDesign/Behind:mesh:material:shader_parameter/radius")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CircleDesign/7:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3.48787e-16, -3.14159, 3.48787e-16), Vector3(3.48787e-16, -3.14159, -34.9066)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CircleDesign/9:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3.48787e-16, -3.14159, 3.48787e-16), Vector3(3.48787e-16, -3.14159, 17.4533)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CircleDesign/1:mesh:material:shader_parameter/radius")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CircleDesign/2:mesh:material:shader_parameter/radius")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CircleDesign/4:mesh:material:shader_parameter/radius")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CircleDesign/4:rotation")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3.48787e-16, 3.14159, 3.48787e-16), Vector3(3.48787e-16, 3.14159, 12.5664)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("CircleDesign/5:mesh:material:shader_parameter/radius")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("CircleDesign/6:mesh:material:shader_parameter/radius")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("CircleDesign/7:mesh:material:shader_parameter/radius")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("CircleDesign/8:mesh:material:shader_parameter/radius")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("CircleDesign/9:mesh:material:shader_parameter/radius")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("CircleDesign/10:mesh:material:shader_parameter/radius")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("CircleDesign/5:rotation")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 64),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3.48787e-16, -3.14159, 3.48787e-16), Vector3(3.48787e-16, -3.14159, 17.4533)]
 }
 
 [sub_resource type="Animation" id="Animation_brlnt"]
@@ -182,21 +503,459 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector3(0, -3.14159, 6.28319)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CircleDesign/Back:mesh:material:shader_parameter/radius")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CircleDesign/Front:mesh:material:shader_parameter/radius")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CircleDesign/Ring:mesh:material:shader_parameter/radius")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CircleDesign/Behind:mesh:material:shader_parameter/radius")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CircleDesign/4:mesh:material:shader_parameter/radius")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CircleDesign/5:mesh:material:shader_parameter/radius")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CircleDesign/1:mesh:material:shader_parameter/radius")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CircleDesign/6:mesh:material:shader_parameter/radius")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CircleDesign/7:mesh:material:shader_parameter/radius")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CircleDesign/9:mesh:material:shader_parameter/radius")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("CircleDesign/10:mesh:material:shader_parameter/radius")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("CircleDesign/8:mesh:material:shader_parameter/radius")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("CircleDesign/2:mesh:material:shader_parameter/radius")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("CircleDesign/4:rotation")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.48787e-16, 3.14159, 3.48787e-16)]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("CircleDesign/5:rotation")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.48787e-16, -3.14159, 3.48787e-16)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("CircleDesign/7:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.48787e-16, -3.14159, 3.48787e-16)]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("CircleDesign/9:rotation")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.48787e-16, -3.14159, 3.48787e-16)]
+}
+
+[sub_resource type="Animation" id="Animation_0dnpu"]
+resource_name = "load_in_rings"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CircleDesign/Back:mesh:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CircleDesign/Front:mesh:material:shader_parameter/radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CircleDesign/Ring:mesh:material:shader_parameter/radius")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CircleDesign/Behind:mesh:material:shader_parameter/radius")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CircleDesign/1:mesh:material:shader_parameter/radius")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CircleDesign/2:mesh:material:shader_parameter/radius")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CircleDesign/4:mesh:material:shader_parameter/radius")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CircleDesign/5:mesh:material:shader_parameter/radius")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CircleDesign/6:mesh:material:shader_parameter/radius")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CircleDesign/7:mesh:material:shader_parameter/radius")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CircleDesign/8:mesh:material:shader_parameter/radius")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CircleDesign/9:mesh:material:shader_parameter/radius")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CircleDesign/10:mesh:material:shader_parameter/radius")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_70jht"]
 _data = {
 "Idle": SubResource("Animation_2ielc"),
-"RESET": SubResource("Animation_brlnt")
+"RESET": SubResource("Animation_brlnt"),
+"load_in_rings": SubResource("Animation_0dnpu")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_stn0e"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oresx"]
 animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_571gr"]
+animation = &"load_in_rings"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gtv7o"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_57kon"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_uet3g"]
+states/Idle/node = SubResource("AnimationNodeAnimation_oresx")
+states/Idle/position = Vector2(680.418, 71)
+states/Start/position = Vector2(201, 99.971)
+states/load_in_rings/node = SubResource("AnimationNodeAnimation_571gr")
+states/load_in_rings/position = Vector2(415, 99)
+transitions = ["Start", "load_in_rings", SubResource("AnimationNodeStateMachineTransition_gtv7o"), "load_in_rings", "Idle", SubResource("AnimationNodeStateMachineTransition_57kon")]
+graph_offset = Vector2(116.475, -9.96)
 
 [node name="Circle" type="Node3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_0ooju")
 
 [node name="CircleDesign" type="Node3D" parent="."]
 transform = Transform3D(1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="1" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-0.219176, -0.975685, -2.53518e-06, -0.975685, 0.219176, 2.44234e-21, 5.55651e-07, 2.47354e-06, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_emim8")
+skeleton = NodePath("../..")
+
+[node name="2" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-0.219176, -0.975685, -2.53518e-06, -0.975685, 0.219176, 2.44234e-21, 5.55651e-07, 2.47354e-06, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_u5jyt")
+skeleton = NodePath("../..")
+
+[node name="4" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-1, 3.48787e-16, -8.74228e-08, 3.48787e-16, 1, -3.48787e-16, 8.74228e-08, -3.48787e-16, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_yis7r")
+skeleton = NodePath("../..")
+
+[node name="5" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_4w1fj")
+skeleton = NodePath("../..")
+
+[node name="6" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(0.00817908, 0.999966, -2.29676e-06, 0.999966, -0.00817908, -3.48787e-16, -1.87854e-08, -2.29668e-06, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_1abc5")
+skeleton = NodePath("../..")
+
+[node name="7" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_10b7b")
+skeleton = NodePath("../..")
+
+[node name="8" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-0.219176, -0.975685, -2.53518e-06, -0.975685, 0.219176, 2.44237e-21, 5.55651e-07, 2.47354e-06, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_l88qj")
+skeleton = NodePath("../..")
+
+[node name="9" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74227e-08, -3.48787e-16, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_c48us")
+skeleton = NodePath("../..")
+
+[node name="10" type="MeshInstance3D" parent="CircleDesign"]
+transform = Transform3D(-0.219176, -0.975685, -2.53518e-06, -0.975685, 0.219176, 2.44237e-21, 5.55651e-07, 2.47354e-06, -1, 0, 0, 2)
+sorting_offset = -100.0
+mesh = SubResource("QuadMesh_ef6o0")
+skeleton = NodePath("../..")
 
 [node name="Back" type="MeshInstance3D" parent="CircleDesign"]
 transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0, 0, 2)
@@ -231,5 +990,5 @@ libraries = {
 libraries = {
 "": SubResource("AnimationLibrary_70jht")
 }
-tree_root = SubResource("AnimationNodeAnimation_stn0e")
+tree_root = SubResource("AnimationNodeStateMachine_uet3g")
 anim_player = NodePath("../AnimationPlayer")
