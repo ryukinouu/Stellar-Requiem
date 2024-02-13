@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnw07t1vpo5pr"]
+[gd_scene load_steps=12 format=3 uid="uid://bhk6tr6dl6qyp"]
 
 [sub_resource type="Shader" id="Shader_rvyc8"]
 code = "shader_type spatial;
@@ -123,7 +123,7 @@ resource_local_to_scene = true
 animation = &"hit"
 
 [node name="Hv_Note" type="MeshInstance3D"]
-transform = Transform3D(1.5, 0, 0, 0, -6.55671e-08, -1.5, 0, 1.5, -6.55671e-08, 0, 0, 0)
+transform = Transform3D(1.5, 0, 0, 0, -6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, 0)
 mesh = SubResource("SphereMesh_4ncte")
 skeleton = NodePath("../../Circle")
 
