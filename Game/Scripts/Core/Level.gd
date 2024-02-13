@@ -7,10 +7,9 @@ extends Node3D
 @export var game_state = "Menu"
 @export var score = 0
 
-var high_score = 0
-
 func _ready():
 	generate_tabs_around_ring(Global.CIRCLE_MEASURES)
+	UI.get_node("Menu/HighScore").text = "HIGH SCORE: " + str(Global.game_data["high scores"]["Tutorial"])
 	$CanvasLayer/AnimationPlayer.play("fade_in")
 	
 
@@ -42,9 +41,9 @@ func _on_animation_tree_animation_finished(anim_name):
 	if anim_name == "World":
 		var state_machine = anim_tree.get("parameters/playback")
 		state_machine.travel("RESET")
-		if score > high_score:
-			high_score = score
-		UI.get_node("Menu/HighScore").text = "HIGH SCORE: " + str(high_score)
+		if score > Global.game_data["high scores"]["Tutorial"]:
+			Global.game_data["high scores"]["Tutorial"] = score
+		UI.get_node("Menu/HighScore").text = "HIGH SCORE: " + str(Global.game_data["high scores"]["Tutorial"])
 		UI.get_node("Menu").visible = true
 		UI.get_node("Score").visible = false
 		get_node("Tutorial").free()
