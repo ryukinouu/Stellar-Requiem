@@ -1494,6 +1494,132 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 912)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hover105"]
 mesh = SubResource("SphereMesh_uvyyy")
 
+[node name="Hover106" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 992)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover106"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover107" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1000)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover107"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover108" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1008)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover108"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover109" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1016)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover109"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover110" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1024)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover110"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover111" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1032)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover111"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover112" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1040)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover112"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover113" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1048)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover113"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover114" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1056)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover114"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover115" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1064)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover115"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover116" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1072)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover116"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover117" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1080)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover117"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover118" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1088)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover118"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover119" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1096)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover119"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover120" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1104)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover120"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover121" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1112)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover121"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover122" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1120)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover122"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover123" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1128)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover123"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover124" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1136)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover124"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover125" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1144)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover125"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover126" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 1152)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover126"]
+mesh = SubResource("SphereMesh_uvyyy")
+
 [node name="Hit" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 256)
 
@@ -1654,4 +1780,16 @@ mesh = SubResource("SphereMesh_tp828")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 920)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hit27"]
+mesh = SubResource("SphereMesh_tp828")
+
+[node name="ChordStart" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 992)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordStart"]
+mesh = SubResource("SphereMesh_tp828")
+
+[node name="ChordEnd" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 1152)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordEnd"]
 mesh = SubResource("SphereMesh_tp828")
