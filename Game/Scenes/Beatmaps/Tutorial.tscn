@@ -552,18 +552,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 32)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hover"]
 mesh = SubResource("SphereMesh_uvyyy")
 
-[node name="ChordStart" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 32)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordStart"]
-mesh = SubResource("SphereMesh_uvyyy")
-
-[node name="ChordEnd" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 64)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordEnd"]
-mesh = SubResource("SphereMesh_uvyyy")
-
 [node name="Hover2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 64)
 
@@ -592,6 +580,312 @@ mesh = SubResource("SphereMesh_xdqn8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 176)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb2"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 928)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb3"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb4" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 932)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb4"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb5" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 936)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb5"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb6" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 940)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb6"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb7" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 944)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb7"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb8" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 948)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb8"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb9" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 952)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb9"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb10" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 956)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb10"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb11" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 960)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb11"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb12" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 964)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb12"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb13" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 968)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb13"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb14" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 972)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb14"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb15" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 976)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb15"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb16" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 980)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb16"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb17" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 960)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb17"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb18" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 928)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb18"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb19" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 932)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb19"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb20" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 936)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb20"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb21" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 940)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb21"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb22" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 944)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb22"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb23" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 948)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb23"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb24" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 952)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb24"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb25" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 956)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb25"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb26" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 960)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb26"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb27" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 964)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb27"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb28" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 968)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb28"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb29" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 972)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb29"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb30" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 976)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb30"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb31" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 980)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb31"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb32" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 984)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb32"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb33" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 988)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb33"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb34" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 992)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb34"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb35" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 996)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb35"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb36" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1000)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb36"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb37" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1004)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb37"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb38" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1008)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb38"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb39" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1012)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb39"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb40" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 984)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb40"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb41" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 988)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb41"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb42" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 992)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb42"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb43" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 996)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb43"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb44" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1000)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb44"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb45" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1004)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb45"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb46" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1008)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb46"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb47" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1012)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb47"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb48" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1016)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb48"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb49" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1020)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb49"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb50" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1024)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb50"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb51" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1016)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb51"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb52" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1020)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb52"]
+mesh = SubResource("SphereMesh_xdqn8")
+
+[node name="Bomb53" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 1024)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bomb53"]
 mesh = SubResource("SphereMesh_xdqn8")
 
 [node name="Hover5" type="Node3D" parent="."]
@@ -1183,9 +1477,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 864)
 mesh = SubResource("SphereMesh_uvyyy")
 
 [node name="Hover103" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 880)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.971, 1.90735e-06, 880)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hover103"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover104" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 896)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover104"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="Hover105" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 912)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hover105"]
 mesh = SubResource("SphereMesh_uvyyy")
 
 [node name="Hit" type="Node3D" parent="."]
@@ -1336,4 +1642,16 @@ mesh = SubResource("SphereMesh_tp828")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 888)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hit25"]
+mesh = SubResource("SphereMesh_tp828")
+
+[node name="Hit26" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 904)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hit26"]
+mesh = SubResource("SphereMesh_tp828")
+
+[node name="Hit27" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 920)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hit27"]
 mesh = SubResource("SphereMesh_tp828")

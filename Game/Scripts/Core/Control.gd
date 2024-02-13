@@ -132,3 +132,4 @@ func _on_area_exited(area):
 	var hit = area.get_parent()
 	if hit.name.substr(0, 2) == "Ht":
 		print("CAN'T HIT: " + hit.name)
+		print(Time.get_ticks_msec())
