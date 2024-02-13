@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bhk6tr6dl6qyp"]
+[gd_scene load_steps=14 format=3 uid="uid://cetuksv8c6cpg"]
 
 [ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="1_sxlb6"]
 
@@ -29,18 +29,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_s1363"]
 resource_name = "hit"
@@ -58,15 +46,48 @@ tracks/0/keys = {
 "values": [1.0, 0.2]
 }
 
+[sub_resource type="Animation" id="Animation_12n1d"]
+resource_name = "after"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:shader_parameter/transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.2]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2s0o8"]
 _data = {
 "RESET": SubResource("Animation_en4j8"),
+"after": SubResource("Animation_12n1d"),
 "hit": SubResource("Animation_s1363")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_iglg7"]
-resource_local_to_scene = true
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_o0dsu"]
+animation = &"after"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ld4xn"]
 animation = &"hit"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5823g"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tgusr"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_618eq"]
+states/after/node = SubResource("AnimationNodeAnimation_o0dsu")
+states/after/position = Vector2(464, 100)
+states/hit/node = SubResource("AnimationNodeAnimation_ld4xn")
+states/hit/position = Vector2(330, 100)
+transitions = ["Start", "hit", SubResource("AnimationNodeStateMachineTransition_5823g"), "hit", "after", SubResource("AnimationNodeStateMachineTransition_tgusr")]
 
 [node name="Cm_Note" type="MeshInstance3D"]
 transform = Transform3D(1.5, 0, 0, 0, -6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, 0)
@@ -89,5 +110,5 @@ reset_on_save = false
 libraries = {
 "": SubResource("AnimationLibrary_2s0o8")
 }
-tree_root = SubResource("AnimationNodeAnimation_iglg7")
+tree_root = SubResource("AnimationNodeStateMachine_618eq")
 anim_player = NodePath("../AnimationPlayer")
