@@ -28,7 +28,7 @@ func _process(delta):
 	if progress < max_progress:
 		increase_score(1)
 
-	
+
 func increase_score(amount : float):
 	score += amount
 	update_score_display()
