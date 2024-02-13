@@ -41,6 +41,9 @@ var animations = {
 	"click": {
 		speed = 2
 	},
+	"click_hold": {
+		speed = 1
+	},
 	"left": {
 		speed = 1
 	},

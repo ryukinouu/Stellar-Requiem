@@ -16,6 +16,8 @@ var current_anim = "normal"
 
 var has_pressed : bool
 var on_cd : bool
+var on_chord : bool
+var holding : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,7 +60,7 @@ func move_direction(event):
 		Global.positions[measure]["rotation"].z, 
 	)
 	
-	if direction != "none":
+	if direction != "none" and current_anim != "click_hold" and current_anim != "click":
 		animate(direction, "normal")
 	
 	#anim_tree.set("parameters/" + animation_state + "/blend_position", direction)
@@ -73,17 +75,23 @@ func animate(animation, next):
 	var state_machine = anim_tree.get("parameters/playback")
 	current_anim = animation
 	state_machine.travel(animation)
-	Global.cooldown(anim_player.get_animation(animation).length / Global.animations[animation].speed,
-		func(): 
-			current_anim = next
-			state_machine.travel(next)
-	)
+	if next:
+		Global.cooldown(anim_player.get_animation(animation).length / Global.animations[animation].speed,
+			func(): 
+				current_anim = next
+				state_machine.travel(next)
+		)
 
 func note_hit(hit, type):
-	if type != "Bomb":
-		get_parent().score += 100
-	else:
+	if type == "Chord":
+		on_chord = true
+		var anim_tree = hit.get_node("AnimationTree")
+		anim_tree.active = true
+		return
+	elif type == "Bomb":
 		get_parent().score -= 100
+	else:
+		get_parent().score += 100
 	hit.get_node("Area3D").free()
 	hit.get_parent().remove_child(hit)
 	effects.add_child(hit)
@@ -96,13 +104,24 @@ func note_hit(hit, type):
 
 func _input(event):
 	if event.is_action_pressed("action"):
-		animate("click", "normal")
+		animate("click", "click_hold")
+		holding = true
 		var notes = get_overlapping_areas()
 		for area in notes:
 			var hit = area.get_parent()
 			var prefix = hit.name.substr(0, 2)
 			if prefix == "Ht":
 				note_hit(hit, "Hit")
+			elif prefix == "Cs" or prefix == "Cm":
+				var num = hit.name.substr(11)
+				note_hit(hit.get_parent().get_node("Cs_Note" + str(num)), "Chord")
+				note_hit(hit.get_parent().get_node("Cm_Note" + str(num)), "Chord")
+				note_hit(hit.get_parent().get_node("Ce_Note" + str(num)), "Chord")
+	elif event.is_action_released("action"):
+		animate("normal", null)
+		holding = false
+		if on_chord:
+			on_chord = false
 	else:
 		move_direction(event)
 
@@ -116,6 +135,9 @@ func _process(delta):
 	
 	#print(round(position.x) == round(target_position.x))
 	
+	if on_chord:
+		get_parent().score += 1
+	
 	if !Input.is_action_pressed("left") and !Input.is_action_pressed("right") and on_cd:
 		has_pressed = false
 
@@ -127,9 +149,17 @@ func _on_area_entered(area):
 		note_hit(hit, "Bomb")
 	elif hit.name.substr(0, 2) == "Ht":
 		print("CAN HIT: " + hit.name)
+	elif hit.name.substr(0, 2) == "Cs" or hit.name.substr(0, 2) == "Cm":
+		if holding:
+			var num = hit.name.substr(11)
+			note_hit(hit.get_parent().get_node("Cs_Note" + str(num)), "Chord")
+			note_hit(hit.get_parent().get_node("Cm_Note" + str(num)), "Chord")
+			note_hit(hit.get_parent().get_node("Ce_Note" + str(num)), "Chord")
 
 func _on_area_exited(area):
 	var hit = area.get_parent()
 	if hit.name.substr(0, 2) == "Ht":
 		print("CAN'T HIT: " + hit.name)
 		print(Time.get_ticks_msec())
+	elif hit.name.substr(0, 2) == "Cm":
+		on_chord = false

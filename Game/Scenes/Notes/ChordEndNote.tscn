@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnw07t1vpo5pr"]
+[gd_scene load_steps=17 format=3 uid="uid://bqasgqfra3p25"]
 
 [sub_resource type="Shader" id="Shader_rvyc8"]
 code = "shader_type spatial;
@@ -71,18 +71,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_s1363"]
 resource_name = "hit"
@@ -112,15 +100,61 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_aio7l"]
+resource_name = "after"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:shader_parameter/transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Glow:mesh:material:albedo_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2s0o8"]
 _data = {
 "RESET": SubResource("Animation_en4j8"),
+"after": SubResource("Animation_aio7l"),
 "hit": SubResource("Animation_s1363")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_iglg7"]
-resource_local_to_scene = true
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d0j66"]
+animation = &"after"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v7dwn"]
 animation = &"hit"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vad88"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ewtel"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ph8ow"]
+states/after/node = SubResource("AnimationNodeAnimation_d0j66")
+states/after/position = Vector2(481, 100)
+states/hit/node = SubResource("AnimationNodeAnimation_v7dwn")
+states/hit/position = Vector2(346, 100)
+transitions = ["Start", "hit", SubResource("AnimationNodeStateMachineTransition_vad88"), "hit", "after", SubResource("AnimationNodeStateMachineTransition_ewtel")]
 
 [node name="Ce_Note" type="MeshInstance3D"]
 transform = Transform3D(1.5, 0, 0, 0, -6.55671e-08, -1.5, 0, 1.5, -6.55671e-08, 0, 0, 0)
@@ -147,5 +181,5 @@ reset_on_save = false
 libraries = {
 "": SubResource("AnimationLibrary_2s0o8")
 }
-tree_root = SubResource("AnimationNodeAnimation_iglg7")
+tree_root = SubResource("AnimationNodeStateMachine_ph8ow")
 anim_player = NodePath("../AnimationPlayer")
