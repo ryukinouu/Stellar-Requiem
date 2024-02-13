@@ -1,6 +1,5 @@
 [gd_scene load_steps=50 format=3 uid="uid://cgcvnb0csh4yd"]
 
-[ext_resource type="Script" path="res://Game/Scenes/Core/Circle.gd" id="1_0ooju"]
 [ext_resource type="Shader" path="res://Game/Shaders/Decal.gdshader" id="1_q1vmp"]
 [ext_resource type="Texture2D" uid="uid://pfnhdul7p7ns" path="res://Assets/Textures/Circle/Asset_8.png" id="2_cdr7n"]
 [ext_resource type="Texture2D" uid="uid://btdx73bjyo16o" path="res://Assets/Textures/Circle/1.png" id="3_7d1ic"]
@@ -14,6 +13,20 @@
 [ext_resource type="Texture2D" uid="uid://bo3q6thpu2tp1" path="res://Assets/Textures/Circle/8.png" id="9_sdra4"]
 [ext_resource type="Texture2D" uid="uid://cd8em06ie8x0" path="res://Assets/Textures/Circle/9.png" id="10_jx2pf"]
 [ext_resource type="Texture2D" uid="uid://tihvp07piy8y" path="res://Assets/Textures/Circle/10.png" id="11_swty4"]
+
+[sub_resource type="GDScript" id="GDScript_w6860"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	# Play the first animation with AnimationPlayer
+	pass
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wit8m"]
 render_priority = 0
@@ -898,7 +911,7 @@ graph_offset = Vector2(116.475, -9.96)
 
 [node name="Circle" type="Node3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-script = ExtResource("1_0ooju")
+script = SubResource("GDScript_w6860")
 
 [node name="CircleDesign" type="Node3D" parent="."]
 transform = Transform3D(1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0, 1, 0, 0, 0)

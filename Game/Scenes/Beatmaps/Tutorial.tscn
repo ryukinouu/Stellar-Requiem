@@ -552,6 +552,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 32)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Hover"]
 mesh = SubResource("SphereMesh_uvyyy")
 
+[node name="ChordStart" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 32)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordStart"]
+mesh = SubResource("SphereMesh_uvyyy")
+
+[node name="ChordEnd" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 64)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ChordEnd"]
+mesh = SubResource("SphereMesh_uvyyy")
+
 [node name="Hover2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 64)
 

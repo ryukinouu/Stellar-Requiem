@@ -1,49 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://bhk6tr6dl6qyp"]
+[gd_scene load_steps=9 format=3 uid="uid://bhk6tr6dl6qyp"]
 
-[sub_resource type="Shader" id="Shader_rvyc8"]
-code = "shader_type spatial;
-render_mode unshaded; // Ensure the material is unaffected by lighting
+[ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="1_sxlb6"]
 
-uniform vec4 neon_color = vec4(1.0, 1.0, 1.0, 1.0); // Neon green as an example
-uniform float transparency : hint_range(0.0, 1.0) = 1.0;
-
-void fragment() {
-	ALBEDO = neon_color.rgb;
-    EMISSION = neon_color.rgb; // The material will glow with this color
-    ALPHA = neon_color.a * transparency; // Set the alpha to the alpha of the neon color
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3qcpf"]
-resource_local_to_scene = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dfwqo"]
 render_priority = 0
-shader = SubResource("Shader_rvyc8")
-shader_parameter/neon_color = Vector4(0.87, 0.675, 0.135, 1)
+shader = ExtResource("1_sxlb6")
+shader_parameter/neon_color = Vector4(0.87, 0.5, 0.135, 1)
 shader_parameter/transparency = 1.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_4ncte"]
-resource_local_to_scene = true
-material = SubResource("ShaderMaterial_3qcpf")
-height = 0.5
-is_hemisphere = true
+[sub_resource type="CylinderMesh" id="CylinderMesh_5gj2w"]
+material = SubResource("ShaderMaterial_dfwqo")
+height = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_osi20"]
 size = Vector3(0.2, 0.2, 0.2)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qrj56"]
-load_path = "res://.godot/imported/Glow.png-6f9c7ea0e2ff8ffb9e0042a64a869a67.s3tc.ctex"
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_re114"]
-resource_local_to_scene = true
-transparency = 1
-shading_mode = 0
-albedo_texture = SubResource("CompressedTexture2D_qrj56")
-disable_receive_shadows = true
-billboard_mode = 1
-billboard_keep_scale = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_aud2r"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_re114")
 
 [sub_resource type="Animation" id="Animation_en4j8"]
 length = 0.001
@@ -62,22 +32,10 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Glow:mesh:material:albedo_color")
+tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -99,18 +57,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [1.0, 0.2]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Glow:mesh:material:albedo_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2s0o8"]
 _data = {
@@ -122,19 +68,15 @@ _data = {
 resource_local_to_scene = true
 animation = &"hit"
 
-[node name="Hv_Note" type="MeshInstance3D"]
+[node name="Cm_Note" type="MeshInstance3D"]
 transform = Transform3D(1.5, 0, 0, 0, -6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, 0)
-mesh = SubResource("SphereMesh_4ncte")
+mesh = SubResource("CylinderMesh_5gj2w")
 skeleton = NodePath("../../Circle")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_osi20")
-
-[node name="Glow" type="MeshInstance3D" parent="."]
-sorting_offset = 1.0
-mesh = SubResource("QuadMesh_aud2r")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
