@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b56iycaimi3bn"]
+[gd_scene load_steps=12 format=3 uid="uid://bnw07t1vpo5pr"]
 
 [sub_resource type="Shader" id="Shader_rvyc8"]
 code = "shader_type spatial;
@@ -18,7 +18,7 @@ resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_rvyc8")
 shader_parameter/neon_color = Vector4(0.87, 0.675, 0.135, 1)
-shader_parameter/transparency = 1.0
+shader_parameter/transparency = 0.2
 
 [sub_resource type="SphereMesh" id="SphereMesh_4ncte"]
 resource_local_to_scene = true
@@ -36,6 +36,7 @@ load_path = "res://.godot/imported/Glow.png-6f9c7ea0e2ff8ffb9e0042a64a869a67.s3t
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
+albedo_color = Color(1, 1, 1, 0)
 albedo_texture = SubResource("CompressedTexture2D_qrj56")
 disable_receive_shadows = true
 billboard_mode = 1
