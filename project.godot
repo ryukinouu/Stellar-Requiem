@@ -24,6 +24,7 @@ Global="*res://Game/Scripts/Core/Global.gd"
 
 window/size/mode=2
 window/size/borderless=true
+window/main_scene="res://Game/Scenes/Levels/MusicBox.tscn"
 
 [filesystem]
 
