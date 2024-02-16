@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Stellar Requiem"
-run/main_scene="res://Game/Scenes/Main/MainMenu.tscn"
+run/main_scene="res://Game/Scenes/Levels/MusicBox.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 AnimationHandler="*res://Game/Scripts/AnimationHandler.gd"
 Global="*res://Game/Scripts/Core/Global.gd"
+
+[display]
+
+window/size/mode=2
+window/size/borderless=true
 
 [filesystem]
 
