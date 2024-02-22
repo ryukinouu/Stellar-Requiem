@@ -17,13 +17,16 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-AnimationHandler="*res://Game/Scripts/AnimationHandler.gd"
-Global="*res://Game/Scripts/Core/Global.gd"
+Core="*res://Game/Framework/Core/Core.gd"
+Database="*res://Game/Framework/Core/Database.gd"
+DataEngine="*res://Game/Framework/Core/DataEngine.gd"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [display]
 
-window/size/mode=2
-window/size/borderless=true
 window/main_scene="res://Game/Scenes/Levels/MusicBox.tscn"
 
 [filesystem]
