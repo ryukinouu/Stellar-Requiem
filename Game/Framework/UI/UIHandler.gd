@@ -2,7 +2,7 @@ extends CanvasLayer
 
 
 func _ready():
-	pass
+	$HUD/AnimationPlayer.active = true
 
 func _process(delta):
 	var progress_ratio = $HUD/Score/Bar.value / $HUD/Score/Bar.max_value
