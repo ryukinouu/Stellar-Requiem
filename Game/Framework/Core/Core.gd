@@ -6,4 +6,12 @@ func cooldown(time, exe):
 
 var data = {
 	"current_score": 0,
+	"player_1": {
+		"character": "Apollo",
+		"lives": 3,
+	},
+	"player_2": {
+		"character": "Artemis",
+		"lives": 3,
+	}
 }

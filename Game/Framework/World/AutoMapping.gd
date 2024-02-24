@@ -1,6 +1,8 @@
 extends Node3D
 
-@export var BPM : float = 85
+@export var BPM : float
+@export var distance : int
+@export var song_length : int
 
 func _ready():
 	$Visual.visible = false
@@ -15,5 +17,6 @@ func _ready():
 
 			note_instance.position = note.position
 			note_instance.name = "Hv_Note"
-			note_instance.position.z = note.position.z * (1 / (BPM / 60)) * 12
+			# POSITION.Z * (1 / (BPM / 60)) * (MAX DISTANCE / SONG LENGTH)
+			note_instance.position.z = note.position.z * (1 / (BPM / 60)) * (distance / song_length)
 			note.queue_free() 
