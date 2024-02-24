@@ -1,18 +1,3 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0q0rcd4ntx6b"]
-
-[ext_resource type="Shader" path="res://Game/Shaders/Neon.gdshader" id="1_v8fhb"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_omcrk"]
-render_priority = 0
-shader = ExtResource("1_v8fhb")
-shader_parameter/neon_color = Vector4(1, 1, 1, 1)
-shader_parameter/transparency = 1.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_xytqh"]
-material = SubResource("ShaderMaterial_omcrk")
-size = Vector3(0.1, 0.2, 1)
-
-[node name="Tab" type="MeshInstance3D"]
-transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0)
-mesh = SubResource("BoxMesh_xytqh")
-skeleton = NodePath("../..")
+version https://git-lfs.github.com/spec/v1
+oid sha256:4304d589d8233c5fa7f22ecac7f7701a6f6f860562ca0d0aac13a9f72e04f0fa
+size 664
