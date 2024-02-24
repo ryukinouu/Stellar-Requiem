@@ -2,8 +2,8 @@ extends Area3D
 
 @onready var anim_tree = $AnimationTree
 
-@export var boost_speed = 12.0
-@export var move_speed = 8.0
+var boost_speed = 12.0
+var move_speed = 8.0
 var initial_speed = boost_speed
 
 var current_anim = "Idle"
@@ -29,6 +29,9 @@ func begin():
 	enabled = true
 
 func note_hit(hit, type):
+	if type == "Hover":
+		Core.data["current_score"] += 100
+		Core.ui_effect("add", "hover")
 	hit.get_node("Area3D").free()
 	hit.get_parent().remove_child(hit)
 	$Effects.add_child(hit)
