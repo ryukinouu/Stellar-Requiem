@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dbjjcqgab24f4"]
+
+[resource]
+resource_name = "gold"
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.90654, 0.834326, 0.351053, 1)
+metallic = 0.988281
+roughness = 0.2

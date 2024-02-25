@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c16k123buwjjf"]
+
+[resource]
+resource_name = "eye"
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.523684, 0.823952, 0.906954, 1)
+roughness = 0.5

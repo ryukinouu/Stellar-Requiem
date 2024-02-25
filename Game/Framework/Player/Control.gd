@@ -1,12 +1,14 @@
 extends Area3D
 
 @onready var anim_tree = $AnimationTree
+@onready var anim_player = $APOLLO_Alpha_Final2/AnimationPlayer
 
 var boost_speed = 12.0
 var move_speed = 8.0
 var initial_speed = boost_speed
 
 var current_anim = "Idle"
+var anim_enabled = true
 var enabled = false
 var tween
 
@@ -22,15 +24,28 @@ var target_position : Vector3
 const LIMIT_RIGHT = -14
 const LIMIT_LEFT = 16
 
+func animate(anim, prio):
+	if anim_enabled and !prio:
+		var state_machine = anim_tree.get("parameters/playback")
+		current_anim = anim
+		state_machine.travel(current_anim)
+		return
+	if prio:
+		var state_machine = anim_tree.get("parameters/playback")
+		current_anim = anim
+		state_machine.travel(current_anim)
+		anim_enabled = false
+		Core.cooldown(anim_player.get_animation(anim).length, func():
+			anim_enabled = true
+		)
+
 func begin():
-	var state_machine = anim_tree.get("parameters/playback")
-	current_anim = "Walk"
-	state_machine.travel(current_anim)
+	animate("Walk", false)
 	enabled = true
 
 func note_hit(hit, type):
 	if type == "Hover":
-		Core.data["current_score"] += 100
+		#Core.data["current_score"] += 100
 		Core.ui_effect("add", "hover")
 	hit.get_node("Area3D").free()
 	hit.get_parent().remove_child(hit)
@@ -45,12 +60,18 @@ func note_hit(hit, type):
 func _input(event):
 	if event.is_action_pressed("left"):
 		input["left"] = true
+		animate("Left", false)
 	elif event.is_action_pressed("right"):
 		input["right"] = true
+		animate("Right", false)
 	elif event.is_action_released("left"):
 		input["left"] = false
+		if input["right"] == false:
+			animate("Walk", false)
 	elif event.is_action_released("right"):
 		input["right"] = false
+		if input["left"] == false:
+			animate("Walk", false)
 	
 	if event.is_action_pressed("left") or event.is_action_pressed("right"):
 		if tween and tween.is_running():
@@ -67,7 +88,7 @@ func _input(event):
 			boost_speed = initial_speed
 	
 	if event.is_action_pressed("action"):
-		pass
+		animate("Hit", true)
 	elif event.is_action_released("action"):
 		pass
 
