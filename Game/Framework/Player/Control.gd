@@ -45,9 +45,14 @@ func begin():
 
 func note_hit(hit, type):
 	if type == "Hover":
-		#Core.data["current_score"] += 100
+		Core.data["current_score"] += Core.data["hover_note_score"]
 		Core.ui_effect("add", "hover")
+	elif type == "Hit":
+		print("HIT!")
+		Core.data["current_score"] += Core.data["hit_note_score"]
+		Core.ui_effect("add", "hit")
 	hit.get_node("Area3D").free()
+	hit.position = Vector3(0,hit.get_parent().position.y,0)
 	hit.get_parent().remove_child(hit)
 	$Effects.add_child(hit)
 	var anim_tree = hit.get_node("AnimationTree")
@@ -89,6 +94,12 @@ func _input(event):
 	
 	if event.is_action_pressed("action"):
 		animate("Hit", true)
+		var notes = get_overlapping_areas()
+		for area in notes:
+			var hit = area.get_parent()
+			var prefix = hit.name.substr(0, 2)
+			if prefix == "Ht":
+				note_hit(hit, "Hit")
 	elif event.is_action_released("action"):
 		pass
 

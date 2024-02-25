@@ -28,11 +28,11 @@ func _on_unpause_pressed():
 
 func _on_timer_timeout():
 	Core.data["current_score"] += round(50000 / ($Beatmap.song_length * 100))
-	base_score += round(50000 / ($Beatmap.song_length * 100))
-	if base_score >= 50000:
+	base_score += round(500000 / ($Beatmap.song_length * 100))
+	if base_score >= 500000:
 		$Timer.stop()
-	elif Core.data["current_score"] >= 100000:
+	elif Core.data["current_score"] >= 1000000:
 		$Timer.stop()
-		Core.data["current_score"] = 100000
+		Core.data["current_score"] = 1000000
 	$GUI/HUD/SoloScore/Text.text = str("%07d" % Core.data["current_score"])
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % Core.data["current_score"])
