@@ -26,5 +26,4 @@ func _newest_high_score():
 	Song Length: 2:10
 
 	Difficulty: ★☆☆☆☆
-	High Score: 
-	" + str(DataEngine.save_info["songs"]["Meow"]["high_score"])
+	High Score: " + str(DataEngine.save_info["songs"]["Meow"]["high_score"])
