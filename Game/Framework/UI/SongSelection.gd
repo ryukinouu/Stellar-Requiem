@@ -28,3 +28,11 @@ func _newest_high_score():
 	Difficulty: ★☆☆☆☆
 	High Score: 
 	" + str(DataEngine.save_info["songs"]["Meow"]["high_score"])
+
+
+func _on_texture_button_2_pressed():
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("LoadOut")
+	Core.cooldown(0.5, func():
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
+	)
