@@ -1,25 +1,30 @@
 extends Node3D
 
-var animation_player
+@onready var anim_tree = $AnimationTree
+@onready var animation_player = $AnimationPlayer
 
 func _ready():
-	print('menu ready') 
-	animation_player = get_node("AnimationPlayer")
-	print("peep")
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	anim_tree.active = true
 
 func _on_play_pressed():
-	print("play")
-	get_tree().change_scene_to_file("res://Game/Scenes/Menu/Controllers.tscn")
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("LoadOut")
+	Core.cooldown(0.5, func():
+		get_tree().change_scene_to_file("res://Game/Scenes/Levels/Meow.tscn")
+	)
 
 
 func _on_credits_pressed():
-	print("credits")
-	get_tree().change_scene_to_file("res://Game/Scenes/Menu/Credits.tscn")
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("LoadOut")
+	Core.cooldown(0.5, func():
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Credits.tscn")
+	)
 
 
 func _on_quit_pressed():
-	get_tree().quit()
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("LoadOut")
+	Core.cooldown(1, func():
+		get_tree().quit()
+	)
