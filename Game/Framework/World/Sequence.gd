@@ -71,6 +71,11 @@ func _on_exit_pressed():
 	Core.cooldown(0.5, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
 	)
+	
+	####DEBUGGING
+	var scoreScript = preload("res://Game/Framework/Core/DataEngine.gd")
+	var scoreScript_instance = scoreScript.new()
+	print(str(scoreScript_instance.save_info["songs"]["Meow"]["high_score"]))
 
 func _on_retry_pressed():
 	print("PRESSED")
