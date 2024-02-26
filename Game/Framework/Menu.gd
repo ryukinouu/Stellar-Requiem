@@ -4,6 +4,7 @@ extends Node3D
 @onready var animation_player = $AnimationPlayer
 
 func _ready():
+	$Control/Characters.size = Vector2(1695, 1570)
 	anim_tree.active = true
 
 func _on_play_pressed():
@@ -14,6 +15,9 @@ func _on_play_pressed():
 	)
 
 func _on_credits_pressed():
+	#DEBUG
+	print(DataEngine.save_info["songs"]["Meow"]["high_score"])
+	
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
 	Core.cooldown(0.5, func():
