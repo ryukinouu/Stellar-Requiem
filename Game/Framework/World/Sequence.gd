@@ -73,6 +73,7 @@ func _on_exit_pressed():
 	)
 
 func _on_retry_pressed():
+	print("PRESSED")
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("Return")
 	Core.cooldown(0.5, func():
@@ -103,3 +104,12 @@ func _on_song_timeout():
 		$GUI/End/NewHighScore.visible = false
 	$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"])
 	DataEngine.save_data()
+
+func _on_return_pressed():
+	get_tree().paused = false
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("Return")
+	can_pause = false
+	Core.cooldown(0.5, func():
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
+	)
