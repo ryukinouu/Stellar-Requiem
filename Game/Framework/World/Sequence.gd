@@ -14,21 +14,8 @@ func game_loop():
 	Core.data["current_score"] = 0
 	$GUI/HUD/SoloScore/Text.text = str("%07d" % Core.data["current_score"])
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % Core.data["current_score"])
-	Core.cooldown(10, func():
-		$Timer.start()
-		can_pause = true
-		Core.cooldown($Beatmap.song_length, func():
-			can_pause = false
-			$GUI/End/Score.text = str(Core.data["current_score"])
-			if Core.data["current_score"] > DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"]:
-				DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"] = Core.data["current_score"]
-				$GUI/End/NewHighScore.visible = true
-			else:
-				$GUI/End/NewHighScore.visible = false
-			$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"])
-			DataEngine.save_data()
-		)
-	)
+	$Song.wait_time = $Beatmap.song_length
+	$Start.start()
 
 func restart():
 	var bm_scene = load("res://Game/Scenes/Beatmaps/" + $Beatmap.song_name + ".tscn")
@@ -54,9 +41,10 @@ func _process(delta):
 	$GUI/HUD/Score/Glow.position.x = -1498 + $GUI/HUD/Score/Bar.size.x * progress_ratio
 
 func _on_settings_pressed():
-	paused = true
-	get_tree().paused = paused
-	$GUI/Paused.visible = paused
+	if can_pause:
+		paused = true
+		get_tree().paused = paused
+		$GUI/Paused.visible = paused
 
 func _on_unpause_pressed():
 	paused = false
@@ -99,3 +87,19 @@ func _on_restart_pressed():
 	Core.cooldown(0.5, func():
 		restart()
 	)
+
+func _on_start_timeout():
+	can_pause = true
+	$Song.start()
+	$Score.start()
+
+func _on_song_timeout():
+	can_pause = false
+	$GUI/End/Score.text = str(Core.data["current_score"])
+	if Core.data["current_score"] > DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"]:
+		DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"] = Core.data["current_score"]
+		$GUI/End/NewHighScore.visible = true
+	else:
+		$GUI/End/NewHighScore.visible = false
+	$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"])
+	DataEngine.save_data()
