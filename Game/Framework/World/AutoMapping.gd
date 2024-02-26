@@ -3,6 +3,7 @@ extends Node3D
 @export var BPM : float
 @export var distance : int
 @export var song_length : int
+@export var song_name : String
 
 func _ready():
 	$Visual.visible = false
@@ -25,8 +26,9 @@ func _ready():
 	var hover_ratio = float(counts["hover"]) / counts["total"]
 	var hit_ratio = float((counts["hit"] * hit_weight)) / counts["total"]
 
-	Core.data["hover_note_score"] = float(round(500000 * hover_ratio)) / counts["hover"]
-	Core.data["hit_note_score"] = float(round(500000 * hit_ratio)) / counts["hit"]
+	var note_points = 1000000 - (song_length * 1000)
+	Core.data["hover_note_score"] = round(float(note_points * hover_ratio) / counts["hover"])
+	Core.data["hit_note_score"] = round(float(note_points * hit_ratio) / counts["hit"])
 
 func handle_note(note, offset, counts):
 	if note.name.substr(0, 5) == "Hover":

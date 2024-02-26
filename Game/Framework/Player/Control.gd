@@ -119,6 +119,10 @@ func _on_area_entered(area):
 	var hit = area.get_parent()
 	if hit.name.substr(0, 2) == "Hv":
 		note_hit(hit, "Hover")
+	elif hit.name.substr(0, 2) == "Ht":
+		print("CAN HIT!")
 
 func _on_area_exited(area):
-	pass
+	var hit = area.get_parent()
+	if hit.name.substr(0, 2) == "Ht":
+		print("CAN'T HIT")

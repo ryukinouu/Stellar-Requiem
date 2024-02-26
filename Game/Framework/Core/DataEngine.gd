@@ -2,9 +2,12 @@ extends Node
 
 var save_path = "user://save.dat"
 var save_info = {
-	"Songs": {
-		"Floating In The Deep Night": {
-			"High Score": 0,
+	"songs": {
+		"Meow": {
+			"high_score": 0,
+		},
+		"Music Box": {
+			"high_score": 0
 		}
 	}
 }
@@ -17,7 +20,6 @@ func load_data():
 	if FileAccess.file_exists(save_path):
 		var save = FileAccess.open(save_path, FileAccess.READ)
 		var data = save.get_var()
-		print(data["Songs"]["Floating In The Deep Night"]["High Score"])
 	else:
 		save_data()
 

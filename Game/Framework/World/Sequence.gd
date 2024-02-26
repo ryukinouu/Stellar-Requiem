@@ -6,8 +6,19 @@ var paused = false
 
 func _ready():
 	$AnimationTree.active = true
+	$GUI/HUD/AnimationPlayer.active = true
 	Core.cooldown(10, func():
 		$Timer.start()
+		Core.cooldown($Beatmap.song_length, func():
+			$GUI/End/Score.text = str(Core.data["current_score"])
+			if Core.data["current_score"] > DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"]:
+				DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"] = Core.data["current_score"]
+				$GUI/End/NewHighScore.visible = true
+			else:
+				$GUI/End/NewHighScore.visible = false
+			$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"])
+			DataEngine.save_data()
+		)
 	)
 
 func _input(event):
@@ -15,6 +26,10 @@ func _input(event):
 		paused = !paused
 		get_tree().paused = paused
 		$GUI/Paused.visible = paused
+
+func _process(delta):
+	var progress_ratio = $GUI/HUD/Score/Bar.value / $GUI/HUD/Score/Bar.max_value
+	$GUI/HUD/Score/Glow.position.x = -1498 + $GUI/HUD/Score/Bar.size.x * progress_ratio
 
 func _on_settings_pressed():
 	paused = true
@@ -27,9 +42,9 @@ func _on_unpause_pressed():
 	$GUI/Paused.visible = paused
 
 func _on_timer_timeout():
-	Core.data["current_score"] += round(50000 / ($Beatmap.song_length * 100))
-	base_score += round(500000 / ($Beatmap.song_length * 100))
-	if base_score >= 500000:
+	Core.data["current_score"] += 1
+	base_score += 1
+	if base_score >= $Beatmap.song_length * 1000:
 		$Timer.stop()
 	elif Core.data["current_score"] >= 1000000:
 		$Timer.stop()
