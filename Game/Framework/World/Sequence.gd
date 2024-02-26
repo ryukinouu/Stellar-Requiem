@@ -51,3 +51,9 @@ func _on_timer_timeout():
 		Core.data["current_score"] = 1000000
 	$GUI/HUD/SoloScore/Text.text = str("%07d" % Core.data["current_score"])
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % Core.data["current_score"])
+
+
+
+func _on_exit_pressed():
+	# When instancing a scene dynamically, connect its signals like this:
+	get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
