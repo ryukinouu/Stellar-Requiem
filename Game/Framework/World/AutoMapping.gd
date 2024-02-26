@@ -61,3 +61,17 @@ func handle_note(note, offset, counts):
 		# POSITION.Z * (1 / (BPM / 60)) * (MAX DISTANCE / SONG LENGTH)
 		note_instance.position.z = (note.position.z + offset.z) * (1 / (BPM / 60)) * (distance / song_length)
 		note.queue_free() 
+	elif note.name.substr(0, 4) == "Bomb":
+		var note_scene = load("res://Game/Scenes/Notes/BombNote.tscn")
+		var note_instance = note_scene.instantiate()
+		add_child(note_instance)
+
+		note_instance.position = Vector3(
+			note.position.x + offset.x, 
+			note.position.y + offset.y,
+			note.position.z + offset.z
+		)
+		note_instance.name = "Bm_Note"
+		# POSITION.Z * (1 / (BPM / 60)) * (MAX DISTANCE / SONG LENGTH)
+		note_instance.position.z = (note.position.z + offset.z) * (1 / (BPM / 60)) * (distance / song_length)
+		note.queue_free() 
