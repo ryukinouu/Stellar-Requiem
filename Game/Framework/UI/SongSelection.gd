@@ -26,9 +26,7 @@ func _newest_high_score():
 	Song Length: 2:10
 
 	Difficulty: ★☆☆☆☆
-	High Score: 
-	" + str(DataEngine.save_info["songs"]["Meow"]["high_score"])
-
+	High Score: " + str(DataEngine.save_info["songs"]["Meow"]["high_score"])
 
 func _on_texture_button_2_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
