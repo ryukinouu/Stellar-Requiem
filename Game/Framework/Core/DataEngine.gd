@@ -20,8 +20,13 @@ func load_data():
 	if FileAccess.file_exists(save_path):
 		var save = FileAccess.open(save_path, FileAccess.READ)
 		var data = save.get_var()
+		save_info = data
+		print("LOADED:")
+		print(save_info)
 	else:
 		save_data()
+		print("NEW SAVE DATA:")
+		print(save_info)
 
 func _ready():
 	load_data()
