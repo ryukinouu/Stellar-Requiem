@@ -14,7 +14,7 @@ func _process(delta):
 func _on_texture_button_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
-	Core.cooldown(0.5, func():
+	Core.cooldown(1, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Levels/Meow.tscn")
 	)
 	
@@ -31,6 +31,6 @@ func _newest_high_score():
 func _on_texture_button_2_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
-	Core.cooldown(0.5, func():
+	Core.cooldown(1, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
 	)

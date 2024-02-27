@@ -27,6 +27,6 @@ func _on_credits_pressed():
 func _on_quit_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
-	Core.cooldown(1, func():
+	Core.cooldown(0.5, func():
 		get_tree().quit()
 	)
