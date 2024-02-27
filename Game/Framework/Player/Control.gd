@@ -10,6 +10,7 @@ var initial_speed = boost_speed
 var current_anim = "Idle"
 var anim_enabled = true
 var enabled = false
+var can_be_bombed = true
 var tween
 
 var input = {
@@ -47,6 +48,21 @@ func note_hit(hit, type):
 	if type == "Hover":
 		Core.data["current_score"] += Core.data["hover_note_score"]
 		Core.ui_effect("add", "hover")
+	elif type == "Bomb":
+		if can_be_bombed:
+			Core.data["player_1"]["lives"] -= 1
+			can_be_bombed = false
+			Core.cooldown(1, func():
+				can_be_bombed = true
+			)
+			hit.get_node("Area3D").free()
+			var anim_tree = hit.get_node("AnimationTree")
+			anim_tree.active = true
+			Core.cooldown(0.1,
+				func():
+					hit.queue_free()
+			)
+			return
 	elif type == "Hit":
 		print("HIT!")
 		Core.data["current_score"] += Core.data["hit_note_score"]
@@ -121,6 +137,8 @@ func _on_area_entered(area):
 		note_hit(hit, "Hover")
 	elif hit.name.substr(0, 2) == "Ht":
 		print("CAN HIT!")
+	elif hit.name.substr(0, 2) == "Bm":
+		note_hit(hit, "Bomb")
 
 func _on_area_exited(area):
 	var hit = area.get_parent()

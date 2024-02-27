@@ -12,6 +12,10 @@ func game_loop():
 	$GUI/Paused.visible = paused
 	$Character.position = Vector3(0, 0.5, 0)
 	Core.data["current_score"] = 0
+	Core.data["player_1"]["lives"] = 3
+	$GUI/HUD/Side/Lives/One.visible = true
+	$GUI/HUD/Side/Lives/Two.visible = true
+	$GUI/HUD/Side/Lives/Three.visible = true
 	$GUI/HUD/SoloScore/Text.text = str("%07d" % Core.data["current_score"])
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % Core.data["current_score"])
 	$Song.wait_time = $Beatmap.song_length
@@ -39,6 +43,31 @@ func _input(event):
 func _process(delta):
 	var progress_ratio = $GUI/HUD/Score/Bar.value / $GUI/HUD/Score/Bar.max_value
 	$GUI/HUD/Score/Glow.position.x = -1498 + $GUI/HUD/Score/Bar.size.x * progress_ratio
+	if Core.data["player_1"]["lives"] == 2:
+		$GUI/HUD/Side/Lives/Three.visible = false
+	elif Core.data["player_1"]["lives"] == 1:
+		$GUI/HUD/Side/Lives/Two.visible = false
+		$GUI/HUD/Side/Lives/Three.visible = false
+	elif Core.data["player_1"]["lives"] == 0:
+		Core.data["player_1"]["lives"] = 3
+		$GUI/HUD/Side/Lives/One.visible = false
+		$GUI/HUD/Side/Lives/Two.visible = false
+		$GUI/HUD/Side/Lives/Three.visible = false
+		can_pause = false
+		$GUI/End/Score.text = str(Core.data["current_score"])
+		if Core.data["current_score"] > DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"]:
+			DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"] = Core.data["current_score"]
+			$GUI/End/NewHighScore.visible = true
+		else:
+			$GUI/End/NewHighScore.visible = false
+		$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["songs"][$Beatmap.song_name]["high_score"])
+		DataEngine.save_data()
+		var state_machine = anim_tree.get("parameters/playback")
+		state_machine.travel("Return")
+		Core.cooldown(0.5, func():
+			var state_machine2 = anim_tree.get("parameters/playback")
+			state_machine2.travel("EndScreen")
+		)
 
 func _on_settings_pressed():
 	if can_pause:
@@ -69,7 +98,7 @@ func _on_exit_pressed():
 	state_machine.travel("Return")
 	can_pause = false
 	Core.cooldown(0.5, func():
-		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/SongSelection.tscn")
 	)
 	print(str(DataEngine.save_info["songs"]["Meow"]["high_score"]))
 
@@ -112,5 +141,5 @@ func _on_return_pressed():
 	state_machine.travel("Return")
 	can_pause = false
 	Core.cooldown(0.5, func():
-		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/SongSelection.tscn")
 	)
