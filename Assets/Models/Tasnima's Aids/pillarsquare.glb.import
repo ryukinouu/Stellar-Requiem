@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d30d7hcwg45t0"
-path="res://.godot/imported/Rocks.gltf-1d8c92f36afe39c62be8132bef13b9ac.scn"
+uid="uid://c6y8esjajnu6b"
+path="res://.godot/imported/pillarsquare.glb-03184e7fbd2e26988bbe445608d4befc.scn"
 
 [deps]
 
-source_file="res://Assets/Models/Rocks/Rocks.gltf"
-dest_files=["res://.godot/imported/Rocks.gltf-1d8c92f36afe39c62be8132bef13b9ac.scn"]
+source_file="res://Assets/Models/Tasnima's Aids/pillarsquare.glb"
+dest_files=["res://.godot/imported/pillarsquare.glb-03184e7fbd2e26988bbe445608d4befc.scn"]
 
 [params]
 
@@ -29,13 +29,6 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={
-"materials": {
-"DefaultMaterial": {
-"use_external/enabled": true,
-"use_external/path": "res://Assets/Models/Rocks/DefaultMaterial.tres"
-}
-}
-}
+_subresources={}
 gltf/naming_version=1
 gltf/embedded_image_handling=1

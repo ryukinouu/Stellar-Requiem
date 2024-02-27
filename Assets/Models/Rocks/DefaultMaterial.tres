@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://c6md7k5mdg0uo"]
+
+[ext_resource type="Texture2D" uid="uid://cd1su3kftclww" path="res://Assets/Models/Rocks/textures/DefaultMaterial_baseColor.jpeg" id="1_o2pom"]
+[ext_resource type="Texture2D" uid="uid://chvtolyeomxsr" path="res://Assets/Models/Rocks/textures/DefaultMaterial_metallicRoughness.png" id="2_3fsdq"]
+[ext_resource type="Texture2D" uid="uid://c1ahkdvvjd2hf" path="res://Assets/Models/Rocks/textures/DefaultMaterial_normal.png" id="3_vwwyr"]
+
+[resource]
+resource_name = "DefaultMaterial"
+cull_mode = 2
+albedo_color = Color(1, 0.803922, 1, 1)
+albedo_texture = ExtResource("1_o2pom")
+metallic_texture = ExtResource("2_3fsdq")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_3fsdq")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("3_vwwyr")
+ao_enabled = true
+ao_texture = ExtResource("2_3fsdq")
