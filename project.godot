@@ -13,7 +13,8 @@ config_version=5
 config/name="Stellar Requiem"
 run/main_scene="res://Game/Scenes/Menu/Menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/image="res://Assets/Textures/Stacked_FullArt.png"
+config/icon="res://Assets/Textures/Heart.png"
 
 [autoload]
 
