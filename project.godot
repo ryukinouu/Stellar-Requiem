@@ -18,12 +18,23 @@ config/icon="res://Assets/Textures/Heart.png"
 
 [autoload]
 
+AnimationHandler="*res://Game/Scripts/AnimationHandler.gd"
+Global="*res://Game/Scripts/Core/Global.gd"
 Core="*res://Game/Framework/Core/Core.gd"
 Database="*res://Game/Framework/Core/Database.gd"
 DataEngine="*res://Game/Framework/Core/DataEngine.gd"
 
+[debug]
+
+settings/stdout/print_fps=true
+
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/stretch/scale=1.25
 window/main_scene="res://Game/Scenes/Levels/MusicBox.tscn"
 
 [filesystem]
