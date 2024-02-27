@@ -21,10 +21,6 @@ Core="*res://Game/Framework/Core/Core.gd"
 Database="*res://Game/Framework/Core/Database.gd"
 DataEngine="*res://Game/Framework/Core/DataEngine.gd"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/main_scene="res://Game/Scenes/Levels/MusicBox.tscn"
