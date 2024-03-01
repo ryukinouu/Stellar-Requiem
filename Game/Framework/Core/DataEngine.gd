@@ -1,5 +1,6 @@
 extends Node
 
+var rewrite_save = true
 var save_path = "user://save.dat"
 var save_info = {
 	"songs": {
@@ -8,6 +9,22 @@ var save_info = {
 		},
 		"Music Box": {
 			"high_score": 0
+		}
+	},
+	"settings": {
+		"keybinds": {
+			"player_1": {
+				"left": "A",
+				"right": "D",
+				"action": "S",
+				"escape": "escape"
+			},
+			"player_2": {
+				"left": "4",
+				"right": "6",
+				"action": "5",
+				"escape": "enter"
+			},
 		}
 	}
 }
@@ -29,5 +46,7 @@ func load_data():
 		print(save_info)
 
 func _ready():
+	if rewrite_save:
+		save_data()
 	load_data()
 

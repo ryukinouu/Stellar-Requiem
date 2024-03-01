@@ -15,9 +15,6 @@ func _on_play_pressed():
 	)
 
 func _on_credits_pressed():
-	#DEBUG
-	print(DataEngine.save_info["songs"]["Meow"]["high_score"])
-	
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
 	Core.cooldown(0.5, func():
@@ -31,6 +28,12 @@ func _on_quit_pressed():
 		get_tree().quit()
 	)
 
-
 func _on_audio_stream_player_finished():
-	pass # Replace with function body.
+	$AudioStreamPlayer.play()
+
+func _on_settings_pressed():
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("LoadOut")
+	Core.cooldown(0.5, func():
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Settings.tscn")
+	)
