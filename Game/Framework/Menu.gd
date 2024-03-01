@@ -30,3 +30,7 @@ func _on_quit_pressed():
 	Core.cooldown(0.5, func():
 		get_tree().quit()
 	)
+
+
+func _on_audio_stream_player_finished():
+	pass # Replace with function body.
