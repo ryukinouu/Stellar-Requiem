@@ -37,3 +37,6 @@ func _on_settings_pressed():
 	Core.cooldown(0.5, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Settings.tscn")
 	)
+
+func _on_audio_toggle_toggled(toggled_on):
+	$AudioStreamPlayer.stream_paused = toggled_on

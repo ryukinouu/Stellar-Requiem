@@ -29,3 +29,6 @@ func _on_texture_button_2_pressed():
 	Core.cooldown(1, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
 	)
+
+func _on_audio_toggle_toggled(toggled_on):
+	$AudioStreamPlayer.stream_paused = toggled_on
