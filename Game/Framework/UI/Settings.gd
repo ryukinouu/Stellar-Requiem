@@ -9,7 +9,7 @@ var last_btn = null
 func _ready():
 	anim_tree.active = true
 	for node in $Control/Player1.get_children():
-		node.get_node("Button/Text").text = DataEngine.save_info["settings"]["keybinds"][node.name]
+		node.get_node("Button/Text").text = Core.data["keybinds"][node.name]
 
 func _input(event):
 	if input_wait != null and not event is InputEventMouseMotion:
@@ -17,7 +17,9 @@ func _input(event):
 			InputMap.action_erase_events(input_wait)
 			InputMap.action_add_event(input_wait, event)
 			if txt_btn:
-				txt_btn.get_node("Text").text = event.as_text()
+				var display_text = simplify_button_name(event.as_text())
+				txt_btn.get_node("Text").text = display_text
+				Core.data["keybinds"][input_wait] = display_text
 				last_btn = txt_btn
 			input_wait = null
 			txt_btn = null
@@ -25,6 +27,15 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			last_btn = null
+
+func simplify_button_name(button_text: String) -> String:
+	if button_text.begins_with("Joypad Button"):
+		var parts = button_text.split(" (")
+		if parts.size() > 1:
+			var name_parts = parts[1].replace(")", "").split(", ")
+			if name_parts.size() > 0:
+				return name_parts[0]
+	return button_text
 
 func _on_texture_button_pressed():
 	var state_machine = anim_tree.get("parameters/playback")

@@ -10,14 +10,6 @@ var save_info = {
 		"Music Box": {
 			"high_score": 0
 		}
-	},
-	"settings": {
-		"keybinds": {
-			"left": "A",
-			"right": "D",
-			"action": "S",
-			"escape": "escape"
-		}
 	}
 }
 

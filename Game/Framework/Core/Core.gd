@@ -16,6 +16,12 @@ var data = {
 	"player_2": {
 		"character": "Artemis",
 		"lives": 3,
+	},
+	"keybinds": {
+		"left": "A",
+		"right": "D",
+		"action": "S",
+		"escape": "escape"
 	}
 }
 
