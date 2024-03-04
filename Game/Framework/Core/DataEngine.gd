@@ -13,18 +13,10 @@ var save_info = {
 	},
 	"settings": {
 		"keybinds": {
-			"player_1": {
-				"left": "A",
-				"right": "D",
-				"action": "S",
-				"escape": "escape"
-			},
-			"player_2": {
-				"left": "4",
-				"right": "6",
-				"action": "5",
-				"escape": "enter"
-			},
+			"left": "A",
+			"right": "D",
+			"action": "S",
+			"escape": "escape"
 		}
 	}
 }
