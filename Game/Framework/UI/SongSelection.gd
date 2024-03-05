@@ -15,13 +15,7 @@ func _on_texture_button_pressed():
 
 
 func _newest_high_score():
-	$SongDescBckgrnd/Description.text = "Song: Meow
-	Artist: Zhehan
-	BPM: 170
-	Song Length: 2:10
-
-	Difficulty: ★☆☆☆☆
-	High Score: " + str(DataEngine.save_info["songs"]["Meow"]["high_score"])
+	$SongDescription/HighScore.text = str(DataEngine.save_info["songs"]["Meow"]["high_score"])
 
 func _on_texture_button_2_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
