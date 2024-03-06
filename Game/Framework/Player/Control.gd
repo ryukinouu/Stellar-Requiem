@@ -127,9 +127,11 @@ func _process(delta):
 	if enabled:
 		#print(boost_speed)
 		if Input.is_action_pressed("left"):
-			position.x = lerp(position.x, position.x + 0.1 * boost_speed, delta * move_speed)
+			if position.x < 14:
+				position.x = lerp(position.x, position.x + 0.1 * boost_speed, delta * move_speed)
 		if Input.is_action_pressed("right"):
-			position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
+			if position.x > -14:
+				position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
 		
 		if not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 			var target_x = round(position.x)
