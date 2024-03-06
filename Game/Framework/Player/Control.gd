@@ -130,6 +130,16 @@ func _process(delta):
 			position.x = lerp(position.x, position.x + 0.1 * boost_speed, delta * move_speed)
 		if Input.is_action_pressed("right"):
 			position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
+		
+		if not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+			var target_x = round(position.x)
+			print(int(target_x))
+			if int(target_x) % 2 != 0:
+				if position.x - target_x >= 0.5:
+					target_x += 1
+				else:
+					target_x -= 1
+			position.x = lerp(position.x, target_x, delta * move_speed)
 
 func _on_area_entered(area):
 	var hit = area.get_parent()
