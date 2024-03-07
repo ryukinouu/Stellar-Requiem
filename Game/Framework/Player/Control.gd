@@ -4,7 +4,7 @@ extends Area3D
 @onready var anim_player = $APOLLO_Alpha_Final2/AnimationPlayer
 
 var boost_speed = 22.0
-var move_speed = 8.0
+var move_speed = 10.0
 var initial_speed = boost_speed
 
 var current_anim = "Idle"
