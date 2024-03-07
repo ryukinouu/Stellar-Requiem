@@ -3,7 +3,7 @@ extends Area3D
 @onready var anim_tree = $AnimationTree
 @onready var anim_player = $APOLLO_Alpha_Final2/AnimationPlayer
 
-var boost_speed = 12.0
+var boost_speed = 22.0
 var move_speed = 8.0
 var initial_speed = boost_speed
 
@@ -134,14 +134,8 @@ func _process(delta):
 				position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
 		
 		if not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
-			var target_x = round(position.x)
-			print(int(target_x))
-			if int(target_x) % 2 != 0:
-				if position.x - target_x >= 0.5:
-					target_x += 1
-				else:
-					target_x -= 1
-			position.x = lerp(position.x, target_x, delta * move_speed)
+			var target_x = snapped(position.x, 2)
+			position.x = lerp(position.x, float(target_x), delta * move_speed)
 
 func _on_area_entered(area):
 	var hit = area.get_parent()
