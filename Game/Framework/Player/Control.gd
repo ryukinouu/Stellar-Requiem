@@ -26,15 +26,18 @@ const LIMIT_RIGHT = -14
 const LIMIT_LEFT = 16
 
 func animate(anim, prio):
+	var state_machine = anim_tree.get("parameters/playback")
+	current_anim = anim
+	state_machine.travel(current_anim)
 	if anim_enabled and !prio:
-		var state_machine = anim_tree.get("parameters/playback")
-		current_anim = anim
-		state_machine.travel(current_anim)
+		#var state_machine = anim_tree.get("parameters/playback")
+		#current_anim = anim
+		#state_machine.travel(current_anim)
 		return
 	if prio:
-		var state_machine = anim_tree.get("parameters/playback")
-		current_anim = anim
-		state_machine.travel(current_anim)
+		#var state_machine = anim_tree.get("parameters/playback")
+		#current_anim = anim
+		#state_machine.travel(current_anim)
 		anim_enabled = false
 		Core.cooldown(anim_player.get_animation(anim).length, func():
 			anim_enabled = true
@@ -129,13 +132,16 @@ func _process(delta):
 		if Input.is_action_pressed("left"):
 			if position.x < 14:
 				position.x = lerp(position.x, position.x + 0.1 * boost_speed, delta * move_speed)
+				#$Camera3D.position.x = lerp(position.x, position.x + 0.1 * boost_speed, delta * move_speed)
 		if Input.is_action_pressed("right"):
 			if position.x > -14:
 				position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
+				#$Camera3D.position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
 		
 		if not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 			var target_x = snapped(position.x, 2)
 			position.x = lerp(position.x, float(target_x), delta * move_speed)
+			#$Camera3D.position.x = lerp(position.x, float(target_x), delta * move_speed)
 
 func _on_area_entered(area):
 	var hit = area.get_parent()
