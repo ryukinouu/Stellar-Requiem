@@ -132,16 +132,13 @@ func _process(delta):
 		if Input.is_action_pressed("left"):
 			if position.x < 14:
 				position.x = lerp(position.x, position.x + 0.1 * boost_speed, delta * move_speed)
-				#$Camera3D.position.x = lerp(position.x, position.x + 0.1 * boost_speed, delta * move_speed)
 		if Input.is_action_pressed("right"):
 			if position.x > -14:
 				position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
-				#$Camera3D.position.x = lerp(position.x, position.x - 0.1 * boost_speed, delta * move_speed)
 		
 		if not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 			var target_x = snapped(position.x, 2)
 			position.x = lerp(position.x, float(target_x), delta * move_speed)
-			#$Camera3D.position.x = lerp(position.x, float(target_x), delta * move_speed)
 
 func _on_area_entered(area):
 	var hit = area.get_parent()
