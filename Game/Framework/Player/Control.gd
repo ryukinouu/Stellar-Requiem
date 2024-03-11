@@ -1,7 +1,7 @@
 extends Area3D
 
 @onready var anim_tree = $AnimationTree
-@onready var anim_player = $APOLLO_Alpha_Final2/AnimationPlayer
+@onready var anim_player = $apolofinal/AnimationPlayer
 
 var boost_speed = 22.0
 var move_speed = 10.0
