@@ -30,17 +30,17 @@ func animate(anim, prio):
 	current_anim = anim
 	state_machine.travel(current_anim)
 	if anim_enabled and !prio:
-		#var state_machine = anim_tree.get("parameters/playback")
-		#current_anim = anim
-		#state_machine.travel(current_anim)
 		return
 	if prio:
-		#var state_machine = anim_tree.get("parameters/playback")
-		#current_anim = anim
-		#state_machine.travel(current_anim)
 		anim_enabled = false
-		Core.cooldown(anim_player.get_animation(anim).length, func():
+		var anim_length = anim_player.get_animation(anim).length
+		if anim == "Hit":
+			anim_player.speed_scale = 4.0
+			anim_length = anim_length / 4
+		Core.cooldown(anim_length, func():
 			anim_enabled = true
+			if anim == "Hit":
+				anim_player.speed_scale = 1.0
 		)
 
 func begin():
