@@ -6,6 +6,11 @@ extends Node3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
 
+@onready var lane_left = $Main/Notes/left
+@onready var lane_top = $Main/Notes/top
+@onready var lane_bottom = $Main/Notes/bottom
+@onready var lane_right = $Main/Notes/right
+
 @export var map_speed : int = 30
 @export var wav_delay : float = 8.0
 @export var channel_midi : int = 10
@@ -14,19 +19,23 @@ extends Node3D
 var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
 
 var mapping = {
-	1: "left",
-	2: "top",
+	36: "left",
+	38: "top",
 	40: "bottom",
-	3: "right"
+	41: "right"
 }
 var ids = {"left": [], "top": [], "bottom": [], "right": []}
 var canhit = {"left": [], "top": [], "bottom": [], "right": []}
-var lanes = {
-	"left": $Main/Notes/left, 
-	"top": $Main/Notes/top, 
-	"bottom": $Main/Notes/bottom, 
-	"right": $Main/Notes/right
-}
+
+func get_lane(direction):
+	if direction == "left":
+		return lane_left
+	elif direction == "top":
+		return lane_top
+	elif direction == "bottom":
+		return lane_bottom
+	elif direction == "right":
+		return lane_right
 
 func _ready():
 	var anim = anim_player.get_animation("Playing")
@@ -48,7 +57,7 @@ func _on_note_event(channel, event):
 				# SPAWN
 				var note_direction = mapping[event.note]
 				var note_instance = note_scene.instantiate()
-				lanes[note_direction].add_child(note_instance)
+				get_lane(note_direction).add_child(note_instance)
 				note_instance.position.z = 100
 				
 				var tween = get_tree().create_tween()

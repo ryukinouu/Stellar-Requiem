@@ -18,8 +18,6 @@ config/icon="res://Assets/Textures/Heart.png"
 
 [autoload]
 
-AnimationHandler="*res://Game/Scripts/AnimationHandler.gd"
-Global="*res://Game/Scripts/Core/Global.gd"
 Core="*res://Game/Framework/Core/Core.gd"
 Database="*res://Game/Framework/Core/Database.gd"
 DataEngine="*res://Game/Framework/Core/DataEngine.gd"
