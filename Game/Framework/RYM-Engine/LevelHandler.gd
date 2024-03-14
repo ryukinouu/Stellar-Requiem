@@ -28,4 +28,24 @@ func _ready():
 	anim_tree.active = true
 	
 	music.play()
-	
+	Core.cooldown(wav_delay - 2, func():
+		# MIDI is 2 seconds behind
+		midi.play()
+	)
+
+func _on_note_event(channel, event):
+	if event.type == SMF.MIDIEventType.note_on:
+		if channel.number == channel_midi - 1: 
+			if event.note in mapping.keys():
+				Core.cooldown(2 - hit_delta, func():
+					var note_direction = mapping[event.note]
+					var note_id = ids[note_direction][-1] + 1 if ids[note_direction].size() > 0 else 1
+					ids[note_direction].append(note_id)
+					canhit[note_direction].append(note_id)
+					print("Hit Window Start: " + note_direction + " (" + str(note_id) + ")")
+					Core.cooldown(2 * hit_delta, func():
+						if note_id in canhit[mapping[event.note]]:
+							canhit[mapping[event.note]].erase(note_id)
+							print("Hit Window End: " + mapping[event.note] + " (" + str(note_id) + ")")
+					)
+				)
