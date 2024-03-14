@@ -6,12 +6,15 @@ var song_length: int = 180 # Example song length in seconds
 
 @onready var onhit_midi = $MidiPlayer
 @onready var prep_midi = $MidiPlayer2
+@onready var music_player = $MusicPlayer
 
-var channel_midi = 10
+var channel_midi = 1
 var delta = 0.05
 var mapping = {
-	36: "top",
-	38: "bottom"
+	36: "left",
+	38: "top",
+	40: "bottom",
+	41: "right"
 }
 var canhit = {
 	"left": null,
@@ -21,10 +24,10 @@ var canhit = {
 }
 
 func _ready():
-	print(onhit_midi.get_)
 	prep_midi.play()
 	Core.cooldown(2, func():
 		onhit_midi.play()
+		music_player.play()
 	)
 
 func map_hit_note(note, velocity, midi_time):
@@ -57,7 +60,7 @@ func _on_midi_player_2_midi_event(channel, event):
 			if event.note in mapping.keys():
 				Core.cooldown(2 - delta, func():
 					canhit[mapping[event.note]] = event.note
-					print("HIT NOW!")
+					print("Hit: " + mapping[event.note])
 				)
 
 func _input(event):
@@ -65,6 +68,14 @@ func _input(event):
 		if canhit["top"] != null:
 			print("HIT TOP!")
 			canhit["top"] = null
+	elif event.is_action_pressed("action-bottom-1"):
+		if canhit["bottom"] != null:
+			print("HIT BOTTOM!")
+			canhit["bottom"] = null
+	elif event.is_action_pressed("action-left-1"):
+		if canhit["left"] != null:
+			print("HIT LEFT!")
+			canhit["left"] = null
 	elif event.is_action_pressed("action-bottom-1"):
 		if canhit["bottom"] != null:
 			print("HIT BOTTOM!")
