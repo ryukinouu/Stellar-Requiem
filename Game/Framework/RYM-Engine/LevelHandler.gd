@@ -81,3 +81,21 @@ func _on_note_event(channel, event):
 							print("Hit Window End: " + mapping[event.note] + " (" + str(note_id) + ")")
 					)
 				)
+
+func _input(event):
+	if event.is_action_pressed("action-top-1"):
+		if canhit["top"].size() > 0:
+			print("HIT TOP!")
+			canhit["top"].pop_front() 
+	elif event.is_action_pressed("action-bottom-1"):
+		if canhit["bottom"].size() > 0:
+			print("HIT BOTTOM!")
+			canhit["bottom"].pop_front()
+	elif event.is_action_pressed("action-left-1"):
+		if canhit["left"].size() > 0:
+			print("HIT LEFT!")
+			canhit["left"].pop_front()
+	elif event.is_action_pressed("action-right-1"): 
+		if canhit["right"].size() > 0:
+			print("HIT RIGHT!")
+			canhit["right"].pop_front()
