@@ -3,7 +3,7 @@ extends Node3D
 var BPM: float = 120
 var distance: int = 1000
 var song_length: int = 180
-var wav_delay : int = 2
+var wav_delay : int = 8
 
 @onready var onhit_midi = $MidiPlayer
 @onready var prep_midi = $MidiPlayer2
@@ -12,8 +12,8 @@ var wav_delay : int = 2
 var channel_midi = 10
 var delta = 0.2
 var mapping = {
-	1: "left",
-	2: "top",
+	36: "left",
+	38: "top",
 	40: "bottom",
 	3: "right"
 }
