@@ -5,17 +5,16 @@ var distance: int = 1000
 var song_length: int = 180
 var wav_delay : int = 8
 
-@onready var onhit_midi = $MidiPlayer
 @onready var prep_midi = $MidiPlayer2
 @onready var music_player = $MusicPlayer
 
 var channel_midi = 10
 var delta = 0.2
 var mapping = {
-	36: "left",
-	38: "top",
+	1: "left",
+	3: "top",
 	40: "bottom",
-	3: "right"
+	2: "right"
 }
 var ids ={
 	"left": [],
@@ -34,25 +33,7 @@ func _ready():
 	music_player.play()
 	Core.cooldown(wav_delay - 2, func():
 		prep_midi.play()
-		Core.cooldown(2, func():
-			onhit_midi.play()
-		)
 	)
-
-func map_hit_note(note, velocity, midi_time):
-	var z_pos = calculate_position(midi_time)
-	var note_instance = preload("res://Game/Scenes/Notes/HitNote.tscn").instantiate()
-	note_instance.position = Vector3(0, 0, z_pos)
-	add_child(note_instance)
-
-func calculate_position(midi_time):
-	var time_in_seconds = midi_time_to_seconds(midi_time)
-	return time_in_seconds * (1 / (BPM / 60)) * (distance / song_length)
-
-func midi_time_to_seconds(midi_time):
-	var timebase = onhit_midi.smf_data.timebase
-	var seconds_per_tick = (60.0 / (BPM * timebase))
-	return midi_time * seconds_per_tick
 
 #func _on_midi_player_midi_event(channel, event):
 	#if event.type == SMF.MIDIEventType.note_on:

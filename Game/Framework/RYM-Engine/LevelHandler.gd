@@ -11,11 +11,13 @@ extends Node3D
 @export var channel_midi : int = 10
 @export var hit_delta : float = 0.2
 
+var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
+
 var mapping = {
 	36: "left",
 	38: "top",
 	40: "bottom",
-	3: "right"
+	41: "right"
 }
 var ids = {"left": [], "top": [], "bottom": [], "right": []}
 var canhit = {"left": [], "top": [], "bottom": [], "right": []}
@@ -43,8 +45,13 @@ func _on_note_event(channel, event):
 	if event.type == SMF.MIDIEventType.note_on:
 		if channel.number == channel_midi - 1: 
 			if event.note in mapping.keys():
+				# SPAWN
+				var note_direction = mapping[event.note]
+				var note_instance = note_scene.instantiate()
+				lanes[note_direction].add_child(note_instance)
+				
+				# HIT WINDOW
 				Core.cooldown(2 - hit_delta, func():
-					var note_direction = mapping[event.note]
 					var note_id = ids[note_direction][-1] + 1 if ids[note_direction].size() > 0 else 1
 					ids[note_direction].append(note_id)
 					canhit[note_direction].append(note_id)
