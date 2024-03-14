@@ -19,6 +19,12 @@ var mapping = {
 }
 var ids = {"left": [], "top": [], "bottom": [], "right": []}
 var canhit = {"left": [], "top": [], "bottom": [], "right": []}
+var lanes = {
+	"left": $Main/Notes/left, 
+	"top": $Main/Notes/top, 
+	"bottom": $Main/Notes/bottom, 
+	"right": $Main/Notes/right
+}
 
 func _ready():
 	var anim = anim_player.get_animation("Playing")
