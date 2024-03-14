@@ -15,6 +15,7 @@ extends Node3D
 @export var wav_delay : float = 8.0
 @export var channel_midi : int = 10
 @export var hit_delta : float = 0.2
+@export var spawn_distance : int = 200
 
 var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
 
@@ -58,13 +59,13 @@ func _on_note_event(channel, event):
 				var note_direction = mapping[event.note]
 				var note_instance = note_scene.instantiate()
 				get_lane(note_direction).add_child(note_instance)
-				note_instance.position.z = 200
+				note_instance.position.z = spawn_distance
 				
 				var tween = get_tree().create_tween()
 				tween.tween_property(
 					note_instance, 
 					"position:z", 
-					-100, 
+					-spawn_distance / 2, 
 					2 * 1.5
 				)
 				tween.tween_callback(note_instance.queue_free)
