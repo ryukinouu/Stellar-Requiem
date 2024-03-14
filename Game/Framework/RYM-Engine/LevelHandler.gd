@@ -14,10 +14,10 @@ extends Node3D
 var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
 
 var mapping = {
-	36: "left",
-	38: "top",
+	1: "left",
+	2: "top",
 	40: "bottom",
-	41: "right"
+	3: "right"
 }
 var ids = {"left": [], "top": [], "bottom": [], "right": []}
 var canhit = {"left": [], "top": [], "bottom": [], "right": []}
@@ -49,6 +49,16 @@ func _on_note_event(channel, event):
 				var note_direction = mapping[event.note]
 				var note_instance = note_scene.instantiate()
 				lanes[note_direction].add_child(note_instance)
+				note_instance.position.z = 100
+				
+				var tween = get_tree().create_tween()
+				tween.tween_property(
+					note_instance, 
+					"position:z", 
+					-100, 
+					2 * 2
+				)
+				tween.tween_callback(note_instance.queue_free)
 				
 				# HIT WINDOW
 				Core.cooldown(2 - hit_delta, func():
