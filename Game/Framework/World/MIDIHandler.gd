@@ -1,33 +1,42 @@
 extends Node3D
 
-var BPM: float = 120 # Example BPM
-var distance: int = 1000 # Example max distance
-var song_length: int = 180 # Example song length in seconds
+var BPM: float = 120
+var distance: int = 1000
+var song_length: int = 180
+var wav_delay : int = 2
 
 @onready var onhit_midi = $MidiPlayer
 @onready var prep_midi = $MidiPlayer2
 @onready var music_player = $MusicPlayer
 
-var channel_midi = 1
-var delta = 0.05
+var channel_midi = 10
+var delta = 0.2
 var mapping = {
-	36: "left",
-	38: "top",
+	1: "left",
+	2: "top",
 	40: "bottom",
-	41: "right"
+	3: "right"
+}
+var ids ={
+	"left": [],
+	"top": [],
+	"bottom": [],
+	"right": []
 }
 var canhit = {
-	"left": null,
-	"top": null,
-	"bottom": null,
-	"right": null
+	"left": [],
+	"top": [],
+	"bottom": [],
+	"right": []
 }
 
 func _ready():
-	prep_midi.play()
-	Core.cooldown(2, func():
-		onhit_midi.play()
-		music_player.play()
+	music_player.play()
+	Core.cooldown(wav_delay - 2, func():
+		prep_midi.play()
+		Core.cooldown(2, func():
+			onhit_midi.play()
+		)
 	)
 
 func map_hit_note(note, velocity, midi_time):
@@ -45,38 +54,48 @@ func midi_time_to_seconds(midi_time):
 	var seconds_per_tick = (60.0 / (BPM * timebase))
 	return midi_time * seconds_per_tick
 
-func _on_midi_player_midi_event(channel, event):
-	if event.type == SMF.MIDIEventType.note_on:
-		if channel.number == channel_midi - 1: 
-			if event.note in mapping.keys():
-				Core.cooldown(delta, func():
-					if canhit[mapping[event.note]] != event.note:
-						canhit[mapping[event.note]] = null
-				)
+#func _on_midi_player_midi_event(channel, event):
+	#if event.type == SMF.MIDIEventType.note_on:
+		#if channel.number == channel_midi - 1: 
+			#if event.note in mapping.keys():
+				#var note_id = ids[mapping[event.note]].pop(0) if ids[mapping[event.note]] else 0
+				#Core.cooldown(2 * delta, func():
+					#if note_id in canhit[mapping[event.note]]:
+						#canhit[mapping[event.note]].erase(note_id)
+						#print("Hit Window End: " + mapping[event.note] + " (" + str(note_id) + ")")
+				#)
 
 func _on_midi_player_2_midi_event(channel, event):
 	if event.type == SMF.MIDIEventType.note_on:
 		if channel.number == channel_midi - 1: 
 			if event.note in mapping.keys():
 				Core.cooldown(2 - delta, func():
-					canhit[mapping[event.note]] = event.note
-					print("Hit: " + mapping[event.note])
+					var note_direction = mapping[event.note]
+					var note_id = ids[note_direction][-1] + 1 if ids[note_direction].size() > 0 else 1
+					ids[note_direction].append(note_id)
+					canhit[note_direction].append(note_id)
+					print("Hit Window Start: " + note_direction + " (" + str(note_id) + ")")
+					Core.cooldown(2 * delta, func():
+						if note_id in canhit[mapping[event.note]]:
+							canhit[mapping[event.note]].erase(note_id)
+							print("Hit Window End: " + mapping[event.note] + " (" + str(note_id) + ")")
+					)
 				)
 
 func _input(event):
 	if event.is_action_pressed("action-top-1"):
-		if canhit["top"] != null:
+		if canhit["top"].size() > 0:
 			print("HIT TOP!")
-			canhit["top"] = null
+			canhit["top"].pop_front() 
 	elif event.is_action_pressed("action-bottom-1"):
-		if canhit["bottom"] != null:
+		if canhit["bottom"].size() > 0:
 			print("HIT BOTTOM!")
-			canhit["bottom"] = null
+			canhit["bottom"].pop_front()
 	elif event.is_action_pressed("action-left-1"):
-		if canhit["left"] != null:
+		if canhit["left"].size() > 0:
 			print("HIT LEFT!")
-			canhit["left"] = null
-	elif event.is_action_pressed("action-bottom-1"):
-		if canhit["bottom"] != null:
-			print("HIT BOTTOM!")
-			canhit["bottom"] = null
+			canhit["left"].pop_front()
+	elif event.is_action_pressed("action-right-1"): 
+		if canhit["right"].size() > 0:
+			print("HIT RIGHT!")
+			canhit["right"].pop_front()
