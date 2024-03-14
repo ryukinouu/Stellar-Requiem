@@ -58,14 +58,14 @@ func _on_note_event(channel, event):
 				var note_direction = mapping[event.note]
 				var note_instance = note_scene.instantiate()
 				get_lane(note_direction).add_child(note_instance)
-				note_instance.position.z = 100
+				note_instance.position.z = 200
 				
 				var tween = get_tree().create_tween()
 				tween.tween_property(
 					note_instance, 
 					"position:z", 
 					-100, 
-					2 * 2
+					2 * 1.5
 				)
 				tween.tween_callback(note_instance.queue_free)
 				
