@@ -12,10 +12,10 @@ extends Node3D
 @onready var lane_right = $Main/Notes/right
 
 @export var map_speed : int = 30
-@export var wav_delay : float = 8.0
-@export var channel_midi : int = 10
+@export var wav_delay : float = 2.0
+@export var channel_midi : int = 1
 @export var hit_delta : float = 0.2
-@export var spawn_distance : int = 200
+@export var spawn_distance : int = 100
 
 var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
 
@@ -72,14 +72,14 @@ func _on_note_event(channel, event):
 				
 				# HIT WINDOW
 				Core.cooldown(2 - hit_delta, func():
-					var note_id = ids[note_direction][-1] + 1 if ids[note_direction].size() > 0 else 1
-					ids[note_direction].append(note_id)
-					canhit[note_direction].append(note_id)
-					print("Hit Window Start: " + note_direction + " (" + str(note_id) + ")")
+					#var note_id = ids[note_direction][-1] + 1 if ids[note_direction].size() > 0 else 1
+					ids[note_direction].append(note_instance)
+					canhit[note_direction].append(note_instance)
+					#print("Hit Window Start: " + note_direction + " (" + str(note_id) + ")")
 					Core.cooldown(2 * hit_delta, func():
-						if note_id in canhit[mapping[event.note]]:
-							canhit[mapping[event.note]].erase(note_id)
-							print("Hit Window End: " + mapping[event.note] + " (" + str(note_id) + ")")
+						if note_instance in canhit[mapping[event.note]]:
+							canhit[mapping[event.note]].erase(note_instance)
+							#print("Hit Window End: " + mapping[event.note] + " (" + str(note_id) + ")")
 					)
 				)
 
@@ -87,16 +87,20 @@ func _input(event):
 	if event.is_action_pressed("action-top-1"):
 		if canhit["top"].size() > 0:
 			print("HIT TOP!")
-			canhit["top"].pop_front() 
+			var note = canhit["top"].pop_front() 
+			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
 	elif event.is_action_pressed("action-bottom-1"):
 		if canhit["bottom"].size() > 0:
 			print("HIT BOTTOM!")
-			canhit["bottom"].pop_front()
+			var note = canhit["bottom"].pop_front()
+			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
 	elif event.is_action_pressed("action-left-1"):
 		if canhit["left"].size() > 0:
 			print("HIT LEFT!")
-			canhit["left"].pop_front()
+			var note = canhit["left"].pop_front()
+			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
 	elif event.is_action_pressed("action-right-1"): 
 		if canhit["right"].size() > 0:
 			print("HIT RIGHT!")
-			canhit["right"].pop_front()
+			var note = canhit["right"].pop_front()
+			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
