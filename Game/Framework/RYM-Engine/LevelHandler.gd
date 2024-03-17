@@ -58,6 +58,19 @@ func _on_note_event(channel, event):
 				# SPAWN
 				var note_direction = mapping[event.note]
 				var note_instance = note_scene.instantiate()
+				
+				var mesh_instance_paths = ["Sphere", "Sphere_001", "Sphere_002", "Sphere_003", "Sphere_004"]
+				for mesh_instance_path in mesh_instance_paths:
+					var mesh_instance = note_instance.get_node("DefaultNoteWhite/Armature/Skeleton3D/" + mesh_instance_path)
+					if mesh_instance and mesh_instance is MeshInstance3D:
+						var mesh = mesh_instance.mesh
+						if mesh:
+							for surface in range(mesh.get_surface_count()):
+								var mat = mesh.surface_get_material(surface)
+								if mat:
+									var new_mat = mat.duplicate()
+									mesh.surface_set_material(surface, new_mat)
+				
 				get_lane(note_direction).add_child(note_instance)
 				note_instance.position.z = spawn_distance
 				
