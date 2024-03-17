@@ -2,16 +2,18 @@ extends Node3D
 
 @onready var midi = $Midi
 @onready var music = $Main/Camera3D/Music
+@onready var misc = $Main/Misc
 
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
 
-@onready var lane_left = $Main/Notes/left
-@onready var lane_top = $Main/Notes/top
-@onready var lane_bottom = $Main/Notes/bottom
-@onready var lane_right = $Main/Notes/right
+@onready var d_lane_left = $Main/Notes/d_left
+@onready var d_lane_top = $Main/Notes/d_top
+@onready var d_lane_bottom = $Main/Notes/d_bottom
+@onready var d_lane_right = $Main/Notes/d_right
 
 @onready var apollo = $Main/Apollo
+@onready var apollo_animtree = $Main/Apollo/AnimationTree
 @onready var artemis = $Main/Artemis
 
 @onready var apollo_v = $"Main/Player1-Visuals"
@@ -33,6 +35,7 @@ var delta_miss = 0.1
 var hit_delta = delta_stellar + delta_great + delta_good + delta_bad + delta_miss
 
 var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
+var apollo_afterimage = load("res://Game/Scenes/Core/Apollo_Afterimage.tscn")
 var miss_texture = load("res://Assets/Textures/Indicators/MISS.png")
 var great_texture = load("res://Assets/Textures/Indicators/GREAT!.png")
 var good_texture = load("res://Assets/Textures/Indicators/GOOD!.png")
@@ -40,23 +43,44 @@ var bad_texture = load("res://Assets/Textures/Indicators/BAD.png")
 var stellar_texture = load("res://Assets/Textures/Indicators/STELLAR!.png")
 
 var mapping = {
-	36: "left",
-	38: "top",
-	40: "bottom",
-	41: "right"
+	36: "d_left",
+	38: "d_top",
+	40: "d_bottom",
+	41: "d_right"
+}
+var canhit = {
+	"d_left": [], 
+	"d_top": [], 
+	"d_bottom": [], 
+	"d_right": []
 }
 var tweens = {}
-var canhit = {"left": [], "top": [], "bottom": [], "right": []}
+var char_lanes = {
+	"apollo": {
+		"current": "top",
+		"left": 33,
+		"top": 25,
+		"bottom": 17,
+		"right": 9
+	},
+	"artemis": {
+		"current": "bottom",
+		"left": -9,
+		"top": -17,
+		"bottom": -25,
+		"right": -3
+	},
+}
 
 func get_lane(direction):
-	if direction == "left":
-		return lane_left
-	elif direction == "top":
-		return lane_top
-	elif direction == "bottom":
-		return lane_bottom
-	elif direction == "right":
-		return lane_right
+	if direction == "d_left":
+		return d_lane_left
+	elif direction == "d_top":
+		return d_lane_top
+	elif direction == "d_bottom":
+		return d_lane_bottom
+	elif direction == "d_right":
+		return d_lane_right
 
 func _ready():
 	var anim = anim_player.get_animation("Playing")
@@ -76,14 +100,14 @@ func _ready():
 			tween.tween_property(
 				apollo, 
 				"position:x", 
-				9, 
+				char_lanes["apollo"]["top"], 
 				2
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 			tween = get_tree().create_tween()
 			tween.tween_property(
 				artemis, 
 				"position:x", 
-				-9, 
+				char_lanes["artemis"]["bottom"], 
 				2
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
@@ -93,11 +117,12 @@ func _ready():
 		artemis_v.visible = false
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(21, 16, -14))
 		Core.cooldown(2, func():
+			
 			var tween = get_tree().create_tween()
 			tween.tween_property(
 				apollo, 
 				"position:x", 
-				9, 
+				char_lanes["apollo"]["top"], 
 				2
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
@@ -111,7 +136,7 @@ func _ready():
 			tween.tween_property(
 				artemis, 
 				"position:x", 
-				-9, 
+				char_lanes["artemis"]["bottom"], 
 				2
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
@@ -167,7 +192,7 @@ func _on_note_event(channel, event):
 				Core.cooldown(2 - hit_delta, func():
 					canhit[note_direction].append(note_instance)
 					tweens[note_instance] = tween
-					Core.cooldown(hit_delta, func():
+					Core.cooldown(hit_delta + delta_miss, func():
 						if note_instance in canhit[mapping[event.note]]:
 							canhit[mapping[event.note]].erase(note_instance)
 							tweens.erase(note_instance)
@@ -175,20 +200,27 @@ func _on_note_event(channel, event):
 				)
 				
 				Core.cooldown(2 - hit_delta, func():
-					note_instance.get_node("Miss").name = "Miss"
+					change_indicator(note_instance, "Miss", "Miss")
 					Core.cooldown(delta_miss, func():
-						note_instance.get_node("Miss").name = "Bad"
+						change_indicator(note_instance, "Miss", "Bad")
 						Core.cooldown(delta_bad, func():
-							note_instance.get_node("Bad").name = "Good"
+							change_indicator(note_instance, "Bad", "Good")
 							Core.cooldown(delta_good, func():
-								note_instance.get_node("Good").name = "Great"
+								change_indicator(note_instance, "Good", "Great")
 								Core.cooldown(delta_great, func():
-									note_instance.get_node("Great").name = "Stellar"
+									change_indicator(note_instance, "Great", "Stellar")
+									Core.cooldown(delta_stellar, func():
+										change_indicator(note_instance, "Stellar", "Miss")
+									)
 								)
 							)
 						)
 					)
 				)
+
+func change_indicator(note, old, new):
+	if note:
+		note.get_node(old).name = new
 
 func note_on_hit(note):
 	var anim_tree = note.get_node("AnimationTree")
@@ -208,20 +240,58 @@ func note_on_hit(note):
 	elif note.get_node_or_null("Miss"):
 		note.get_node("Indicator").mesh.material.albedo_texture = miss_texture
 
+func apollo_afterimage_effect():
+	var apollo_effect = apollo_afterimage.instantiate()
+	misc.add_child(apollo_effect)
+	apollo_effect.position = Vector3(
+		char_lanes["apollo"][char_lanes["apollo"]["current"]],
+		-2,
+		0
+	)
+	Core.cooldown(0.2, apollo_effect.queue_free)
+
 func _input(event):
 	if event.is_action_pressed("action-top-1"):
-		if canhit["top"].size() > 0:
-			var note = canhit["top"].pop_front()
+		if char_lanes["apollo"]["current"] != "top":
+			apollo_afterimage_effect()
+			char_lanes["apollo"]["current"] = "top"
+			apollo.position.x = char_lanes["apollo"]["top"]
+			apollo_animtree.get("parameters/playback").travel("Teleport")
+		else:
+			apollo_animtree.get("parameters/playback").travel("Hit")
+		if canhit["d_top"].size() > 0:
+			var note = canhit["d_top"].pop_front()
 			note_on_hit(note)
 	elif event.is_action_pressed("action-bottom-1"):
-		if canhit["bottom"].size() > 0:
-			var note = canhit["bottom"].pop_front()
+		if char_lanes["apollo"]["current"] != "bottom":
+			apollo_afterimage_effect()
+			char_lanes["apollo"]["current"] = "bottom"
+			apollo.position.x = char_lanes["apollo"]["bottom"]
+			apollo_animtree.get("parameters/playback").travel("Teleport")
+		else:
+			apollo_animtree.get("parameters/playback").travel("Hit")
+		if canhit["d_bottom"].size() > 0:
+			var note = canhit["d_bottom"].pop_front()
 			note_on_hit(note)
 	elif event.is_action_pressed("action-left-1"):
-		if canhit["left"].size() > 0:
-			var note = canhit["left"].pop_front()
+		if char_lanes["apollo"]["current"] != "left":
+			apollo_afterimage_effect()
+			char_lanes["apollo"]["current"] = "left"
+			apollo.position.x = char_lanes["apollo"]["left"]
+			apollo_animtree.get("parameters/playback").travel("Teleport")
+		else:
+			apollo_animtree.get("parameters/playback").travel("Hit")
+		if canhit["d_left"].size() > 0:
+			var note = canhit["d_left"].pop_front()
 			note_on_hit(note)
 	elif event.is_action_pressed("action-right-1"): 
-		if canhit["right"].size() > 0:
-			var note = canhit["right"].pop_front()
+		if char_lanes["apollo"]["current"] != "right":
+			apollo_afterimage_effect()
+			char_lanes["apollo"]["current"] = "right"
+			apollo.position.x = char_lanes["apollo"]["right"]
+			apollo_animtree.get("parameters/playback").travel("Teleport")
+		else:
+			apollo_animtree.get("parameters/playback").travel("Hit")
+		if canhit["d_right"].size() > 0:
+			var note = canhit["d_right"].pop_front()
 			note_on_hit(note)
