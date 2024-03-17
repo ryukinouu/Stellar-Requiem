@@ -11,10 +11,17 @@ extends Node3D
 @onready var lane_bottom = $Main/Notes/bottom
 @onready var lane_right = $Main/Notes/right
 
+@onready var apollo = $Main/Apollo
+@onready var artemis = $Main/Artemis
+
+@onready var apollo_v = $"Main/Player1-Visuals"
+@onready var artemis_v = $"Main/Player2-Visuals"
+
 @export var map_speed : int = 30
 @export var channel_midi : int = 1
 @export var spawn_distance : int = 100
 
+@export var initial_delay : float = 4.0
 @export var wav_delay : float = 6.0
 @export var music_first : bool = false
 
@@ -53,20 +60,71 @@ func get_lane(direction):
 
 func _ready():
 	var anim = anim_player.get_animation("Playing")
-	var track_idx = anim.find_track("Main:position", 0)
-	var key_idx = anim.track_find_key(track_idx, 600.0, true)
-	anim.track_set_key_value(track_idx, key_idx, Vector3(0, 0, 600.0 * map_speed))
+	var tmain_pos = anim.find_track("Main:position", 0)
+	var kmain_pos = anim.track_find_key(tmain_pos, 600.0, true)
+	anim.track_set_key_value(tmain_pos, kmain_pos, Vector3(0, 0, 600.0 * map_speed))
 	anim_tree.active = true
 	
-	if music_first:
+	var tcam_pos = anim.find_track("Camera3D:position", 0)
+	var kcam_pos = anim.track_find_key(tcam_pos, 4.0, true)
+	if Core.data["apollo"] and Core.data["artemis"]:
+		apollo.position = Vector3(3, -2, 0)
+		artemis.position = Vector3(-3, -2, 0)
+		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(0, 20, -16))
 		Core.cooldown(2, func():
+			var tween = get_tree().create_tween()
+			tween.tween_property(
+				apollo, 
+				"position:x", 
+				9, 
+				2
+			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+			tween = get_tree().create_tween()
+			tween.tween_property(
+				artemis, 
+				"position:x", 
+				-9, 
+				2
+			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		)
+	elif Core.data["apollo"]:
+		apollo.position = Vector3(0, -2, 0)
+		artemis.visible = false
+		artemis_v.visible = false
+		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(21, 16, -14))
+		Core.cooldown(2, func():
+			var tween = get_tree().create_tween()
+			tween.tween_property(
+				apollo, 
+				"position:x", 
+				9, 
+				2
+			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		)
+	else:
+		artemis.position = Vector3(0, -2, 0)
+		apollo.visible = false
+		apollo_v.visible = false
+		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(-21, 16, -14))
+		Core.cooldown(2, func():
+			var tween = get_tree().create_tween()
+			tween.tween_property(
+				artemis, 
+				"position:x", 
+				-9, 
+				2
+			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		)
+	
+	if music_first:
+		Core.cooldown(initial_delay, func():
 			music.play()
 			Core.cooldown(wav_delay - 2, func():
 				midi.play()
 			)
 		)
 	else:
-		Core.cooldown(2, func():
+		Core.cooldown(initial_delay, func():
 			midi.play()
 			Core.cooldown(2, func():
 				music.play()
@@ -126,9 +184,6 @@ func _on_note_event(channel, event):
 								note_instance.get_node("Good").name = "Great"
 								Core.cooldown(delta_great, func():
 									note_instance.get_node("Great").name = "Stellar"
-									Core.cooldown(delta_stellar, func():
-										note_instance.get_node("Stellar").name = "Miss"
-									)
 								)
 							)
 						)
