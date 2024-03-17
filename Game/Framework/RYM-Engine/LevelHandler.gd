@@ -12,12 +12,25 @@ extends Node3D
 @onready var lane_right = $Main/Notes/right
 
 @export var map_speed : int = 30
-@export var wav_delay : float = 2.0
 @export var channel_midi : int = 1
-@export var hit_delta : float = 0.2
 @export var spawn_distance : int = 100
 
+@export var wav_delay : float = 6.0
+@export var music_first : bool = false
+
+var delta_stellar = 0.05
+var delta_great = 0.05
+var delta_good = 0.05
+var delta_bad = 0.05
+var delta_miss = 0.1
+var hit_delta = delta_stellar + delta_great + delta_good + delta_bad + delta_miss
+
 var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
+var miss_texture = load("res://Assets/Textures/Indicators/MISS.png")
+var great_texture = load("res://Assets/Textures/Indicators/GREAT!.png")
+var good_texture = load("res://Assets/Textures/Indicators/GOOD!.png")
+var bad_texture = load("res://Assets/Textures/Indicators/BAD.png")
+var stellar_texture = load("res://Assets/Textures/Indicators/STELLAR!.png")
 
 var mapping = {
 	36: "left",
@@ -25,7 +38,7 @@ var mapping = {
 	40: "bottom",
 	41: "right"
 }
-var ids = {"left": [], "top": [], "bottom": [], "right": []}
+var tweens = {}
 var canhit = {"left": [], "top": [], "bottom": [], "right": []}
 
 func get_lane(direction):
@@ -45,11 +58,20 @@ func _ready():
 	anim.track_set_key_value(track_idx, key_idx, Vector3(0, 0, 600.0 * map_speed))
 	anim_tree.active = true
 	
-	music.play()
-	Core.cooldown(wav_delay - 2, func():
-		# MIDI is 2 seconds behind
-		midi.play()
-	)
+	if music_first:
+		Core.cooldown(2, func():
+			music.play()
+			Core.cooldown(wav_delay - 2, func():
+				midi.play()
+			)
+		)
+	else:
+		Core.cooldown(2, func():
+			midi.play()
+			Core.cooldown(2, func():
+				music.play()
+			)
+		)
 
 func _on_note_event(channel, event):
 	if event.type == SMF.MIDIEventType.note_on:
@@ -78,42 +100,73 @@ func _on_note_event(channel, event):
 				tween.tween_property(
 					note_instance, 
 					"position:z", 
-					-spawn_distance / 2, 
-					2 * 1.5
+					-spawn_distance, 
+					2 * 2
 				)
 				tween.tween_callback(note_instance.queue_free)
 				
 				# HIT WINDOW
 				Core.cooldown(2 - hit_delta, func():
-					#var note_id = ids[note_direction][-1] + 1 if ids[note_direction].size() > 0 else 1
-					ids[note_direction].append(note_instance)
 					canhit[note_direction].append(note_instance)
-					#print("Hit Window Start: " + note_direction + " (" + str(note_id) + ")")
-					Core.cooldown(2 * hit_delta, func():
+					tweens[note_instance] = tween
+					Core.cooldown(hit_delta, func():
 						if note_instance in canhit[mapping[event.note]]:
 							canhit[mapping[event.note]].erase(note_instance)
-							#print("Hit Window End: " + mapping[event.note] + " (" + str(note_id) + ")")
+							tweens.erase(note_instance)
 					)
 				)
+				
+				Core.cooldown(2 - hit_delta, func():
+					note_instance.get_node("Miss").name = "Miss"
+					Core.cooldown(delta_miss, func():
+						note_instance.get_node("Miss").name = "Bad"
+						Core.cooldown(delta_bad, func():
+							note_instance.get_node("Bad").name = "Good"
+							Core.cooldown(delta_good, func():
+								note_instance.get_node("Good").name = "Great"
+								Core.cooldown(delta_great, func():
+									note_instance.get_node("Great").name = "Stellar"
+									Core.cooldown(delta_stellar, func():
+										note_instance.get_node("Stellar").name = "Miss"
+									)
+								)
+							)
+						)
+					)
+				)
+
+func note_on_hit(note):
+	var anim_tree = note.get_node("AnimationTree")
+	var anim_player = note.get_node("AnimationPlayer")
+	var anim = anim_tree.get("parameters/playback")
+	anim.travel("hit")
+	tweens[note].kill()
+	Core.cooldown(anim_player.get_animation("hit").length, note.queue_free)
+	if note.get_node_or_null("Great"):
+		note.get_node("Indicator").mesh.material.albedo_texture = great_texture
+	elif note.get_node_or_null("Good"):
+		note.get_node("Indicator").mesh.material.albedo_texture = good_texture
+	elif note.get_node_or_null("Bad"):
+		note.get_node("Indicator").mesh.material.albedo_texture = bad_texture
+	elif note.get_node_or_null("Stellar"):
+		note.get_node("Indicator").mesh.material.albedo_texture = stellar_texture
+	elif note.get_node_or_null("Miss"):
+		note.get_node("Indicator").mesh.material.albedo_texture = miss_texture
 
 func _input(event):
 	if event.is_action_pressed("action-top-1"):
 		if canhit["top"].size() > 0:
-			print("HIT TOP!")
-			var note = canhit["top"].pop_front() 
-			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
+			var note = canhit["top"].pop_front()
+			note_on_hit(note)
 	elif event.is_action_pressed("action-bottom-1"):
 		if canhit["bottom"].size() > 0:
-			print("HIT BOTTOM!")
 			var note = canhit["bottom"].pop_front()
-			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
+			note_on_hit(note)
 	elif event.is_action_pressed("action-left-1"):
 		if canhit["left"].size() > 0:
-			print("HIT LEFT!")
 			var note = canhit["left"].pop_front()
-			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
+			note_on_hit(note)
 	elif event.is_action_pressed("action-right-1"): 
 		if canhit["right"].size() > 0:
-			print("HIT RIGHT!")
 			var note = canhit["right"].pop_front()
-			note.get_node("AnimationTree").get("parameters/playback").travel("hit")
+			note_on_hit(note)
