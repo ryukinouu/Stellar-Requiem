@@ -27,16 +27,12 @@ extends Node3D
 @export var channel_midi : int = 1
 @export var spawn_distance : int = 100
 
+@export var drum_notes : int = 110
+@export var guitar_notes : int = 110
+
 @export var initial_delay : float = 4.0
 @export var wav_delay : float = 6.0
 @export var music_first : bool = false
-
-var delta_stellar = 0.05
-var delta_great = 0.05
-var delta_good = 0.05
-var delta_bad = 0.05
-var delta_miss = 0.1
-var hit_delta = delta_stellar + delta_great + delta_good + delta_bad + delta_miss
 
 var note_scene = load("res://Game/Scenes/Notes/Note.tscn")
 var apollo_afterimage = load("res://Game/Scenes/Core/Apollo_Afterimage.tscn")
@@ -58,6 +54,13 @@ var canhit = {
 	"d_bottom": [], 
 	"d_right": []
 }
+var note_values = {
+	"miss": 0,
+	"bad": 0,
+	"good": 0,
+	"great": 0,
+	"stellar": 0
+}
 var tweens = {}
 var char_lanes = {
 	"apollo": {
@@ -76,14 +79,25 @@ var char_lanes = {
 	},
 }
 
-var artemis_enabled = true
-var artemis_tween
 var artemis_boost_speed = 50.0
 var artemis_move_speed = 15.0
 var artemis_initial_speed = artemis_boost_speed
+var artemis_tween
+
+var delta_stellar = 0.05
+var delta_great = 0.05
+var delta_good = 0.05
+var delta_bad = 0.05
+var delta_miss = 0.1
+var hit_delta = delta_stellar + delta_great + delta_good + delta_bad + delta_miss
 
 var paused = false
 var can_pause = false
+var apollo_notes_disabled = false
+var artemis_notes_disabled = false
+var total_notes = 0
+var base_score = 0
+var notes_score = 0
 
 func get_lane(direction):
 	if direction == "d_left":
@@ -95,21 +109,54 @@ func get_lane(direction):
 	elif direction == "d_right":
 		return d_lane_right
 
+func loading(out):
+	if out:
+		$GUI/Loading.color = Color.BLACK
+		$GUI/Loading.visible = true
+		var tween = get_tree().create_tween()
+		tween.tween_property(
+			$GUI/Loading, 
+			"color", 
+			Color.TRANSPARENT, 
+			1
+		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_callback(func():
+			$GUI/Loading.visible = false
+		)
+	else:
+		$GUI/Loading.color = Color.TRANSPARENT
+		$GUI/Loading.visible = true
+		var tween = get_tree().create_tween()
+		tween.tween_property(
+			$GUI/Loading, 
+			"color", 
+			Color.BLACK, 
+			1
+		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
 func _ready():
 	var anim = anim_player.get_animation("Playing")
 	var tmain_pos = anim.find_track("Main:position", 0)
 	var kmain_pos = anim.track_find_key(tmain_pos, 600.0, true)
 	anim.track_set_key_value(tmain_pos, kmain_pos, Vector3(0, 0, 600.0 * map_speed))
 	
-	var tloading = anim.find_track("GUI/Loading:color", 0)
-	anim.track_insert_key(tloading, music_length - 1 + initial_delay + 2, Color.TRANSPARENT)
-	anim.track_insert_key(tloading, music_length + initial_delay + 2, Color.BLACK)
-	
-	var tcam_pos = anim.find_track("Camera3D:position", 0)
+	var tcam_pos = anim.find_track("Main/Camera3D:position", 0)
 	var kcam_pos = anim.track_find_key(tcam_pos, 4.0, true)
 	if Core.data["apollo"] and Core.data["artemis"]:
+		total_notes = guitar_notes + drum_notes
 		apollo.position = Vector3(3, -2, 0)
 		artemis.position = Vector3(-3, -2, 0)
+		
+		apollo_notes_disabled = false
+		artemis_notes_disabled = false
+		$GUI/HUD/Score/Upper/Score.visible = true
+		$GUI/HUD/SoloScore.visible = false
+		$GUI/HUD/Side.visible = true
+		$GUI/HUD/Score/Upper/Player1.visible = true
+		$GUI/HUD/SoloScore2.visible = false
+		$GUI/HUD/Side2.visible = true
+		$GUI/HUD/Score/Upper/Player2.visible = true
+		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(0, 20, -16))
 		Core.cooldown(2, func():
 			var tween = get_tree().create_tween()
@@ -128,9 +175,21 @@ func _ready():
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
 	elif Core.data["apollo"]:
+		total_notes = drum_notes
 		apollo.position = Vector3(0, -2, 0)
 		artemis.visible = false
 		artemis_v.visible = false
+		
+		apollo_notes_disabled = false
+		artemis_notes_disabled = true
+		$GUI/HUD/Score/Upper/Score.visible = false
+		$GUI/HUD/SoloScore.visible = true
+		$GUI/HUD/Side.visible = true
+		$GUI/HUD/Score/Upper/Player1.visible = true
+		$GUI/HUD/SoloScore2.visible = false
+		$GUI/HUD/Side2.visible = false
+		$GUI/HUD/Score/Upper/Player2.visible = false
+		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(21, 16, -14))
 		Core.cooldown(2, func():
 			var tween = get_tree().create_tween()
@@ -142,9 +201,21 @@ func _ready():
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
 	else:
+		total_notes = guitar_notes
 		artemis.position = Vector3(0, -2, 0)
 		apollo.visible = false
 		apollo_v.visible = false
+		
+		apollo_notes_disabled = true
+		artemis_notes_disabled = false
+		$GUI/HUD/Score/Upper/Score.visible = false
+		$GUI/HUD/SoloScore.visible = false
+		$GUI/HUD/Side.visible = false
+		$GUI/HUD/Score/Upper/Player1.visible = false
+		$GUI/HUD/SoloScore2.visible = true
+		$GUI/HUD/Side2.visible = true
+		$GUI/HUD/Score/Upper/Player2.visible = true
+		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(-21, 16, -14))
 		Core.cooldown(2, func():
 			var tween = get_tree().create_tween()
@@ -156,11 +227,18 @@ func _ready():
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
 	
+	note_values["stellar"] = snapped(50000 / total_notes, 1)
+	note_values["great"] = snapped(note_values["stellar"] * 0.8, 1)
+	note_values["good"] = snapped(note_values["stellar"] * 0.6, 1)
+	note_values["bad"] = snapped(note_values["stellar"] * 0.2, 1)
+	note_values["miss"] = 0
+	
+	loading(true)
 	anim_tree.active = true
 	if music_first:
 		Core.cooldown(initial_delay, func():
 			can_pause = true
-			animate_bar()
+			begin_song()
 			score_timer.start()
 			music.play()
 			Core.cooldown(wav_delay - 2, func():
@@ -170,7 +248,7 @@ func _ready():
 	else:
 		Core.cooldown(initial_delay, func():
 			can_pause = true
-			animate_bar()
+			begin_song()
 			score_timer.start()
 			midi.play()
 			Core.cooldown(2, func():
@@ -178,13 +256,22 @@ func _ready():
 			)
 		)
 
-func animate_bar():
+func begin_song():
 	$GUI/HUD/Score/Bar.value = 0
+	base_score = 0
+	notes_score = 0
 	var tween = get_tree().create_tween()
 	tween.tween_property(
-		$GUI/HUD/Score/Bar, 
+		$GUI/HUD/Score/SongProgress, 
 		"value", 
 		100000, 
+		music_length
+	)
+	tween = get_tree().create_tween()
+	tween.tween_property(
+		self, 
+		"base_score", 
+		50000, 
 		music_length
 	)
 
@@ -194,8 +281,10 @@ func _on_note_event(channel, event):
 			if event.note in mapping.keys():
 				# SPAWN
 				var note_direction = mapping[event.note]
-				var note_instance = note_scene.instantiate()
+				if note_direction.substr(0, 2) == "d_" and apollo_notes_disabled:
+					return
 				
+				var note_instance = note_scene.instantiate()
 				var mesh_instance_paths = ["Sphere", "Sphere_001", "Sphere_002", "Sphere_003", "Sphere_004"]
 				for mesh_instance_path in mesh_instance_paths:
 					var mesh_instance = note_instance.get_node("DefaultNoteWhite/Armature/Skeleton3D/" + mesh_instance_path)
@@ -263,14 +352,19 @@ func note_on_hit(note):
 	Core.cooldown(anim_player.get_animation("hit").length, note.queue_free)
 	if note.get_node_or_null("Great"):
 		note.get_node("Indicator").mesh.material.albedo_texture = great_texture
+		notes_score += note_values["great"]
 	elif note.get_node_or_null("Good"):
 		note.get_node("Indicator").mesh.material.albedo_texture = good_texture
+		notes_score += note_values["good"]
 	elif note.get_node_or_null("Bad"):
 		note.get_node("Indicator").mesh.material.albedo_texture = bad_texture
+		notes_score += note_values["bad"]
 	elif note.get_node_or_null("Stellar"):
 		note.get_node("Indicator").mesh.material.albedo_texture = stellar_texture
+		notes_score += note_values["stellar"]
 	elif note.get_node_or_null("Miss"):
 		note.get_node("Indicator").mesh.material.albedo_texture = miss_texture
+		notes_score += note_values["miss"]
 
 func apollo_afterimage_effect():
 	var apollo_effect = apollo_afterimage.instantiate()
@@ -283,6 +377,9 @@ func apollo_afterimage_effect():
 	Core.cooldown(0.2, apollo_effect.queue_free)
 
 func _input(event):
+	if !can_pause:
+		return
+	
 	if event.is_action_pressed("action-top-1"):
 		if char_lanes["apollo"]["current"] != "top":
 			apollo_afterimage_effect()
@@ -343,14 +440,20 @@ func _input(event):
 				artemis_boost_speed = artemis_move_speed
 		)
 	elif event.is_action_released("left") or event.is_action_released("right"):
-		artemis_tween.kill()
+		if artemis_tween:
+			artemis_tween.kill()
 		if char_lanes["artemis"]["current"] != "left" and char_lanes["artemis"]["current"] != "right":
 			artemis_boost_speed = artemis_initial_speed
 
 func _process(delta):
 	var progress_ratio = $GUI/HUD/Score/Bar.value / $GUI/HUD/Score/Bar.max_value
 	$GUI/HUD/Score/Glow.position.x = -1498 + $GUI/HUD/Score/Bar.size.x * progress_ratio
-	if artemis_enabled:
+	Core.data["current_score"] = base_score + notes_score
+	$GUI/HUD/Score/Bar.value = snapped(Core.data["current_score"], 1)
+	$GUI/HUD/SoloScore/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	$GUI/HUD/SoloScore2/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	$GUI/HUD/Score/Upper/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	if can_pause:
 		if Input.is_action_pressed("left"):
 			if artemis.position.x < -9:
 				artemis.position.x = lerp(artemis.position.x, artemis.position.x + 0.1 * artemis_boost_speed, delta * artemis_move_speed)
@@ -374,12 +477,6 @@ func _process(delta):
 			elif closest_pos == to_right:
 				target_x = char_lanes["artemis"]["right"]
 			artemis.position.x = lerp(artemis.position.x, float(target_x), delta * artemis_move_speed)
-
-func _on_score_timeout():
-	if can_pause:
-		Core.data["current_score"] += (500000 / music_length) / 500
-		$GUI/HUD/SoloScore/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
-		$GUI/HUD/Score/Upper/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
 
 func _on_settings_pressed():
 	if can_pause:
@@ -424,4 +521,10 @@ func _on_retry_pressed():
 	state_machine.travel("Return")
 	Core.cooldown(0.5, func():
 		_ready()
+	)
+
+
+func _on_music_finished():
+	Core.cooldown(2, func():
+		loading(false)
 	)
