@@ -19,6 +19,10 @@ extends Node3D
 @onready var apollo_v = $"Main/Player1-Visuals"
 @onready var artemis_v = $"Main/Player2-Visuals"
 
+@onready var score_timer = $Score
+
+@onready var music_length = music.stream.get_length()
+
 @export var map_speed : int = 30
 @export var channel_midi : int = 1
 @export var spawn_distance : int = 100
@@ -72,6 +76,15 @@ var char_lanes = {
 	},
 }
 
+var artemis_enabled = true
+var artemis_tween
+var artemis_boost_speed = 50.0
+var artemis_move_speed = 15.0
+var artemis_initial_speed = artemis_boost_speed
+
+var paused = false
+var can_pause = false
+
 func get_lane(direction):
 	if direction == "d_left":
 		return d_lane_left
@@ -87,7 +100,10 @@ func _ready():
 	var tmain_pos = anim.find_track("Main:position", 0)
 	var kmain_pos = anim.track_find_key(tmain_pos, 600.0, true)
 	anim.track_set_key_value(tmain_pos, kmain_pos, Vector3(0, 0, 600.0 * map_speed))
-	anim_tree.active = true
+	
+	var tloading = anim.find_track("GUI/Loading:color", 0)
+	anim.track_insert_key(tloading, music_length - 1 + initial_delay + 2, Color.TRANSPARENT)
+	anim.track_insert_key(tloading, music_length + initial_delay + 2, Color.BLACK)
 	
 	var tcam_pos = anim.find_track("Camera3D:position", 0)
 	var kcam_pos = anim.track_find_key(tcam_pos, 4.0, true)
@@ -117,7 +133,6 @@ func _ready():
 		artemis_v.visible = false
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(21, 16, -14))
 		Core.cooldown(2, func():
-			
 			var tween = get_tree().create_tween()
 			tween.tween_property(
 				apollo, 
@@ -141,8 +156,12 @@ func _ready():
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
 	
+	anim_tree.active = true
 	if music_first:
 		Core.cooldown(initial_delay, func():
+			can_pause = true
+			animate_bar()
+			score_timer.start()
 			music.play()
 			Core.cooldown(wav_delay - 2, func():
 				midi.play()
@@ -150,11 +169,24 @@ func _ready():
 		)
 	else:
 		Core.cooldown(initial_delay, func():
+			can_pause = true
+			animate_bar()
+			score_timer.start()
 			midi.play()
 			Core.cooldown(2, func():
 				music.play()
 			)
 		)
+
+func animate_bar():
+	$GUI/HUD/Score/Bar.value = 0
+	var tween = get_tree().create_tween()
+	tween.tween_property(
+		$GUI/HUD/Score/Bar, 
+		"value", 
+		100000, 
+		music_length
+	)
 
 func _on_note_event(channel, event):
 	if event.type == SMF.MIDIEventType.note_on:
@@ -295,3 +327,101 @@ func _input(event):
 		if canhit["d_right"].size() > 0:
 			var note = canhit["d_right"].pop_front()
 			note_on_hit(note)
+	elif event.is_action_pressed("escape"):
+		if can_pause:
+			paused = !paused
+			get_tree().paused = paused
+			$GUI/Paused.visible = paused
+	
+	if event.is_action_pressed("left") or event.is_action_pressed("right"):
+		if artemis_tween and artemis_tween.is_running():
+			artemis_tween.kill()
+		artemis_tween = get_tree().create_tween()
+		artemis_tween.tween_property(self, "artemis_boost_speed", artemis_move_speed, 0.2).set_trans(Tween.TRANS_SINE)
+		artemis_tween.tween_callback(
+			func():
+				artemis_boost_speed = artemis_move_speed
+		)
+	elif event.is_action_released("left") or event.is_action_released("right"):
+		artemis_tween.kill()
+		if char_lanes["artemis"]["current"] != "left" and char_lanes["artemis"]["current"] != "right":
+			artemis_boost_speed = artemis_initial_speed
+
+func _process(delta):
+	var progress_ratio = $GUI/HUD/Score/Bar.value / $GUI/HUD/Score/Bar.max_value
+	$GUI/HUD/Score/Glow.position.x = -1498 + $GUI/HUD/Score/Bar.size.x * progress_ratio
+	if artemis_enabled:
+		if Input.is_action_pressed("left"):
+			if artemis.position.x < -9:
+				artemis.position.x = lerp(artemis.position.x, artemis.position.x + 0.1 * artemis_boost_speed, delta * artemis_move_speed)
+		if Input.is_action_pressed("right"):
+			if artemis.position.x > -33:
+				artemis.position.x = lerp(artemis.position.x, artemis.position.x - 0.1 * artemis_boost_speed, delta * artemis_move_speed)
+		
+		if not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+			var to_left = abs(artemis.position.x - char_lanes["artemis"]["left"])
+			var to_top = abs(artemis.position.x - char_lanes["artemis"]["top"])
+			var to_bottom = abs(artemis.position.x - char_lanes["artemis"]["bottom"])
+			var to_right = abs(artemis.position.x - char_lanes["artemis"]["right"])
+			var closest_pos = min(to_left, to_top, to_bottom, to_right)
+			var target_x
+			if closest_pos == to_left:
+				target_x = char_lanes["artemis"]["left"]
+			elif closest_pos == to_top:
+				target_x = char_lanes["artemis"]["top"]
+			elif closest_pos == to_bottom:
+				target_x = char_lanes["artemis"]["bottom"]
+			elif closest_pos == to_right:
+				target_x = char_lanes["artemis"]["right"]
+			artemis.position.x = lerp(artemis.position.x, float(target_x), delta * artemis_move_speed)
+
+func _on_score_timeout():
+	if can_pause:
+		Core.data["current_score"] += (500000 / music_length) / 500
+		$GUI/HUD/SoloScore/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
+		$GUI/HUD/Score/Upper/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
+
+func _on_settings_pressed():
+	if can_pause:
+		paused = !paused
+		get_tree().paused = paused
+		$GUI/Paused.visible = paused
+
+func _on_unpause_pressed():
+	paused = false
+	get_tree().paused = paused
+	$GUI/Paused.visible = paused
+
+func _on_restart_pressed():
+	get_tree().paused = false
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("Return")
+	can_pause = false
+	Core.cooldown(0.5, func():
+		_ready()
+	)
+
+func _on_exit_pressed():
+	get_tree().paused = false
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("Return")
+	can_pause = false
+	Core.cooldown(0.5, func():
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/SongSelection.tscn")
+	)
+
+func _on_return_pressed():
+	get_tree().paused = false
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("Return")
+	can_pause = false
+	Core.cooldown(0.5, func():
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/SongSelection.tscn")
+	)
+
+func _on_retry_pressed():
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("Return")
+	Core.cooldown(0.5, func():
+		_ready()
+	)
