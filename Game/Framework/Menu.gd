@@ -40,3 +40,27 @@ func _on_settings_pressed():
 
 func _on_audio_toggle_toggled(toggled_on):
 	$AudioStreamPlayer.stream_paused = toggled_on
+
+
+func _on_player_pressed():
+	Core.data["apollo"] = true
+	Core.data["artemis"] = true
+	$Control/Control/Apollo/Header.self_modulate = Color("ffffff64")
+	$Control/Control/Artemis/Header.self_modulate = Color("ffffff64")
+	$"Control/Control/2Player/Header".self_modulate = Color("ffffff")
+
+
+func _on_apollo_pressed():
+	Core.data["apollo"] = true
+	Core.data["artemis"] = false
+	$Control/Control/Apollo/Header.self_modulate = Color("ffffff")
+	$Control/Control/Artemis/Header.self_modulate = Color("ffffff64")
+	$"Control/Control/2Player/Header".self_modulate = Color("ffffff64")
+
+
+func _on_artemis_pressed():
+	Core.data["apollo"] = false
+	Core.data["artemis"] = true
+	$Control/Control/Apollo/Header.self_modulate = Color("ffffff64")
+	$Control/Control/Artemis/Header.self_modulate = Color("ffffff")
+	$"Control/Control/2Player/Header".self_modulate = Color("ffffff64")

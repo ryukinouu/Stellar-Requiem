@@ -29,7 +29,7 @@ extends Node3D
 @export var spawn_distance : int = 100
 
 @export var drum_notes : int = 110
-@export var guitar_notes : int = 0
+@export var guitar_notes : int = 110
 
 @export var initial_delay : float = 4.0
 @export var wav_delay : float = 6.0
@@ -396,65 +396,67 @@ func _input(event):
 	if paused or !can_pause:
 		return
 	
-	if event.is_action_pressed("action-top-1"):
-		if char_lanes["apollo"]["current"] != "top":
-			apollo_afterimage_effect()
-			char_lanes["apollo"]["current"] = "top"
-			apollo.position.x = char_lanes["apollo"]["top"]
-			apollo_animtree.get("parameters/playback").travel("Teleport")
-		else:
-			apollo_animtree.get("parameters/playback").travel("Hit")
-		if canhit["d_top"].size() > 0:
-			var note = canhit["d_top"].pop_front()
-			note_on_hit(note)
-	elif event.is_action_pressed("action-bottom-1"):
-		if char_lanes["apollo"]["current"] != "bottom":
-			apollo_afterimage_effect()
-			char_lanes["apollo"]["current"] = "bottom"
-			apollo.position.x = char_lanes["apollo"]["bottom"]
-			apollo_animtree.get("parameters/playback").travel("Teleport")
-		else:
-			apollo_animtree.get("parameters/playback").travel("Hit")
-		if canhit["d_bottom"].size() > 0:
-			var note = canhit["d_bottom"].pop_front()
-			note_on_hit(note)
-	elif event.is_action_pressed("action-left-1"):
-		if char_lanes["apollo"]["current"] != "left":
-			apollo_afterimage_effect()
-			char_lanes["apollo"]["current"] = "left"
-			apollo.position.x = char_lanes["apollo"]["left"]
-			apollo_animtree.get("parameters/playback").travel("Teleport")
-		else:
-			apollo_animtree.get("parameters/playback").travel("Hit")
-		if canhit["d_left"].size() > 0:
-			var note = canhit["d_left"].pop_front()
-			note_on_hit(note)
-	elif event.is_action_pressed("action-right-1"): 
-		if char_lanes["apollo"]["current"] != "right":
-			apollo_afterimage_effect()
-			char_lanes["apollo"]["current"] = "right"
-			apollo.position.x = char_lanes["apollo"]["right"]
-			apollo_animtree.get("parameters/playback").travel("Teleport")
-		else:
-			apollo_animtree.get("parameters/playback").travel("Hit")
-		if canhit["d_right"].size() > 0:
-			var note = canhit["d_right"].pop_front()
-			note_on_hit(note)
+	if !apollo_notes_disabled:
+		if event.is_action_pressed("action-top-1"):
+			if char_lanes["apollo"]["current"] != "top":
+				apollo_afterimage_effect()
+				char_lanes["apollo"]["current"] = "top"
+				apollo.position.x = char_lanes["apollo"]["top"]
+				apollo_animtree.get("parameters/playback").travel("Teleport")
+			else:
+				apollo_animtree.get("parameters/playback").travel("Hit")
+			if canhit["d_top"].size() > 0:
+				var note = canhit["d_top"].pop_front()
+				note_on_hit(note)
+		elif event.is_action_pressed("action-bottom-1"):
+			if char_lanes["apollo"]["current"] != "bottom":
+				apollo_afterimage_effect()
+				char_lanes["apollo"]["current"] = "bottom"
+				apollo.position.x = char_lanes["apollo"]["bottom"]
+				apollo_animtree.get("parameters/playback").travel("Teleport")
+			else:
+				apollo_animtree.get("parameters/playback").travel("Hit")
+			if canhit["d_bottom"].size() > 0:
+				var note = canhit["d_bottom"].pop_front()
+				note_on_hit(note)
+		elif event.is_action_pressed("action-left-1"):
+			if char_lanes["apollo"]["current"] != "left":
+				apollo_afterimage_effect()
+				char_lanes["apollo"]["current"] = "left"
+				apollo.position.x = char_lanes["apollo"]["left"]
+				apollo_animtree.get("parameters/playback").travel("Teleport")
+			else:
+				apollo_animtree.get("parameters/playback").travel("Hit")
+			if canhit["d_left"].size() > 0:
+				var note = canhit["d_left"].pop_front()
+				note_on_hit(note)
+		elif event.is_action_pressed("action-right-1"): 
+			if char_lanes["apollo"]["current"] != "right":
+				apollo_afterimage_effect()
+				char_lanes["apollo"]["current"] = "right"
+				apollo.position.x = char_lanes["apollo"]["right"]
+				apollo_animtree.get("parameters/playback").travel("Teleport")
+			else:
+				apollo_animtree.get("parameters/playback").travel("Hit")
+			if canhit["d_right"].size() > 0:
+				var note = canhit["d_right"].pop_front()
+				note_on_hit(note)
 	
-	if event.is_action_pressed("left") or event.is_action_pressed("right"):
-		if artemis_tween and artemis_tween.is_running():
-			artemis_tween.kill()
-		artemis_tween = get_tree().create_tween()
-		artemis_tween.tween_property(self, "artemis_boost_speed", artemis_move_speed, 0.2).set_trans(Tween.TRANS_SINE)
-		artemis_tween.tween_callback(
-			func():
-				artemis_boost_speed = artemis_move_speed
-		)
-	elif event.is_action_released("left") or event.is_action_released("right"):
-		if artemis_tween:
-			artemis_tween.kill()
-		if char_lanes["artemis"]["current"] != "left" and char_lanes["artemis"]["current"] != "right":
-			artemis_boost_speed = artemis_initial_speed
+	if !artemis_notes_disabled:
+		if event.is_action_pressed("left") or event.is_action_pressed("right"):
+			if artemis_tween and artemis_tween.is_running():
+				artemis_tween.kill()
+			artemis_tween = get_tree().create_tween()
+			artemis_tween.tween_property(self, "artemis_boost_speed", artemis_move_speed, 0.2).set_trans(Tween.TRANS_SINE)
+			artemis_tween.tween_callback(
+				func():
+					artemis_boost_speed = artemis_move_speed
+			)
+		elif event.is_action_released("left") or event.is_action_released("right"):
+			if artemis_tween:
+				artemis_tween.kill()
+			if char_lanes["artemis"]["current"] != "left" and char_lanes["artemis"]["current"] != "right":
+				artemis_boost_speed = artemis_initial_speed
 
 func _process(delta):
 	var progress_ratio = $GUI/HUD/Score/Bar.value / $GUI/HUD/Score/Bar.max_value
