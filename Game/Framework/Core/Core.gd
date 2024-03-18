@@ -7,17 +7,9 @@ func cooldown(time, exe):
 var data = {
 	"apollo": true,
 	"artemis": true,
+	"d_lives": 3,
+	"g_lives": 3,
 	"current_score": 0,
-	"hover_note_score": 0,
-	"hit_note_score": 0,
-	"player_1": {
-		"character": "Apollo",
-		"lives": 3,
-	},
-	"player_2": {
-		"character": "Artemis",
-		"lives": 3,
-	},
 	"keybinds": {
 		"left": "A",
 		"right": "D",

@@ -23,12 +23,13 @@ extends Node3D
 
 @onready var music_length = music.stream.get_length()
 
+@export var song_name : String = "Music Box"
 @export var map_speed : int = 30
 @export var channel_midi : int = 1
 @export var spawn_distance : int = 100
 
 @export var drum_notes : int = 110
-@export var guitar_notes : int = 110
+@export var guitar_notes : int = 0
 
 @export var initial_delay : float = 4.0
 @export var wav_delay : float = 6.0
@@ -142,6 +143,10 @@ func _ready():
 	
 	var tcam_pos = anim.find_track("Main/Camera3D:position", 0)
 	var kcam_pos = anim.track_find_key(tcam_pos, 4.0, true)
+	
+	$GUI/HUD.visible = true
+	$GUI/End.visible = false
+	
 	if Core.data["apollo"] and Core.data["artemis"]:
 		total_notes = guitar_notes + drum_notes
 		apollo.position = Vector3(3, -2, 0)
@@ -377,7 +382,13 @@ func apollo_afterimage_effect():
 	Core.cooldown(0.2, apollo_effect.queue_free)
 
 func _input(event):
-	if !can_pause:
+	if event.is_action_pressed("escape"):
+		if can_pause:
+			paused = !paused
+			get_tree().paused = paused
+			$GUI/Paused.visible = paused
+	
+	if paused or !can_pause:
 		return
 	
 	if event.is_action_pressed("action-top-1"):
@@ -424,11 +435,6 @@ func _input(event):
 		if canhit["d_right"].size() > 0:
 			var note = canhit["d_right"].pop_front()
 			note_on_hit(note)
-	elif event.is_action_pressed("escape"):
-		if can_pause:
-			paused = !paused
-			get_tree().paused = paused
-			$GUI/Paused.visible = paused
 	
 	if event.is_action_pressed("left") or event.is_action_pressed("right"):
 		if artemis_tween and artemis_tween.is_running():
@@ -492,39 +498,59 @@ func _on_unpause_pressed():
 func _on_restart_pressed():
 	get_tree().paused = false
 	var state_machine = anim_tree.get("parameters/playback")
-	state_machine.travel("Return")
+	state_machine.travel("Restart")
 	can_pause = false
-	Core.cooldown(0.5, func():
+	loading(false)
+	Core.cooldown(1, func():
 		_ready()
 	)
 
 func _on_exit_pressed():
 	get_tree().paused = false
 	var state_machine = anim_tree.get("parameters/playback")
-	state_machine.travel("Return")
 	can_pause = false
-	Core.cooldown(0.5, func():
+	loading(false)
+	Core.cooldown(1, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Menu/SongSelection.tscn")
 	)
 
 func _on_return_pressed():
 	get_tree().paused = false
 	var state_machine = anim_tree.get("parameters/playback")
-	state_machine.travel("Return")
 	can_pause = false
-	Core.cooldown(0.5, func():
+	loading(false)
+	Core.cooldown(1, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Menu/SongSelection.tscn")
 	)
 
 func _on_retry_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
-	state_machine.travel("Return")
-	Core.cooldown(0.5, func():
+	state_machine.travel("Restart")
+	can_pause = false
+	loading(false)
+	Core.cooldown(1, func():
 		_ready()
 	)
-
 
 func _on_music_finished():
 	Core.cooldown(2, func():
 		loading(false)
+		can_pause = false
+		Core.data["current_score"] = snapped(Core.data["current_score"], 1)
+		$GUI/End/Score.text = str(Core.data["current_score"])
+		if DataEngine.save_info["high_scores"].has(song_name):
+			if Core.data["current_score"] > DataEngine.save_info["high_scores"][song_name]:
+				DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
+				$GUI/End/NewHighScore.visible = true
+			else:
+				$GUI/End/NewHighScore.visible = false
+		else:
+			DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
+		$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["high_scores"][song_name])
+		DataEngine.save_data()
+		Core.cooldown(1, func():
+			$GUI/End.visible = true
+			$GUI/HUD.visible = false
+			loading(true)
+		)
 	)
