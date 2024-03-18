@@ -146,6 +146,11 @@ func _ready():
 	
 	$GUI/HUD.visible = true
 	$GUI/End.visible = false
+	$GUI/HUD/Score/SongProgress.value = 0
+	$GUI/HUD/Score/Bar.value = 0
+	$GUI/HUD/SoloScore/Text.text = "0000000"
+	$GUI/HUD/SoloScore2/Text.text = "0000000"
+	$GUI/HUD/Score/Upper/Score.text = "0000000"
 	
 	if Core.data["apollo"] and Core.data["artemis"]:
 		total_notes = guitar_notes + drum_notes
@@ -232,7 +237,7 @@ func _ready():
 			).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		)
 	
-	note_values["stellar"] = snapped(50000 / total_notes, 1)
+	note_values["stellar"] = snapped(500000 / total_notes, 1)
 	note_values["great"] = snapped(note_values["stellar"] * 0.8, 1)
 	note_values["good"] = snapped(note_values["stellar"] * 0.6, 1)
 	note_values["bad"] = snapped(note_values["stellar"] * 0.2, 1)
@@ -269,14 +274,14 @@ func begin_song():
 	tween.tween_property(
 		$GUI/HUD/Score/SongProgress, 
 		"value", 
-		100000, 
+		1000000, 
 		music_length
 	)
 	tween = get_tree().create_tween()
 	tween.tween_property(
 		self, 
 		"base_score", 
-		50000, 
+		500000, 
 		music_length
 	)
 
