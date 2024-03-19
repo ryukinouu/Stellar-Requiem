@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=24 format=3 uid="uid://djdvvewfn86x2"]
+[gd_resource type="VisualShader" load_steps=24 format=3 uid="uid://4l4186jpxcsa"]
 
 [sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_eb7oa"]
 parameter_name = "WindColor"

@@ -6,7 +6,7 @@ func cooldown(time, exe):
 
 var data = {
 	"apollo": true,
-	"artemis": false,
+	"artemis": true,
 	"d_lives": 3,
 	"g_lives": 3,
 	"current_score": 0,
