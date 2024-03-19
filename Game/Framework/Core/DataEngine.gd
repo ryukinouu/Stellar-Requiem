@@ -1,6 +1,6 @@
 extends Node
 
-var rewrite_save = false
+var rewrite_save = true
 var save_path = "user://save.dat"
 var save_info = {
 	"high_scores": {}
