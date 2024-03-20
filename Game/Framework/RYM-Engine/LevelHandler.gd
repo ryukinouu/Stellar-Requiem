@@ -134,14 +134,7 @@ var char_lanes = {
 	},
 }
 
-var artemis_boost_speed = 22.0
-var artemis_move_speed = 10.0
-var artemis_initial_speed = artemis_boost_speed
 var artemis_tween
-var artemis_instant_left = false
-var artemis_next_left
-var artemis_instant_right = false
-var artemis_next_right
 
 var delta_stellar = 0.05
 var delta_great = 0.05
@@ -544,79 +537,34 @@ func _input(event):
 
 	# Artemis Single Movement
 	if !artemis_notes_disabled:
-		if event is InputEventKey:
-			if event.keycode == KEY_LEFT:
-				if event.pressed and not event.echo:
-					if char_lanes["artemis"]["current"] != "left":
-						if char_lanes["artemis"]["current"] == "top":
-							artemis_next_left = char_lanes["artemis"]["left"]
-						elif char_lanes["artemis"]["current"] == "bottom":
-							artemis_next_left = char_lanes["artemis"]["top"]
-						elif char_lanes["artemis"]["current"] == "right":
-							artemis_next_left = char_lanes["artemis"]["bottom"]
-						artemis_instant_left = true
-				else:
-					artemis_instant_left = false
-			elif event.keycode == KEY_RIGHT:
-				if event.pressed and not event.echo:
-					if char_lanes["artemis"]["current"] != "right":
-						if char_lanes["artemis"]["current"] == "bottom":
-							artemis_next_right = char_lanes["artemis"]["right"]
-						elif char_lanes["artemis"]["current"] == "top":
-							artemis_next_right = char_lanes["artemis"]["bottom"]
-						elif char_lanes["artemis"]["current"] == "left":
-							artemis_next_right = char_lanes["artemis"]["top"]
-						artemis_instant_right = true
-				else:
-					artemis_instant_right = false
-
-		elif event is InputEventJoypadButton:
-			if event.button_index == JOY_BUTTON_DPAD_UP:
-				if event.pressed:
-					if char_lanes["artemis"]["current"] != "left":
-						if char_lanes["artemis"]["current"] == "top":
-							artemis_next_left = char_lanes["artemis"]["left"]
-						elif char_lanes["artemis"]["current"] == "bottom":
-							artemis_next_left = char_lanes["artemis"]["top"]
-						elif char_lanes["artemis"]["current"] == "right":
-							artemis_next_left = char_lanes["artemis"]["bottom"]
-						artemis_instant_left = true
-				else:
-					artemis_instant_left = false
-			elif event.button_index == JOY_BUTTON_DPAD_DOWN:
-				if event.pressed:
-					if char_lanes["artemis"]["current"] != "right":
-						if char_lanes["artemis"]["current"] == "bottom":
-							artemis_next_right = char_lanes["artemis"]["right"]
-						elif char_lanes["artemis"]["current"] == "top":
-							artemis_next_right = char_lanes["artemis"]["bottom"]
-						elif char_lanes["artemis"]["current"] == "left":
-							artemis_next_right = char_lanes["artemis"]["top"]
-						artemis_instant_right = true
-				else:
-					artemis_instant_right = false
-		# Artemis Continuous Movement
-		if event.is_action_pressed("artemis-left") or event.is_action_pressed("artemis-right"):
+		if event.is_action_pressed("artemis-left"):
+			var next_pos = get_next_lane("left")
+			print(next_pos)
 			if artemis_tween and artemis_tween.is_running():
 				artemis_tween.kill()
 			artemis_tween = get_tree().create_tween()
-			artemis_tween.tween_property(self, "artemis_boost_speed", artemis_move_speed, 0.2).set_trans(Tween.TRANS_SINE)
-			artemis_tween.tween_callback(
-				func():
-					artemis_boost_speed = artemis_move_speed
-			)
-			if event.is_action_pressed("artemis-left"):
-				artemis_animtree.get("parameters/playback").travel("Tilt_L")
-			else:
-				artemis_animtree.get("parameters/playback").travel("Tilt_R")
-		elif event.is_action_released("artemis-left") or event.is_action_released("artemis-right"):
-			if artemis_tween:
+			artemis_tween.tween_property(
+				artemis,
+				"position:x", 
+				next_pos, 
+				0.2
+			).set_trans(Tween.TRANS_SINE)
+			artemis_animtree.get("parameters/playback").travel("Tilt_L")
+		elif event.is_action_pressed("artemis-right"):
+			var next_pos = get_next_lane("right")
+			print(next_pos)
+			if artemis_tween and artemis_tween.is_running():
 				artemis_tween.kill()
-			if char_lanes["artemis"]["current"] != "left" and char_lanes["artemis"]["current"] != "right":
-				artemis_boost_speed = artemis_initial_speed
-			artemis_animtree.get("parameters/playback").travel("Forward")
-		# Artemis Action Buttons
-		elif event.is_action_pressed("artemis-green"):
+			artemis_tween = get_tree().create_tween()
+			artemis_tween.tween_property(
+				artemis,
+				"position:x", 
+				next_pos, 
+				0.2
+			).set_trans(Tween.TRANS_SINE)
+			artemis_animtree.get("parameters/playback").travel("Tilt_R")
+		
+		if event.is_action_pressed("artemis-green"):
 			var curr_lane = get_curr_canhit_lane()
 			artemis_animtree.get("parameters/playback").travel("Hit_001")
 			if canhit[curr_lane]["green"].size() > 0:
@@ -643,7 +591,29 @@ func _input(event):
 		elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red") \
 		or event.is_action_released("artemis-yellow") or event.is_action_released("artemis-blue"):
 			artemis_animtree.get("parameters/playback").travel("Forward")
-				
+
+func get_next_lane(direction):
+	var curr_lane = char_lanes["artemis"]["current"]
+	if direction == "left":
+		if curr_lane == "left":
+			char_lanes["artemis"]["current"] = "left"
+		elif curr_lane == "top":
+			char_lanes["artemis"]["current"] = "left"
+		elif curr_lane == "bottom":
+			char_lanes["artemis"]["current"] = "top"
+		elif curr_lane == "right":
+			char_lanes["artemis"]["current"] = "bottom"
+	elif direction == "right":
+		if curr_lane == "left":
+			char_lanes["artemis"]["current"] = "top"
+		elif curr_lane == "top":
+			char_lanes["artemis"]["current"] = "bottom"
+		elif curr_lane == "bottom":
+			char_lanes["artemis"]["current"] = "right"
+		elif curr_lane == "right":
+			char_lanes["artemis"]["current"] = "right"
+	return char_lanes["artemis"][char_lanes["artemis"]["current"]]
+
 func get_curr_canhit_lane():
 	var curr_lane = char_lanes["artemis"]["current"]
 	if curr_lane == "left":
@@ -664,40 +634,6 @@ func _process(delta):
 	$GUI/HUD/SoloScore/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
 	$GUI/HUD/SoloScore2/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
-	if can_pause:
-		if Input.is_action_pressed("artemis-left"):
-			if artemis.position.x < -9:
-				if artemis_instant_left:
-					artemis.position.x = lerp(artemis.position.x, float(artemis_next_left), delta * (artemis_move_speed + 5))
-				else:
-					artemis.position.x = lerp(artemis.position.x, artemis.position.x + 0.1 * artemis_boost_speed, delta * artemis_move_speed)
-		if Input.is_action_pressed("artemis-right"):
-			if artemis.position.x > -33:
-				if artemis_instant_right:
-					artemis.position.x = lerp(artemis.position.x, float(artemis_next_right), delta * (artemis_move_speed + 5))
-				else:
-					artemis.position.x = lerp(artemis.position.x, artemis.position.x - 0.1 * artemis_boost_speed, delta * artemis_move_speed)
-		
-		if not Input.is_action_pressed("artemis-left") and not Input.is_action_pressed("artemis-right"):
-			var to_left = abs(artemis.position.x - char_lanes["artemis"]["left"])
-			var to_top = abs(artemis.position.x - char_lanes["artemis"]["top"])
-			var to_bottom = abs(artemis.position.x - char_lanes["artemis"]["bottom"])
-			var to_right = abs(artemis.position.x - char_lanes["artemis"]["right"])
-			var closest_pos = min(to_left, to_top, to_bottom, to_right)
-			var target_x
-			if closest_pos == to_left:
-				target_x = char_lanes["artemis"]["left"]
-				char_lanes["artemis"]["current"] = "left"
-			elif closest_pos == to_top:
-				target_x = char_lanes["artemis"]["top"]
-				char_lanes["artemis"]["current"] = "top"
-			elif closest_pos == to_bottom:
-				target_x = char_lanes["artemis"]["bottom"]
-				char_lanes["artemis"]["current"] = "bottom"
-			elif closest_pos == to_right:
-				target_x = char_lanes["artemis"]["right"]
-				char_lanes["artemis"]["current"] = "right"
-			artemis.position.x = lerp(artemis.position.x, float(target_x), delta * artemis_move_speed)
 
 func _on_settings_pressed():
 	if can_pause:

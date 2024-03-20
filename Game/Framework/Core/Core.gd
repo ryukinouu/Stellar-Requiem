@@ -5,8 +5,8 @@ func cooldown(time, exe):
 	get_tree().create_timer(time).connect("timeout", exe)
 
 var data = {
-	"apollo": true,
-	"artemis": false,
+	"apollo": false,
+	"artemis": true,
 	"d_lives": 3,
 	"g_lives": 3,
 	"current_score": 0,
