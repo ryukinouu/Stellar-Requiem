@@ -25,7 +25,9 @@ var scene_data = {
 	"drum_notes": 0,
 	"guitar_notes": 0,
 	"music_first": false,
-	"wav_delay": 2.0
+	"wav_delay": 2.0,
+	"wav": null,
+	"midi": null
 }
 
 func ui_effect(type, subtype):

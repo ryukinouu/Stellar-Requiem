@@ -33,3 +33,5 @@ func init_scene():
 	Core.scene_data["guitar_notes"] = guitar_notes
 	Core.scene_data["music_first"] = music_first
 	Core.scene_data["wav_delay"] = wav_delay
+	Core.scene_data["wav"] = wav
+	Core.scene_data["midi"] = midi

@@ -28,13 +28,13 @@ extends Node3D
 
 @onready var music_length = music.stream.get_length()
 
-@export var song_name
-@export var map_speed
-@export var channel_midi
-@export var spawn_distance
+@export var song_name : String = "Music Box"
+@export var map_speed : int = 30
+@export var channel_midi : int = 1
+@export var spawn_distance : int = 100
 
-@export var drum_notes
-@export var guitar_notes
+@export var drum_notes : int = 110
+@export var guitar_notes : int = 110
 
 @export var initial_delay : float = 4.0
 @export var wav_delay : float = 6.0
@@ -205,6 +205,18 @@ func loading(out):
 		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 func _ready():
+	song_name = Core.scene_data["song_name"]
+	map_speed = Core.scene_data["map_speed"]
+	drum_notes = Core.scene_data["drum_notes"]
+	guitar_notes = Core.scene_data["guitar_notes"]
+	music_first = Core.scene_data["music_first"]
+	wav_delay = Core.scene_data["wav_delay"]
+	music.stream = Core.scene_data["wav"]
+	midi.file = Core.scene_data["midi"]
+	if Core.scene_data["tutorial"]:
+		$GUI/HUD/Tutorial.visible = true
+		$GUI/HUD/Tutorial2.visible = true
+	
 	var anim = anim_player.get_animation("Playing")
 	var tmain_pos = anim.find_track("Main:position", 0)
 	var kmain_pos = anim.track_find_key(tmain_pos, 600.0, true)
