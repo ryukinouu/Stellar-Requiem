@@ -443,7 +443,7 @@ func _on_note_event(channel, event):
 						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
 							Core.data["g_lives"] -= 1
 							if Core.data["g_lives"] == 0:
-								_on_game_over()
+								on_game_over()
 					)
 				else:
 					# HIT WINDOW
@@ -745,7 +745,7 @@ func _on_retry_pressed():
 		_ready()
 	)
 
-func _on_game_over():
+func on_game_over():
 		loading(false)
 		can_pause = false
 		Core.data["current_score"] = snapped(Core.data["current_score"], 1)

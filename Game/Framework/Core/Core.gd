@@ -11,10 +11,16 @@ var data = {
 	"g_lives": 3,
 	"current_score": 0,
 	"keybinds": {
-		"left": "A",
-		"right": "D",
-		"action": "S",
-		"escape": "escape"
+		"apollo-left": "A",
+		"apollo-top": "S",
+		"apollo-bottom": "D",
+		"apollo-right": "F",
+		"apollo-pause": "Escape",
+		"artemis-left": "Left",
+		"artemis-right": "Right",
+		"artemis-action1": "H",
+		"artemis-action2": "J",
+		"artemis-pause": "Return",
 	}
 }
 

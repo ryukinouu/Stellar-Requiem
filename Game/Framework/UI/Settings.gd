@@ -8,7 +8,9 @@ var last_btn = null
 
 func _ready():
 	anim_tree.active = true
-	for node in $Control/Player1.get_children():
+	for node in $Control/Apollo.get_children():
+		node.get_node("Button/Text").text = Core.data["keybinds"][node.name]
+	for node in $Control/Artemis.get_children():
 		node.get_node("Button/Text").text = Core.data["keybinds"][node.name]
 
 func _input(event):
@@ -37,7 +39,7 @@ func simplify_button_name(button_text: String) -> String:
 				return name_parts[0]
 	return button_text
 
-func _on_texture_button_pressed():
+func _on_back_button_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
 	Core.cooldown(0.5, func():
@@ -47,17 +49,37 @@ func _on_texture_button_pressed():
 func _on_audio_stream_player_finished():
 	$AudioStreamPlayer.play()
 
-func _on_move_left_1_pressed():
-	set_input_wait("left", $Control/Player1/left/Button)
+# Apollo Keybindings
+func _on_apollo_left_pressed():
+	set_input_wait("apollo-left", $Control/Apollo/"apollo-left"/Button)
 
-func _on_move_right_1_pressed():
-	set_input_wait("right", $Control/Player1/right/Button)
+func _on_apollo_top_pressed():
+	set_input_wait("apollo-top", $Control/Apollo/"apollo-top"/Button)
 
-func _on_action_1_pressed():
-	set_input_wait("action", $Control/Player1/action/Button)
+func _on_apollo_bottom_pressed():
+	set_input_wait("apollo-bottom", $Control/Apollo/"apollo-bottom"/Button)
 
-func _on_pause_1_pressed():
-	set_input_wait("escape", $Control/Player1/escape/Button)
+func _on_apollo_right_pressed():
+	set_input_wait("apollo-right", $Control/Apollo/"apollo-right"/Button)
+
+func _on_apollo_pause_pressed():
+	set_input_wait("escape", $Control/Apollo/"apollo-pause"/Button)
+
+# Artemis Keybindings
+func _on_artemis_left_pressed():
+	set_input_wait("artemis-left", $Control/Artemis/"artemis-left"/Button)
+
+func _on_artemis_right_pressed():
+	set_input_wait("artemis-right", $Control/Artemis/"artemis-right"/Button)
+
+func _on_artemis_action1_pressed():
+	set_input_wait("artemis-green", $Control/Artemis/"artemis-action1"/Button)
+
+func _on_artemis_action2_pressed():
+	set_input_wait("artemis-red", $Control/Artemis/"artemis-action2"/Button)
+
+func _on_artemis_pause_pressed():
+	set_input_wait("return", $Control/Artemis/"artemis-pause"/Button)
 
 func set_input_wait(action_name: String, button: Control):
 	if last_btn != button:
