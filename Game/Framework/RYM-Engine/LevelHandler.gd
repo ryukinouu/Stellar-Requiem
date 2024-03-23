@@ -366,6 +366,8 @@ func begin_song():
 		music_length
 	)
 
+
+
 func _on_note_event(channel, event):
 	if event.type == SMF.MIDIEventType.note_on:
 		if channel.number == channel_midi - 1: 
@@ -430,17 +432,19 @@ func _on_note_event(channel, event):
 				
 				if note_scene == g_hover_note_scene:
 					Core.cooldown(2, func():
-						change_indicator(note_instance, "Miss", "Stellar")
+						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
+							change_indicator(note_instance, "Miss", "Stellar")
 						artemis_animtree.get("parameters/playback").travel("Hit_003")
 						tweens[note_instance] = tween
 						note_on_hit(note_instance)
-						)
+					)
 				elif note_scene == g_rocks_scene:
 					Core.cooldown(2, func():
-						Core.data["g_lives"] -= 1
-						if Core.data["g_lives"] == 0:
-							_on_game_over()
-						)
+						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
+							Core.data["g_lives"] -= 1
+							if Core.data["g_lives"] == 0:
+								_on_game_over()
+					)
 				else:
 					# HIT WINDOW
 					Core.cooldown(2 - hit_delta, func():
@@ -691,7 +695,7 @@ func _process(delta):
 	elif Core.data["g_lives"] == 1:
 		$GUI/HUD/Side2/GridContainer/TextureRect2.visible = false
 	elif Core.data["g_lives"] == 0:
-		$GUI/HUD/Side2/GridContainer/TextureRect1.visible = false
+		$GUI/HUD/Side2/GridContainer/TextureRect.visible = false
 
 func _on_settings_pressed():
 	if can_pause:
