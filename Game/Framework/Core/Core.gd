@@ -18,6 +18,15 @@ var data = {
 	}
 }
 
+var scene_data = {
+	"tutorial": false,
+	"map_speed": 30,
+	"drum_notes": 0,
+	"guitar_notes": 0,
+	"music_first": false,
+	"wav_delay": 2.0
+}
+
 func ui_effect(type, subtype):
 	if type == "add":
 		var additions = get_parent().get_node("/root/Level/GUI/HUD/SoloScore/Additions")

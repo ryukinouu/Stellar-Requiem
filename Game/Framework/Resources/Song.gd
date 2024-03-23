@@ -24,3 +24,6 @@ class_name Song
 var channel_midi = 1
 var spawn_distance = 100
 var initial_delay = 4.0
+
+func init_scene():
+	pass
