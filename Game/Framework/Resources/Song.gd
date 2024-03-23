@@ -26,4 +26,10 @@ var spawn_distance = 100
 var initial_delay = 4.0
 
 func init_scene():
-	pass
+	Core.scene_data["song_name"] = title
+	Core.scene_data["tutorial"] = tutorial
+	Core.scene_data["map_speed"] = map_speed
+	Core.scene_data["drum_notes"] = drum_notes
+	Core.scene_data["guitar_notes"] = guitar_notes
+	Core.scene_data["music_first"] = music_first
+	Core.scene_data["wav_delay"] = wav_delay

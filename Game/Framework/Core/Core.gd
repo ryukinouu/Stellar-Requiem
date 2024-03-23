@@ -19,6 +19,7 @@ var data = {
 }
 
 var scene_data = {
+	"song_name": "",
 	"tutorial": false,
 	"map_speed": 30,
 	"drum_notes": 0,

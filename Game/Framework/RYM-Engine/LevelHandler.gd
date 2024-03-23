@@ -28,13 +28,13 @@ extends Node3D
 
 @onready var music_length = music.stream.get_length()
 
-@export var song_name : String = "Music Box"
-@export var map_speed : int = 30
-@export var channel_midi : int = 1
-@export var spawn_distance : int = 100
+@export var song_name
+@export var map_speed
+@export var channel_midi
+@export var spawn_distance
 
-@export var drum_notes : int = 110
-@export var guitar_notes : int = 110
+@export var drum_notes
+@export var guitar_notes
 
 @export var initial_delay : float = 4.0
 @export var wav_delay : float = 6.0

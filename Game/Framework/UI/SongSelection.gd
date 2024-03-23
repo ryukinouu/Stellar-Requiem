@@ -30,7 +30,6 @@ func _on_texture_button_2_pressed():
 func _on_audio_toggle_toggled(toggled_on):
 	$AudioStreamPlayer.stream_paused = toggled_on
 
-
 func _on_texture_button_3_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
