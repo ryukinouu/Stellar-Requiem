@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Song" load_steps=4 format=3 uid="uid://cvtflf6ibicu8"]
+
+[ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="2_0jvie"]
+[ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="3_x08h3"]
+[ext_resource type="AudioStream" uid="uid://gjwaym6llq87" path="res://Assets/Music/MusicBox.wav" id="4_inj35"]
+
+[resource]
+script = ExtResource("3_x08h3")
+title = "Meow"
+artist = "Zhehan"
+environment = ""
+midi = "res://Assets/MIDI/music_box.mid"
+wav = ExtResource("4_inj35")
+icon = ExtResource("2_0jvie")
+difficulty = 3
+bpm = 80
+length = 78
+tutorial = false
+map_speed = 30
+drum_notes = 110
+guitar_notes = 110
+music_first = false
+wav_delay = 2.0

@@ -5,7 +5,7 @@ class_name Song
 @export var title : String = ""
 @export var artist : String = ""
 
-@export var environment : PackedScene
+@export var environment : String = ""
 @export_file ("*.mid") var midi : String = ""
 @export var wav : AudioStream
 

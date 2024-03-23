@@ -44,6 +44,8 @@ func update_song():
 		else:
 			diff_node.texture = load("res://Assets/Textures/SongSelectionAssets/Asset_142x.png")
 	$SongIcon.texture = songs[current_index].icon
+	$AudioStreamPlayer.stream = songs[current_index].wav
+	$AudioStreamPlayer.play()
 	newest_high_score(songs[current_index].title)
 
 func _ready():
@@ -61,7 +63,7 @@ func _on_texture_button_pressed():
 	state_machine.travel("LoadOut")
 	songs[current_index].init_scene()
 	Core.cooldown(1, func():
-		get_tree().change_scene_to_packed(songs[current_index].environment)
+		get_tree().change_scene_to_file(songs[current_index].environment)
 	)
 
 func _on_texture_button_2_pressed():
@@ -80,3 +82,7 @@ func _on_texture_button_3_pressed():
 	Core.cooldown(1, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Levels/Music Box.tscn")
 	)
+
+
+func _on_audio_stream_player_finished():
+	pass # Replace with function body.
