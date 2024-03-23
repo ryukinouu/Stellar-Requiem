@@ -47,6 +47,12 @@ func update_song():
 	$AudioStreamPlayer.stream = songs[current_index].wav
 	$AudioStreamPlayer.play()
 	newest_high_score(songs[current_index].title)
+	$CanvasLayer/Next.modulate = Color("ffffff")
+	$CanvasLayer/Previous.modulate = Color("ffffff")
+	if current_index + 1 > songs.size() - 1:
+		$CanvasLayer/Next.modulate = Color("ffffff82")
+	if current_index - 1 < 0:
+		$CanvasLayer/Previous.modulate = Color("ffffff82")
 
 func _ready():
 	var song_paths = dir_contents("res://Game/Resources/Songs/")
@@ -83,6 +89,15 @@ func _on_texture_button_3_pressed():
 		get_tree().change_scene_to_file("res://Game/Scenes/Levels/Music Box.tscn")
 	)
 
-
 func _on_audio_stream_player_finished():
-	pass # Replace with function body.
+	$AudioStreamPlayer.play()
+
+func _on_previous_pressed():
+	if current_index - 1 >= 0:
+		current_index -= 1
+		update_song()
+
+func _on_next_pressed():
+	if current_index + 1 <= songs.size() - 1:
+		current_index += 1
+		update_song()
