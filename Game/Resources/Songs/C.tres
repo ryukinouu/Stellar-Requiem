@@ -2,22 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="1_tyjvj"]
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_2csus"]
-[ext_resource type="AudioStream" uid="uid://bmu574axugi3y" path="res://Assets/Music/BouncyNotes.wav" id="3_wvy1c"]
+[ext_resource type="AudioStream" uid="uid://djtpkiqb1p1jt" path="res://Assets/Music/TakeItOver.mp3" id="3_3rs75"]
 
 [resource]
 script = ExtResource("2_2csus")
-title = "Bouncy Notes"
-artist = "Zongfan"
+title = "Take it Over"
+artist = "Zhehan"
 environment = "res://Game/Scenes/Environments/Testing Room.tscn"
-midi = "res://Assets/MIDI/bouncy_notes.mid"
-wav = ExtResource("3_wvy1c")
+midi = "res://Assets/MIDI/take_it_over.mid"
+wav = ExtResource("3_3rs75")
 icon = ExtResource("1_tyjvj")
-difficulty = 1
-bpm = 150
-length = 125
+difficulty = 4
+bpm = 160
+length = 135
 tutorial = false
 map_speed = 30
-drum_notes = 392
-guitar_notes = 261
-music_first = true
-wav_delay = 3.2
+drum_notes = 210
+guitar_notes = 219
+music_first = false
+wav_delay = 2.0
