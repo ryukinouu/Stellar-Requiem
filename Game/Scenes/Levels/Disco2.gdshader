@@ -36,8 +36,8 @@ void fragment() {
     color *= black.x * black.y * smoothstep(1.0, 0.0, length(fract(grid_uv) - 0.5));
 
     // Correcting this line to ensure there's no 'vec3 = float' situation
-    float randomValue = 0.1 + 0.5 * cos(random(floor(uv * grid_size)) + TIME * tile_speed);
-    color *= randomValue; // Correctly applying the float to each component of the vec3
+    //float randomValue = 0.1 + 0.5 * cos(random(floor(uv * grid_size)) + TIME * tile_speed);
+    //color *= randomValue; // Correctly applying the float to each component of the vec3
 
     ALBEDO = color;
 }

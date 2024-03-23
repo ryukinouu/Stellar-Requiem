@@ -43,8 +43,10 @@ extends Node3D
 var d_note_scene = load("res://Game/Scenes/Notes/Note.tscn")
 var g_green_note_scene = load("res://Game/Scenes/Notes/GreenNote.tscn")
 var g_red_note_scene = load("res://Game/Scenes/Notes/RedNote.tscn")
-var g_yellow_note_scene = load("res://Game/Scenes/Notes/YellowNote.tscn")
-var g_blue_note_scene = load("res://Game/Scenes/Notes/BlueNote.tscn")
+var g_hover_note_scene = load("res://Game/Scenes/Notes/HoverNote.tscn")
+var g_rocks_scene = load("res://Game/Scenes/Notes/Rocks.tscn")
+#var g_yellow_note_scene = load("res://Game/Scenes/Notes/YellowNote.tscn")
+#var g_blue_note_scene = load("res://Game/Scenes/Notes/BlueNote.tscn")
 
 var apollo_afterimage = load("res://Game/Scenes/Core/Apollo_Afterimage.tscn")
 var miss_texture = load("res://Assets/Textures/Indicators/MISS.png")
@@ -87,26 +89,34 @@ var canhit = {
 	"g_left": {
 		"green": [],
 		"red": [],
-		"yellow": [],
-		"blue": []
+		"hover": [],
+		"rocks": []
+		#"yellow": [],
+		#"blue": []
 	},
 	"g_top": {
 		"green": [],
 		"red": [],
-		"yellow": [],
-		"blue": []
+		"hover": [],
+		"rocks": []
+		#"yellow": [],
+		#"blue": []
 	},
 	"g_bottom": {
 		"green": [],
 		"red": [],
-		"yellow": [],
-		"blue": []
+		"hover": [],
+		"rocks": []
+		#"yellow": [],
+		#"blue": []
 	},
 	"g_right": {
 		"green": [],
 		"red": [],
-		"yellow": [],
-		"blue": []
+		"hover": [],
+		"rocks": []
+		#"yellow": [],
+		#"blue": []
 	}
 }
 var note_values = {
@@ -364,14 +374,27 @@ func _on_note_event(channel, event):
 					elif event.note == 13 or event.note == 20 or event.note == 25 or event.note == 32:
 						note_scene = g_red_note_scene
 					elif event.note == 14 or event.note == 21 or event.note == 26 or event.note == 33:
-						note_scene = g_yellow_note_scene
+						#note_scene = g_yellow_note_scene
+						note_scene = g_hover_note_scene
 					elif event.note == 15 or event.note == 22 or event.note == 27 or event.note == 34:
-						note_scene = g_blue_note_scene
+						#note_scene = g_blue_note_scene
+						note_scene = g_rocks_scene
 
 				var note_instance = note_scene.instantiate()
-				var mesh_instance_paths = ["Sphere", "Sphere_001", "Sphere_002", "Sphere_003", "Sphere_004"]
-				for mesh_instance_path in mesh_instance_paths:
-					var mesh_instance = note_instance.get_node("DefaultNoteWhite/Armature/Skeleton3D/" + mesh_instance_path)
+				if note_scene != g_rocks_scene:
+					var mesh_instance_paths = ["Sphere", "Sphere_001", "Sphere_002", "Sphere_003", "Sphere_004"]
+					for mesh_instance_path in mesh_instance_paths:
+						var mesh_instance = note_instance.get_node("DefaultNoteWhite/Armature/Skeleton3D/" + mesh_instance_path)
+						if mesh_instance and mesh_instance is MeshInstance3D:
+							var mesh = mesh_instance.mesh
+							if mesh:
+								for surface in range(mesh.get_surface_count()):
+									var mat = mesh.surface_get_material(surface)
+									if mat:
+										var new_mat = mat.duplicate()
+										mesh.surface_set_material(surface, new_mat)
+				else:
+					var mesh_instance = note_instance.get_node("Rocks")
 					if mesh_instance and mesh_instance is MeshInstance3D:
 						var mesh = mesh_instance.mesh
 						if mesh:
@@ -393,43 +416,58 @@ func _on_note_event(channel, event):
 				)
 				tween.tween_callback(note_instance.queue_free)
 				
-				# HIT WINDOW
-				Core.cooldown(2 - hit_delta, func():
-					var note_color = null
-					if event.note <= 34:
-						note_color = get_note_color(event.note)
-						canhit[note_direction][note_color].append(note_instance)
-					else:
-						canhit[note_direction].append(note_instance)
-					tweens[note_instance] = tween
-					Core.cooldown(hit_delta + delta_miss, func():
-						if note_instance in canhit[mapping[event.note]]:
-							canhit[mapping[event.note]].erase(note_instance)
-							tweens.erase(note_instance)
-						elif note_color != null and note_instance in canhit[mapping[event.note]][note_color]:
-							canhit[mapping[event.note]][note_color].erase(note_instance)
-							tweens.erase(note_instance)
+				if note_scene == g_hover_note_scene:
+					Core.cooldown(2, func():
+						change_indicator(note_instance, "Miss", "Stellar")
+						artemis_animtree.get("parameters/playback").travel("Hit_003")
+						tweens[note_instance] = tween
+						note_on_hit(note_instance)
+						)
+				elif note_scene == g_rocks_scene:
+					Core.cooldown(2, func():
+						Core.data["g_lives"] -= 1
+						if Core.data["g_lives"] == 0:
+							_on_game_over()
+						)
+				else:
+					# HIT WINDOW
+					Core.cooldown(2 - hit_delta, func():
+						var note_color = null
+						if event.note <= 34:
+							note_color = get_note_color(event.note)
+							canhit[note_direction][note_color].append(note_instance)
+						else:
+							canhit[note_direction].append(note_instance)
+						tweens[note_instance] = tween
+						Core.cooldown(hit_delta + delta_miss, func():
+							if note_instance in canhit[mapping[event.note]]:
+								canhit[mapping[event.note]].erase(note_instance)
+								tweens.erase(note_instance)
+							elif note_color != null and note_instance in canhit[mapping[event.note]][note_color]:
+								canhit[mapping[event.note]][note_color].erase(note_instance)
+								tweens.erase(note_instance)
+						)
 					)
-				)
 				
-				Core.cooldown(2 - hit_delta, func():
-					change_indicator(note_instance, "Miss", "Miss")
-					Core.cooldown(delta_miss, func():
-						change_indicator(note_instance, "Miss", "Bad")
-						Core.cooldown(delta_bad, func():
-							change_indicator(note_instance, "Bad", "Good")
-							Core.cooldown(delta_good, func():
-								change_indicator(note_instance, "Good", "Great")
-								Core.cooldown(delta_great, func():
-									change_indicator(note_instance, "Great", "Stellar")
-									Core.cooldown(delta_stellar, func():
-										change_indicator(note_instance, "Stellar", "Miss")
+				if note_scene != g_hover_note_scene and note_scene != g_rocks_scene:
+					Core.cooldown(2 - hit_delta, func():
+						change_indicator(note_instance, "Miss", "Miss")
+						Core.cooldown(delta_miss, func():
+							change_indicator(note_instance, "Miss", "Bad")
+							Core.cooldown(delta_bad, func():
+								change_indicator(note_instance, "Bad", "Good")
+								Core.cooldown(delta_good, func():
+									change_indicator(note_instance, "Good", "Great")
+									Core.cooldown(delta_great, func():
+										change_indicator(note_instance, "Great", "Stellar")
+										Core.cooldown(delta_stellar, func():
+											change_indicator(note_instance, "Stellar", "Miss")
+										)
 									)
 								)
 							)
 						)
 					)
-				)
 
 func get_note_color(note):
 	if note == 12 or note == 19 or note == 24 or note == 31:
@@ -437,9 +475,9 @@ func get_note_color(note):
 	elif note == 13 or note == 20 or note == 25 or note == 32:
 		return "red"
 	elif note == 14 or note == 21 or note == 26 or note == 33:
-		return "yellow"
+		return "hover"
 	elif note == 15 or note == 22 or note == 27 or note == 34:
-		return "blue"
+		return "rocks"
 
 func change_indicator(note, old, new):
 	if note:
@@ -576,21 +614,23 @@ func _input(event):
 			if canhit[curr_lane]["red"].size() > 0:
 				var note = canhit[curr_lane]["red"].pop_front()
 				note_on_hit(note)
-		elif event.is_action_pressed("artemis-yellow"):
-			var curr_lane = get_curr_canhit_lane()
-			artemis_animtree.get("parameters/playback").travel("Hit_003")
-			if canhit[curr_lane]["yellow"].size() > 0:
-				var note = canhit[curr_lane]["yellow"].pop_front()
-				note_on_hit(note)
-		elif event.is_action_pressed("artemis-blue"):
-			var curr_lane = get_curr_canhit_lane()
-			artemis_animtree.get("parameters/playback").travel("Hit_004")
-			if canhit[curr_lane]["blue"].size() > 0:
-				var note = canhit[curr_lane]["blue"].pop_front()
-				note_on_hit(note)
-		elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red") \
-		or event.is_action_released("artemis-yellow") or event.is_action_released("artemis-blue"):
+		elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red"):
 			artemis_animtree.get("parameters/playback").travel("Forward")
+		#elif event.is_action_pressed("artemis-yellow"):
+			#var curr_lane = get_curr_canhit_lane()
+			#artemis_animtree.get("parameters/playback").travel("Hit_003")
+			#if canhit[curr_lane]["yellow"].size() > 0:
+				#var note = canhit[curr_lane]["yellow"].pop_front()
+				#note_on_hit(note)
+		#elif event.is_action_pressed("artemis-blue"):
+			#var curr_lane = get_curr_canhit_lane()
+			#artemis_animtree.get("parameters/playback").travel("Hit_004")
+			#if canhit[curr_lane]["blue"].size() > 0:
+				#var note = canhit[curr_lane]["blue"].pop_front()
+				#note_on_hit(note)
+		#elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red") \
+		#or event.is_action_released("artemis-yellow") or event.is_action_released("artemis-blue"):
+			#artemis_animtree.get("parameters/playback").travel("Forward")
 
 func get_next_lane(direction):
 	var curr_lane = char_lanes["artemis"]["current"]
@@ -634,6 +674,12 @@ func _process(delta):
 	$GUI/HUD/SoloScore/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
 	$GUI/HUD/SoloScore2/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	if Core.data["g_lives"] == 2:
+		$GUI/HUD/Side2/GridContainer/TextureRect3.visible = false
+	elif Core.data["g_lives"] == 1:
+		$GUI/HUD/Side2/GridContainer/TextureRect2.visible = false
+	elif Core.data["g_lives"] == 0:
+		$GUI/HUD/Side2/GridContainer/TextureRect1.visible = false
 
 func _on_settings_pressed():
 	if can_pause:
@@ -682,6 +728,27 @@ func _on_retry_pressed():
 	Core.cooldown(1, func():
 		_ready()
 	)
+
+func _on_game_over():
+		loading(false)
+		can_pause = false
+		Core.data["current_score"] = snapped(Core.data["current_score"], 1)
+		$GUI/End/Score.text = str(Core.data["current_score"])
+		if DataEngine.save_info["high_scores"].has(song_name):
+			if Core.data["current_score"] > DataEngine.save_info["high_scores"][song_name]:
+				DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
+				$GUI/End/NewHighScore.visible = true
+			else:
+				$GUI/End/NewHighScore.visible = false
+		else:
+			DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
+		$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["high_scores"][song_name])
+		DataEngine.save_data()
+		Core.cooldown(1, func():
+			$GUI/End.visible = true
+			$GUI/HUD.visible = false
+			loading(true)
+		)
 
 func _on_music_finished():
 	Core.cooldown(2, func():
