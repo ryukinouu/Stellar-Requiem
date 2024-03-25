@@ -36,6 +36,19 @@ var scene_data = {
 	"midi": null
 }
 
+var sfx = {
+	"apollo-hit": load("res://Assets/SFX/ApolloHit.wav"),
+	"apollo-move": load("res://Assets/SFX/ApolloMove.wav"),
+	"artemis-hit": load("res://Assets/SFX/ArtemisHit.wav"),
+	"artemis-moveleft": load("res://Assets/SFX/ArtemisMoveLeft.wav"),
+	"artemis-moveright": load("res://Assets/SFX/ArtemisMoveRight.wav"),
+	"button-click": load("res://Assets/SFX/ButtonClick.wav"),
+	"button-hover": load("res://Assets/SFX/ButtonHover.wav"),
+	"end-score": load("res://Assets/SFX/EndScore.wav"),
+	"full-combo": load("res://Assets/SFX/FullCombo.wav"),
+	"song-complete": load("res://Assets/SFX/SongComplete.wav")
+}
+
 func ui_effect(type, subtype):
 	if type == "add":
 		var additions = get_parent().get_node("/root/Level/GUI/HUD/SoloScore/Additions")

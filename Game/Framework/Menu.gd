@@ -3,6 +3,10 @@ extends Node3D
 @onready var anim_tree = $AnimationTree
 @onready var animation_player = $AnimationPlayer
 
+func sound_effect(sfx_name):
+	if !$SFX.playing: $SFX.play()
+	$SFX.get_stream_playback().play_stream(Core.sfx[sfx_name])
+
 func _ready():
 	$Control/Characters.size = Vector2(1695, 1570)
 	anim_tree.active = true
@@ -29,7 +33,7 @@ func _on_quit_pressed():
 	)
 
 func _on_audio_stream_player_finished():
-	$AudioStreamPlayer.play()
+	$Music.play()
 
 func _on_settings_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
@@ -39,8 +43,8 @@ func _on_settings_pressed():
 	)
 
 func _on_audio_toggle_toggled(toggled_on):
-	$AudioStreamPlayer.stream_paused = toggled_on
-
+	$Music.stream_paused = toggled_on
+	sound_effect("button-click")
 
 func _on_player_pressed():
 	Core.data["apollo"] = true
