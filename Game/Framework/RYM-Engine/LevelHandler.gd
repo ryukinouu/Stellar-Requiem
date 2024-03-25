@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var midi = $Midi
 @onready var music = $Main/Camera3D/Music
+@onready var sfx = $Main/Camera3D/SFX
 @onready var misc = $Main/Misc
 
 @onready var anim_player = $AnimationPlayer
@@ -434,6 +435,7 @@ func _on_note_event(channel, event):
 					Core.cooldown(2, func():
 						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
 							change_indicator(note_instance, "Miss", "Stellar")
+						Core.sound_effect(sfx, "artemis-hit")
 						artemis_animtree.get("parameters/playback").travel("Hit_003")
 						tweens[note_instance] = tween
 						note_on_hit(note_instance)
@@ -545,6 +547,7 @@ func _input(event):
 	# Apollo Movement/Action Buttons
 	if !apollo_notes_disabled:
 		if event.is_action_pressed("apollo-top"):
+			Core.sound_effect(sfx, "apollo-move")
 			if char_lanes["apollo"]["current"] != "top":
 				apollo_afterimage_effect()
 				char_lanes["apollo"]["current"] = "top"
@@ -553,9 +556,11 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_top"].size() > 0:
+				Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_top"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_pressed("apollo-bottom"):
+			Core.sound_effect(sfx, "apollo-move")
 			if char_lanes["apollo"]["current"] != "bottom":
 				apollo_afterimage_effect()
 				char_lanes["apollo"]["current"] = "bottom"
@@ -564,9 +569,11 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_bottom"].size() > 0:
+				Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_bottom"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_pressed("apollo-left"):
+			Core.sound_effect(sfx, "apollo-move")
 			if char_lanes["apollo"]["current"] != "left":
 				apollo_afterimage_effect()
 				char_lanes["apollo"]["current"] = "left"
@@ -575,9 +582,11 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_left"].size() > 0:
+				Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_left"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_pressed("apollo-right"): 
+			Core.sound_effect(sfx, "apollo-move")
 			if char_lanes["apollo"]["current"] != "right":
 				apollo_afterimage_effect()
 				char_lanes["apollo"]["current"] = "right"
@@ -586,12 +595,14 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_right"].size() > 0:
+				Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_right"].pop_front()
 				note_on_hit(note)
 
 	# Artemis Single Movement
 	if !artemis_notes_disabled:
 		if event.is_action_pressed("artemis-left"):
+			Core.sound_effect(sfx, "artemis-moveleft")
 			var next_pos = get_next_lane("left")
 			print(next_pos)
 			if artemis_tween and artemis_tween.is_running():
@@ -605,6 +616,7 @@ func _input(event):
 			).set_trans(Tween.TRANS_SINE)
 			artemis_animtree.get("parameters/playback").travel("Tilt_L")
 		elif event.is_action_pressed("artemis-right"):
+			Core.sound_effect(sfx, "artemis-moveright")
 			var next_pos = get_next_lane("right")
 			print(next_pos)
 			if artemis_tween and artemis_tween.is_running():
@@ -622,12 +634,14 @@ func _input(event):
 			var curr_lane = get_curr_canhit_lane()
 			artemis_animtree.get("parameters/playback").travel("Hit_001")
 			if canhit[curr_lane]["green"].size() > 0:
+				Core.sound_effect(sfx, "artemis-hit")
 				var note = canhit[curr_lane]["green"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_pressed("artemis-red"):
 			var curr_lane = get_curr_canhit_lane()
 			artemis_animtree.get("parameters/playback").travel("Hit_002")
 			if canhit[curr_lane]["red"].size() > 0:
+				Core.sound_effect(sfx, "artemis-hit")
 				var note = canhit[curr_lane]["red"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red"):
@@ -767,6 +781,7 @@ func on_game_over():
 		)
 
 func _on_music_finished():
+	Core.sound_effect(sfx, "song-complete")
 	Core.cooldown(2, func():
 		loading(false)
 		can_pause = false
@@ -786,6 +801,10 @@ func _on_music_finished():
 			$GUI/End.visible = true
 			$GUI/HUD.visible = false
 			loading(true)
+			if Core.data["current_score"] == 1000000:
+				Core.sound_effect(sfx, "full-combo")
+			else:
+				Core.sound_effect(sfx, "end-score")
 		)
 	)
 	

@@ -46,8 +46,8 @@ func update_song():
 		else:
 			diff_node.texture = load("res://Assets/Textures/SongSelectionAssets/Asset_142x.png")
 	$SongIcon.texture = songs[current_index].icon
-	$AudioStreamPlayer.stream = songs[current_index].wav
-	$AudioStreamPlayer.play()
+	$Music.stream = songs[current_index].wav
+	$Music.play()
 	newest_high_score(songs[current_index].title)
 	$CanvasLayer/Next.modulate = Color("ffffff")
 	$CanvasLayer/Previous.modulate = Color("ffffff")
@@ -67,6 +67,7 @@ func _ready():
 	anim_tree.active = true
 
 func _on_texture_button_pressed():
+	Core.sound_effect($SFX, "button-click")
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
 	songs[current_index].init_scene()
@@ -75,6 +76,7 @@ func _on_texture_button_pressed():
 	)
 
 func _on_texture_button_2_pressed():
+	Core.sound_effect($SFX, "button-click")
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
 	Core.cooldown(1, func():
@@ -82,24 +84,34 @@ func _on_texture_button_2_pressed():
 	)
 
 func _on_audio_toggle_toggled(toggled_on):
-	$AudioStreamPlayer.stream_paused = toggled_on
-
-func _on_texture_button_3_pressed():
-	var state_machine = anim_tree.get("parameters/playback")
-	state_machine.travel("LoadOut")
-	Core.cooldown(1, func():
-		get_tree().change_scene_to_file("res://Game/Scenes/Levels/Music Box.tscn")
-	)
+	$Music.stream_paused = toggled_on
 
 func _on_audio_stream_player_finished():
-	$AudioStreamPlayer.play()
+	$Music.play()
 
 func _on_previous_pressed():
 	if current_index - 1 >= 0:
+		Core.sound_effect($SFX, "button-click")
 		current_index -= 1
 		update_song()
 
 func _on_next_pressed():
 	if current_index + 1 <= songs.size() - 1:
+		Core.sound_effect($SFX, "button-click")
 		current_index += 1
 		update_song()
+
+
+func _on_start_mouse_entered():
+	Core.sound_effect($SFX, "button-hover")
+
+func _on_back_mouse_entered():
+	Core.sound_effect($SFX, "button-hover")
+
+func _on_previous_mouse_entered():
+	if current_index - 1 >= 0:
+		Core.sound_effect($SFX, "button-hover")
+
+func _on_next_mouse_entered():
+	if current_index + 1 <= songs.size() - 1:
+		Core.sound_effect($SFX, "button-hover")

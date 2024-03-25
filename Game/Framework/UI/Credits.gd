@@ -6,6 +6,7 @@ func _ready():
 	anim_tree.active = true
 
 func _on_texture_button_pressed():
+	Core.sound_effect($SFX, "button-click")
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
 	Core.cooldown(0.5, func():
@@ -13,4 +14,7 @@ func _on_texture_button_pressed():
 	)
 
 func _on_audio_stream_player_finished():
-	$AudioStreamPlayer.play()
+	$Music.play()
+
+func _on_texture_button_mouse_entered():
+	Core.sound_effect($SFX, "button-hover")

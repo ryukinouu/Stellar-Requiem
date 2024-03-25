@@ -6,7 +6,7 @@ func cooldown(time, exe):
 
 var data = {
 	"apollo": true,
-	"artemis": true,
+	"artemis": false,
 	"d_lives": 3,
 	"g_lives": 3,
 	"current_score": 0,
@@ -48,6 +48,10 @@ var sfx = {
 	"full-combo": load("res://Assets/SFX/FullCombo.wav"),
 	"song-complete": load("res://Assets/SFX/SongComplete.wav")
 }
+
+func sound_effect(sfx_node, sfx_name):
+	if !sfx_node.playing: sfx_node.play()
+	sfx_node.get_stream_playback().play_stream(sfx[sfx_name])
 
 func ui_effect(type, subtype):
 	if type == "add":
