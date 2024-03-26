@@ -6,12 +6,17 @@ var input_wait = null
 var txt_btn = null
 var last_btn = null
 
+var save_path = "user://settings.dat"
+
 func _ready():
 	anim_tree.active = true
 	for node in $Control/Apollo.get_children():
 		node.get_node("Button/Text").text = Core.data["keybinds"][node.name]
 	for node in $Control/Artemis.get_children():
 		node.get_node("Button/Text").text = Core.data["keybinds"][node.name]
+	
+	var slider_value = load_hslider_value()
+	$Control/Sliders/Brightness.value = slider_value
 
 func _input(event):
 	if input_wait != null and not event is InputEventMouseMotion:
@@ -45,6 +50,23 @@ func _on_back_button_pressed():
 	Core.cooldown(0.5, func():
 		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
 	)
+
+func _on_brightness_value_changed(value):
+	GlobalWorldEnvironment.environment.adjustment_brightness = value
+	save_hslider_value(value)
+
+func save_hslider_value(value):
+	var save = FileAccess.open(save_path, FileAccess.WRITE)
+	save.store_var(value)
+
+func load_hslider_value():
+	print("loaded")
+	if FileAccess.file_exists(save_path):
+		var save = FileAccess.open(save_path, FileAccess.READ)
+		var data = save.get_var()
+		return data
+	else:
+		return 0.8
 
 func _on_audio_stream_player_finished():
 	$AudioStreamPlayer.play()
