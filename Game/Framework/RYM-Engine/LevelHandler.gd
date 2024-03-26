@@ -444,8 +444,10 @@ func _on_note_event(channel, event):
 					Core.cooldown(2, func():
 						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
 							Core.data["g_lives"] -= 1
+							Core.sound_effect(sfx, "lose-life")
 							if Core.data["g_lives"] == 0:
 								on_game_over()
+								Core.sound_effect(sfx, "game-over")
 					)
 				else:
 					# HIT WINDOW

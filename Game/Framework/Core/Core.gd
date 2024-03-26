@@ -46,7 +46,9 @@ var sfx = {
 	"button-hover": load("res://Assets/SFX/ButtonHover.wav"),
 	"end-score": load("res://Assets/SFX/EndScore.wav"),
 	"full-combo": load("res://Assets/SFX/FullCombo.wav"),
-	"song-complete": load("res://Assets/SFX/SongComplete.wav")
+	"song-complete": load("res://Assets/SFX/SongComplete.wav"),
+	"lose-life": load("res://Assets/SFX/LoseLife.wav"),
+	"game-over": load("res://Assets/SFX/GameOver.wav")
 }
 
 func sound_effect(sfx_node, sfx_name):
