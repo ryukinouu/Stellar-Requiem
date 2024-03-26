@@ -449,6 +449,17 @@ func _on_note_event(channel, event):
 							Core.data["g_lives"] -= 1
 							Core.sound_effect(sfx, "lose-life")
 							if Core.data["g_lives"] == 0:
+								tween = get_tree().create_tween()
+								tween.tween_property(
+									music, 
+									"pitch_scale", 
+									0, 
+									1
+								)
+								tween.tween_callback(func():
+									music.pitch_scale = 1
+									music.stop()
+								)
 								on_game_over()
 								Core.sound_effect(sfx, "game-over")
 					)
