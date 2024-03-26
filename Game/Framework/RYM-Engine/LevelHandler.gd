@@ -217,6 +217,7 @@ func _ready():
 	$WorldEnvironment.environment.adjustment_brightness = Core.data["settings"]["brightness"]
 	music.volume_db = Core.data["settings"]["music-volume"]
 	sfx.volume_db = Core.data["settings"]["sfx-volume"]
+	Core.data["g_lives"] = 3
 	if Core.scene_data["tutorial"]:
 		$GUI/HUD/Tutorial.visible = true
 		$GUI/HUD/Tutorial2.visible = true
@@ -778,6 +779,7 @@ func _on_retry_pressed():
 func on_game_over():
 	loading(false)
 	can_pause = false
+	midi.stop()
 	Core.data["current_score"] = snapped(Core.data["current_score"], 1)
 	$GUI/End/Score.text = str(Core.data["current_score"])
 	if DataEngine.save_info["high_scores"].has(song_name):

@@ -8,6 +8,7 @@ class_name Song
 @export var environment : String = ""
 @export_file ("*.mid") var midi : String = ""
 @export var wav : AudioStream
+@export var preview : AudioStream
 
 @export var icon : Texture2D
 @export var difficulty : int = 1

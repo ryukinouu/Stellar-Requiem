@@ -46,7 +46,7 @@ func update_song():
 		else:
 			diff_node.texture = load("res://Assets/Textures/SongSelectionAssets/Asset_142x.png")
 	$SongIcon.texture = songs[current_index].icon
-	$Music.stream = songs[current_index].wav
+	$Music.stream = songs[current_index].preview
 	$Music.play()
 	newest_high_score(songs[current_index].title)
 	$CanvasLayer/Next.modulate = Color("ffffff")

@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="Song" load_steps=4 format=3 uid="uid://2xajb8fell45"]
+[gd_resource type="Resource" script_class="Song" load_steps=5 format=3 uid="uid://2xajb8fell45"]
 
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="1_7b3kl"]
 [ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="2_28b6a"]
+[ext_resource type="AudioStream" uid="uid://dr1s477jw7r3h" path="res://Assets/Previews/MusicBox.wav" id="2_w04am"]
 [ext_resource type="AudioStream" uid="uid://gjwaym6llq87" path="res://Assets/Music/MusicBox.wav" id="3_we3o2"]
 
 [resource]
@@ -11,6 +12,7 @@ artist = "Lily"
 environment = "res://Game/Scenes/Environments/Testing Room.tscn"
 midi = "res://Assets/MIDI/music_box_easy.mid"
 wav = ExtResource("3_we3o2")
+preview = ExtResource("2_w04am")
 icon = ExtResource("2_28b6a")
 difficulty = 1
 bpm = 80
