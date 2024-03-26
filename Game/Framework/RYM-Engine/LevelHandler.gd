@@ -214,6 +214,9 @@ func _ready():
 	wav_delay = Core.scene_data["wav_delay"]
 	music.stream = Core.scene_data["wav"]
 	midi.file = Core.scene_data["midi"]
+	$WorldEnvironment.environment.adjustment_brightness = Core.data["settings"]["brightness"]
+	music.volume_db = Core.data["settings"]["music-volume"]
+	sfx.volume_db = Core.data["settings"]["sfx-volume"]
 	if Core.scene_data["tutorial"]:
 		$GUI/HUD/Tutorial.visible = true
 		$GUI/HUD/Tutorial2.visible = true
@@ -762,25 +765,25 @@ func _on_retry_pressed():
 	)
 
 func on_game_over():
-		loading(false)
-		can_pause = false
-		Core.data["current_score"] = snapped(Core.data["current_score"], 1)
-		$GUI/End/Score.text = str(Core.data["current_score"])
-		if DataEngine.save_info["high_scores"].has(song_name):
-			if Core.data["current_score"] > DataEngine.save_info["high_scores"][song_name]:
-				DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
-				$GUI/End/NewHighScore.visible = true
-			else:
-				$GUI/End/NewHighScore.visible = false
-		else:
+	loading(false)
+	can_pause = false
+	Core.data["current_score"] = snapped(Core.data["current_score"], 1)
+	$GUI/End/Score.text = str(Core.data["current_score"])
+	if DataEngine.save_info["high_scores"].has(song_name):
+		if Core.data["current_score"] > DataEngine.save_info["high_scores"][song_name]:
 			DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
-		$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["high_scores"][song_name])
-		DataEngine.save_data()
-		Core.cooldown(1, func():
-			$GUI/End.visible = true
-			$GUI/HUD.visible = false
-			loading(true)
-		)
+			$GUI/End/NewHighScore.visible = true
+		else:
+			$GUI/End/NewHighScore.visible = false
+	else:
+		DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
+	$GUI/End/HighScore.text = "HIGH SCORE: " + str(DataEngine.save_info["high_scores"][song_name])
+	DataEngine.save_data()
+	Core.cooldown(1, func():
+		$GUI/End.visible = true
+		$GUI/HUD.visible = false
+		loading(true)
+	)
 
 func _on_music_finished():
 	Core.sound_effect(sfx, "song-complete")

@@ -21,6 +21,11 @@ var data = {
 		"artemis-action1": "H",
 		"artemis-action2": "J",
 		"artemis-pause": "Return",
+	},
+	"settings": {
+		"brightness": 1,
+		"sfx-volume": 0,
+		"music-volume": -10
 	}
 }
 

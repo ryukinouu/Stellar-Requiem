@@ -21,7 +21,6 @@ config/icon="res://Assets/Textures/Heart.png"
 Core="*res://Game/Framework/Core/Core.gd"
 Database="*res://Game/Framework/Core/Database.gd"
 DataEngine="*res://Game/Framework/Core/DataEngine.gd"
-GlobalWorldEnvironment="*res://Game/Scenes/World/world_environment.tscn"
 
 [display]
 
