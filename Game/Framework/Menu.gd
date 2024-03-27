@@ -94,3 +94,10 @@ func _on_artemis_mouse_entered():
 
 func _on_quit_mouse_entered():
 	Core.sound_effect($SFX, "button-hover")
+
+
+func _on_fullscreen_toggled(toggled_on):
+	if toggled_on:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)      
