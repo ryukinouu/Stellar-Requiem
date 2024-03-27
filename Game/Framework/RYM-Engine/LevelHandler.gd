@@ -151,7 +151,7 @@ var delta_stellar = 0.1
 var delta_great = 0.05
 var delta_good = 0.05
 var delta_bad = 0.05
-var delta_miss = 0.1
+var delta_miss = 0.075
 var hit_delta = delta_stellar + delta_great + delta_good + delta_bad + delta_miss
 
 var paused = false
@@ -803,7 +803,7 @@ func on_game_over():
 
 func _on_music_finished():
 	Core.sound_effect(sfx, "song-complete")
-	Core.cooldown(2, func():
+	Core.cooldown(0.2, func():
 		loading(false)
 		can_pause = false
 		Core.data["current_score"] = snapped(Core.data["current_score"], 1)

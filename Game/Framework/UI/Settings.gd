@@ -112,6 +112,7 @@ func _on_texture_button_toggled(toggled_on):
 
 func _on_sfx_value_changed(value):
 	Core.data["settings"]["sfx-volume"] = value
+	$SFX.volume_db = value
 
 func _on_music_value_changed(value):
 	Core.data["settings"]["music-volume"] = value
