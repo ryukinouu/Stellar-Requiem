@@ -4,6 +4,9 @@ extends Node3D
 @onready var animation_player = $AnimationPlayer
 
 func _ready():
+	$Music.volume_db = Core.data["settings"]["music-volume"]
+	$SFX.volume_db = Core.data["settings"]["sfx-volume"]
+	
 	$Control/Characters.size = Vector2(1695, 1570)
 	anim_tree.active = true
 

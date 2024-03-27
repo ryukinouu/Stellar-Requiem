@@ -3,7 +3,8 @@ extends Node
 var rewrite_save = false
 var save_path = "user://save.dat"
 var save_info = {
-	"high_scores": {}
+	"high_scores": {},
+	"music_volume":{}
 }
 
 func save_data():

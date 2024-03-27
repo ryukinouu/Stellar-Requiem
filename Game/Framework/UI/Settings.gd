@@ -9,6 +9,10 @@ var last_btn = null
 var save_path = "user://settings.dat"
 
 func _ready():
+	$Music.volume_db = Core.data["settings"]["music-volume"]
+	$Control/Sliders/Music.value = Core.data["settings"]["music-volume"]
+	$Control/Sliders/Sfx.value = Core.data["settings"]["sfx-volume"]
+	
 	anim_tree.active = true
 	for node in $Control/Apollo.get_children():
 		node.get_node("Button/Text").text = Core.data["keybinds"][node.name]
@@ -95,8 +99,9 @@ func set_input_wait(action_name: String, button: Control):
 func _on_texture_button_toggled(toggled_on):
 	$AudioStreamPlayer.stream_paused = toggled_on
 
-func _on_sound_effects_value_changed(value):
+func _on_sfx_value_changed(value):
 	Core.data["settings"]["sfx-volume"] = value
 
 func _on_music_value_changed(value):
 	Core.data["settings"]["music-volume"] = value
+	$Music.volume_db = value

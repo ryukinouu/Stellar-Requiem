@@ -3,6 +3,9 @@ extends Node3D
 @onready var anim_tree = $AnimationTree
 
 func _ready():
+	$Music.volume_db = Core.data["settings"]["music-volume"]
+	$SFX.volume_db = Core.data["settings"]["sfx-volume"]
+	
 	anim_tree.active = true
 
 func _on_texture_button_pressed():

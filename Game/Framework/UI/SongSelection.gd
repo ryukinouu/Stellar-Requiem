@@ -57,6 +57,9 @@ func update_song():
 		$CanvasLayer/Previous.modulate = Color("ffffff82")
 
 func _ready():
+	$Music.volume_db = Core.data["settings"]["music-volume"]
+	$SFX.volume_db = Core.data["settings"]["sfx-volume"]
+	
 	var song_paths = dir_contents("res://Game/Resources/Songs/")
 	
 	for song_path in song_paths:
