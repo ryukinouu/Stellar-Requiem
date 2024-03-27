@@ -12,7 +12,7 @@ func _ready():
 	$Music.volume_db = Core.data["settings"]["music-volume"]
 	$Control/Sliders/Music.value = Core.data["settings"]["music-volume"]
 	$Control/Sliders/Sfx.value = Core.data["settings"]["sfx-volume"]
-	
+	$Control/BackButton.grab_focus()
 	anim_tree.active = true
 	for node in $Control/Apollo.get_children():
 		node.get_node("Button/Text").text = Core.data["keybinds"][node.name]
@@ -120,3 +120,10 @@ func _on_music_value_changed(value):
 
 func _on_back_button_mouse_entered():
 	Core.sound_effect($SFX, "button-hover")
+
+func _on_fullscreen_toggled(toggled_on):
+	if toggled_on:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_size(Vector2i(1152, 648))    
