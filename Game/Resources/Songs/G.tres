@@ -1,25 +1,25 @@
-[gd_resource type="Resource" script_class="Song" load_steps=5 format=3 uid="uid://dkbijkmkkp45y"]
+[gd_resource type="Resource" script_class="Song" load_steps=5 format=3 uid="uid://cvtflf6ibicu8"]
 
-[ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="1_r8h8j"]
-[ext_resource type="AudioStream" uid="uid://bg2vddfj8v04" path="res://Assets/Previews/Teleportation.wav" id="2_gnotx"]
-[ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_tuaku"]
-[ext_resource type="AudioStream" uid="uid://dw7ueskogss1m" path="res://Assets/Music/Teleportation.wav" id="3_csjwx"]
+[ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="2_0jvie"]
+[ext_resource type="AudioStream" uid="uid://cjmg5vsvh8c1j" path="res://Assets/Previews/Meow.wav" id="2_60m7c"]
+[ext_resource type="AudioStream" uid="uid://crcof4rdyfyiu" path="res://Assets/Music/Meow.wav" id="3_s5rr1"]
+[ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="3_x08h3"]
 
 [resource]
-script = ExtResource("2_tuaku")
-title = "Teleportation"
+script = ExtResource("3_x08h3")
+title = "Meow"
 artist = "Zhehan"
-environment = "res://Game/Scenes/Environments/Testing Room.tscn"
-midi = "res://Assets/MIDI/Teleportation.mid"
-wav = ExtResource("3_csjwx")
-preview = ExtResource("2_gnotx")
-icon = ExtResource("1_r8h8j")
+environment = "res://Game/Scenes/Environments/Pink and Pretty.tscn"
+midi = "res://Assets/MIDI/meow.mid"
+wav = ExtResource("3_s5rr1")
+preview = ExtResource("2_60m7c")
+icon = ExtResource("2_0jvie")
 difficulty = 5
-bpm = 180
-length = 118
+bpm = 170
+length = 130
 tutorial = false
 map_speed = 30
-drum_notes = 232
-guitar_notes = 384
+drum_notes = 249
+guitar_notes = 161
 music_first = false
 wav_delay = 2.0
