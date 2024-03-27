@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="1_tyjvj"]
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_2csus"]
 [ext_resource type="AudioStream" uid="uid://cmnjt81dub0nn" path="res://Assets/Previews/TakeItOver.wav" id="2_i4h8x"]
-[ext_resource type="AudioStream" uid="uid://djtpkiqb1p1jt" path="res://Assets/Music/TakeItOver.mp3" id="3_3rs75"]
+[ext_resource type="AudioStream" uid="uid://ddf54pliox6wt" path="res://Assets/Music/TakeItOver.wav" id="4_hky2p"]
 
 [resource]
 script = ExtResource("2_2csus")
@@ -11,7 +11,7 @@ title = "Take it Over"
 artist = "Zhehan"
 environment = "res://Game/Scenes/Environments/Testing Room.tscn"
 midi = "res://Assets/MIDI/take_it_over.mid"
-wav = ExtResource("3_3rs75")
+wav = ExtResource("4_hky2p")
 preview = ExtResource("2_i4h8x")
 icon = ExtResource("1_tyjvj")
 difficulty = 4

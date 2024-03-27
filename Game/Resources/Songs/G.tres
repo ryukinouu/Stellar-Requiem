@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="1_r8h8j"]
 [ext_resource type="AudioStream" uid="uid://bg2vddfj8v04" path="res://Assets/Previews/Teleportation.wav" id="2_gnotx"]
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_tuaku"]
-[ext_resource type="AudioStream" uid="uid://dacssu11ssske" path="res://Assets/Music/Teleportation.wav" id="3_csjwx"]
+[ext_resource type="AudioStream" uid="uid://dw7ueskogss1m" path="res://Assets/Music/Teleportation.wav" id="3_csjwx"]
 
 [resource]
 script = ExtResource("2_tuaku")

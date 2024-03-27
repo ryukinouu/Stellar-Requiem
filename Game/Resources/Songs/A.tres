@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="1_7b3kl"]
 [ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="2_28b6a"]
 [ext_resource type="AudioStream" uid="uid://dr1s477jw7r3h" path="res://Assets/Previews/MusicBox.wav" id="2_w04am"]
-[ext_resource type="AudioStream" uid="uid://gjwaym6llq87" path="res://Assets/Music/MusicBox.wav" id="3_we3o2"]
+[ext_resource type="AudioStream" uid="uid://cotw6hnong15" path="res://Assets/Music/MusicBox.wav" id="3_we3o2"]
 
 [resource]
 script = ExtResource("1_7b3kl")

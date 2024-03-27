@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="2_0jvie"]
 [ext_resource type="AudioStream" uid="uid://cjmg5vsvh8c1j" path="res://Assets/Previews/Meow.wav" id="2_60m7c"]
-[ext_resource type="AudioStream" uid="uid://dtp4su0v3vjab" path="res://Assets/Music/Meow.wav" id="3_s5rr1"]
+[ext_resource type="AudioStream" uid="uid://crcof4rdyfyiu" path="res://Assets/Music/Meow.wav" id="3_s5rr1"]
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="3_x08h3"]
 
 [resource]
