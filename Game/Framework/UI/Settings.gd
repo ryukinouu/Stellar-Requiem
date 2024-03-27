@@ -22,6 +22,7 @@ func _ready():
 func _input(event):
 	if input_wait != null and not event is InputEventMouseMotion:
 		if event.is_pressed() and not event.is_echo():
+			Core.sound_effect($SFX, "button-click")
 			InputMap.action_erase_events(input_wait)
 			InputMap.action_add_event(input_wait, event)
 			if txt_btn:
@@ -60,34 +61,44 @@ func _on_audio_stream_player_finished():
 
 # Apollo Keybindings
 func _on_apollo_left_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("apollo-left", $Control/Apollo/"apollo-left"/Button)
 
 func _on_apollo_top_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("apollo-top", $Control/Apollo/"apollo-top"/Button)
 
 func _on_apollo_bottom_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("apollo-bottom", $Control/Apollo/"apollo-bottom"/Button)
 
 func _on_apollo_right_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("apollo-right", $Control/Apollo/"apollo-right"/Button)
 
 func _on_apollo_pause_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("escape", $Control/Apollo/"apollo-pause"/Button)
 
 # Artemis Keybindings
 func _on_artemis_left_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("artemis-left", $Control/Artemis/"artemis-left"/Button)
 
 func _on_artemis_right_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("artemis-right", $Control/Artemis/"artemis-right"/Button)
 
 func _on_artemis_action1_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("artemis-green", $Control/Artemis/"artemis-action1"/Button)
 
 func _on_artemis_action2_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("artemis-red", $Control/Artemis/"artemis-action2"/Button)
 
 func _on_artemis_pause_pressed():
+	Core.sound_effect($SFX, "button-click")
 	set_input_wait("return", $Control/Artemis/"artemis-pause"/Button)
 
 func set_input_wait(action_name: String, button: Control):
@@ -105,3 +116,6 @@ func _on_sfx_value_changed(value):
 func _on_music_value_changed(value):
 	Core.data["settings"]["music-volume"] = value
 	$Music.volume_db = value
+
+func _on_back_button_mouse_entered():
+	Core.sound_effect($SFX, "button-hover")
