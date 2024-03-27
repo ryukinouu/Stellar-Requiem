@@ -147,7 +147,7 @@ var char_lanes = {
 
 var artemis_tween
 
-var delta_stellar = 0.05
+var delta_stellar = 0.1
 var delta_great = 0.05
 var delta_good = 0.05
 var delta_bad = 0.05
@@ -496,7 +496,10 @@ func _on_note_event(channel, event):
 									Core.cooldown(delta_great, func():
 										change_indicator(note_instance, "Great", "Stellar")
 										Core.cooldown(delta_stellar, func():
-											change_indicator(note_instance, "Stellar", "Miss")
+											change_indicator(note_instance, "Stellar", "Good")
+											Core.cooldown(delta_good, func():
+												change_indicator(note_instance, "Good", "Miss")
+											)
 										)
 									)
 								)
