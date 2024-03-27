@@ -6,7 +6,7 @@ extends Node3D
 func _ready():
 	$Music.volume_db = Core.data["settings"]["music-volume"]
 	$SFX.volume_db = Core.data["settings"]["sfx-volume"]
-	
+	$Control/Control/Play.grab_focus()
 	$Control/Characters.size = Vector2(1695, 1570)
 	anim_tree.active = true
 

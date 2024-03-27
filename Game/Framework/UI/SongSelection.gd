@@ -59,6 +59,7 @@ func update_song():
 func _ready():
 	$Music.volume_db = Core.data["settings"]["music-volume"]
 	$SFX.volume_db = Core.data["settings"]["sfx-volume"]
+	$CanvasLayer/Start.grab_focus()
 	
 	var song_paths = dir_contents("res://Game/Resources/Songs/")
 	
