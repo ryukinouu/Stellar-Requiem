@@ -347,7 +347,7 @@ func _ready():
 			begin_song()
 			score_timer.start()
 			midi.play()
-			Core.cooldown(2, func():
+			Core.cooldown(1.8, func():
 				music.play()
 			)
 		)
@@ -576,7 +576,7 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_top"].size() > 0:
-				Core.sound_effect(sfx, "apollo-hit")
+					#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_top"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_pressed("apollo-bottom"):
@@ -589,7 +589,7 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_bottom"].size() > 0:
-				Core.sound_effect(sfx, "apollo-hit")
+					#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_bottom"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_pressed("apollo-left"):
@@ -602,7 +602,7 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_left"].size() > 0:
-				Core.sound_effect(sfx, "apollo-hit")
+					#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_left"].pop_front()
 				note_on_hit(note)
 		elif event.is_action_pressed("apollo-right"): 
@@ -615,7 +615,7 @@ func _input(event):
 			else:
 				apollo_animtree.get("parameters/playback").travel("Hit")
 			if canhit["d_right"].size() > 0:
-				Core.sound_effect(sfx, "apollo-hit")
+				#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_right"].pop_front()
 				note_on_hit(note)
 
