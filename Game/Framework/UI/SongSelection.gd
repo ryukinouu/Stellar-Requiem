@@ -75,8 +75,10 @@ func _on_texture_button_pressed():
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("LoadOut")
 	songs[current_index].init_scene()
+	Core.scene_data["environment"] = songs[current_index].environment
+	print(Core.scene_data["environment"])
 	Core.cooldown(1, func():
-		get_tree().change_scene_to_file(songs[current_index].environment)
+		get_tree().change_scene_to_file("res://Game/Scenes/Menu/TutorialScreens.tscn")
 	)
 
 func _on_texture_button_2_pressed():
