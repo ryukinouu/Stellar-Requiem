@@ -78,7 +78,10 @@ func _on_texture_button_pressed():
 	Core.scene_data["environment"] = songs[current_index].environment
 	print(Core.scene_data["environment"])
 	Core.cooldown(1, func():
-		get_tree().change_scene_to_file("res://Game/Scenes/Menu/TutorialScreens.tscn")
+		if Core.scene_data["tutorial"]:
+			get_tree().change_scene_to_file("res://Game/Scenes/Menu/TutorialScreens.tscn")
+		else:
+			get_tree().change_scene_to_file(Core.scene_data["environment"])
 	)
 
 func _on_texture_button_2_pressed():
