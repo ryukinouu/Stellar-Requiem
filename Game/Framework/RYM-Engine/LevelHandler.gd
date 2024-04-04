@@ -237,6 +237,10 @@ func _ready():
 	$GUI/HUD/SoloScore/Text.text = "0000000"
 	$GUI/HUD/SoloScore2/Text.text = "0000000"
 	$GUI/HUD/Score/Upper/Score.text = "0000000"
+	$GUI/HUD/Side2/GridContainer/TextureRect.visible = true
+	$GUI/HUD/Side2/GridContainer/TextureRect2.visible = true
+	$GUI/HUD/Side2/GridContainer/TextureRect3.visible = true
+	$GUI/Paused.visible = false
 	
 	if Core.data["apollo"] and Core.data["artemis"]:
 		total_notes = guitar_notes + drum_notes
