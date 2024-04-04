@@ -218,9 +218,9 @@ func _ready():
 	music.volume_db = Core.data["settings"]["music-volume"]
 	sfx.volume_db = Core.data["settings"]["sfx-volume"]
 	Core.data["g_lives"] = 3
-	if Core.scene_data["tutorial"]:
-		$GUI/HUD/Tutorial.visible = true
-		$GUI/HUD/Tutorial2.visible = true
+	#if Core.scene_data["tutorial"]:
+		#$GUI/HUD/Tutorial.visible = true
+		#$GUI/HUD/Tutorial2.visible = true
 	
 	var anim = anim_player.get_animation("Playing")
 	var tmain_pos = anim.find_track("Main:position", 0)
