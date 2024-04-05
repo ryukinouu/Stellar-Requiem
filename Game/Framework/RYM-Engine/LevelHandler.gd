@@ -46,8 +46,6 @@ var g_green_note_scene = load("res://Game/Scenes/Notes/GreenNote.tscn")
 var g_red_note_scene = load("res://Game/Scenes/Notes/RedNote.tscn")
 var g_hover_note_scene = load("res://Game/Scenes/Notes/HoverNote.tscn")
 var g_rocks_scene = load("res://Game/Scenes/Notes/Rocks.tscn")
-#var g_yellow_note_scene = load("res://Game/Scenes/Notes/YellowNote.tscn")
-#var g_blue_note_scene = load("res://Game/Scenes/Notes/BlueNote.tscn")
 
 var apollo_afterimage = load("res://Game/Scenes/Core/Apollo_Afterimage.tscn")
 var miss_texture = load("res://Assets/Textures/Indicators/MISS.png")
@@ -92,32 +90,24 @@ var canhit = {
 		"red": [],
 		"hover": [],
 		"rocks": []
-		#"yellow": [],
-		#"blue": []
 	},
 	"g_top": {
 		"green": [],
 		"red": [],
 		"hover": [],
 		"rocks": []
-		#"yellow": [],
-		#"blue": []
 	},
 	"g_bottom": {
 		"green": [],
 		"red": [],
 		"hover": [],
 		"rocks": []
-		#"yellow": [],
-		#"blue": []
 	},
 	"g_right": {
 		"green": [],
 		"red": [],
 		"hover": [],
 		"rocks": []
-		#"yellow": [],
-		#"blue": []
 	}
 }
 var note_values = {
@@ -161,6 +151,16 @@ var artemis_notes_disabled = false
 var total_notes = 0
 var base_score = 0
 var notes_score = 0
+
+# Apollo Score
+var apollo_total_notes = 0
+var apollo_base_score = 0
+var apollo_notes_score = 0
+
+# Artemis Score
+var artemis_total_notes = 0
+var artemis_base_score = 0
+var artemis_notes_score = 0
 
 func get_lane(direction):
 	if direction == "d_left":
@@ -218,6 +218,7 @@ func _ready():
 	music.volume_db = Core.data["settings"]["music-volume"]
 	sfx.volume_db = Core.data["settings"]["sfx-volume"]
 	Core.data["g_lives"] = 3
+	Core.data["d_lives"] = 3
 	#if Core.scene_data["tutorial"]:
 		#$GUI/HUD/Tutorial.visible = true
 		#$GUI/HUD/Tutorial2.visible = true
@@ -234,12 +235,15 @@ func _ready():
 	$GUI/End.visible = false
 	$GUI/HUD/Score/SongProgress.value = 0
 	$GUI/HUD/Score/Bar.value = 0
-	$GUI/HUD/SoloScore/Text.text = "0000000"
-	$GUI/HUD/SoloScore2/Text.text = "0000000"
+	$GUI/HUD/ApolloScore/Score.text = "0000000"
+	$GUI/HUD/ArtemisScore/Score.text = "0000000"
 	$GUI/HUD/Score/Upper/Score.text = "0000000"
-	$GUI/HUD/Side2/GridContainer/TextureRect.visible = true
-	$GUI/HUD/Side2/GridContainer/TextureRect2.visible = true
-	$GUI/HUD/Side2/GridContainer/TextureRect3.visible = true
+	$GUI/HUD/ApolloSide/Lives/One.visible = true
+	$GUI/HUD/ApolloSide/Lives/Two.visible = true
+	$GUI/HUD/ApolloSide/Lives/Three.visible = true
+	$GUI/HUD/ArtemisSide/Lives/One.visible = true
+	$GUI/HUD/ArtemisSide/Lives/Two.visible = true
+	$GUI/HUD/ArtemisSide/Lives/Three.visible = true
 	$GUI/Paused.visible = false
 	
 	if Core.data["apollo"] and Core.data["artemis"]:
@@ -250,11 +254,11 @@ func _ready():
 		apollo_notes_disabled = false
 		artemis_notes_disabled = false
 		$GUI/HUD/Score/Upper/Score.visible = true
-		$GUI/HUD/SoloScore.visible = false
-		$GUI/HUD/Side.visible = true
+		$GUI/HUD/ApolloScore.visible = true
+		$GUI/HUD/ApolloSide.visible = true
 		$GUI/HUD/Score/Upper/Player1.visible = true
-		$GUI/HUD/SoloScore2.visible = false
-		$GUI/HUD/Side2.visible = true
+		$GUI/HUD/ArtemisScore.visible = true
+		$GUI/HUD/ArtemisSide.visible = true
 		$GUI/HUD/Score/Upper/Player2.visible = true
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(0, 25, -20))
@@ -283,11 +287,11 @@ func _ready():
 		apollo_notes_disabled = false
 		artemis_notes_disabled = true
 		$GUI/HUD/Score/Upper/Score.visible = false
-		$GUI/HUD/SoloScore.visible = true
-		$GUI/HUD/Side.visible = true
+		$GUI/HUD/ApolloScore.visible = true
+		$GUI/HUD/ApolloSide.visible = true
 		$GUI/HUD/Score/Upper/Player1.visible = true
-		$GUI/HUD/SoloScore2.visible = false
-		$GUI/HUD/Side2.visible = false
+		$GUI/HUD/ArtemisScore.visible = false
+		$GUI/HUD/ArtemisSide.visible = false
 		$GUI/HUD/Score/Upper/Player2.visible = false
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(21, 16, -14))
@@ -309,11 +313,11 @@ func _ready():
 		apollo_notes_disabled = true
 		artemis_notes_disabled = false
 		$GUI/HUD/Score/Upper/Score.visible = false
-		$GUI/HUD/SoloScore.visible = false
-		$GUI/HUD/Side.visible = false
+		$GUI/HUD/ApolloScore.visible = false
+		$GUI/HUD/ApolloSide.visible = false
 		$GUI/HUD/Score/Upper/Player1.visible = false
-		$GUI/HUD/SoloScore2.visible = true
-		$GUI/HUD/Side2.visible = true
+		$GUI/HUD/ArtemisScore.visible = true
+		$GUI/HUD/ArtemisSide.visible = true
 		$GUI/HUD/Score/Upper/Player2.visible = true
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(-21, 16, -14))
@@ -358,8 +362,14 @@ func _ready():
 
 func begin_song():
 	$GUI/HUD/Score/Bar.value = 0
+	$GUI/HUD/ApolloScore/Score.text = "0000000"
+	$GUI/HUD/ArtemisScore/Score.text = "0000000"
 	base_score = 0
 	notes_score = 0
+	apollo_base_score = 0
+	apollo_notes_score = 0
+	artemis_base_score = 0
+	artemis_notes_score = 0
 	var tween = get_tree().create_tween()
 	tween.tween_property(
 		$GUI/HUD/Score/SongProgress, 
@@ -374,8 +384,20 @@ func begin_song():
 		500000, 
 		music_length
 	)
-
-
+	tween = get_tree().create_tween()
+	tween.tween_property(
+		self, 
+		"apollo_base_score", 
+		250000, 
+		music_length
+	)
+	tween = get_tree().create_tween()
+	tween.tween_property(
+		self, 
+		"artemis_base_score", 
+		250000, 
+		music_length
+	)
 
 func _on_note_event(channel, event):
 	if event.type == SMF.MIDIEventType.note_on:
@@ -397,10 +419,8 @@ func _on_note_event(channel, event):
 					elif event.note == 13 or event.note == 20 or event.note == 25 or event.note == 32:
 						note_scene = g_red_note_scene
 					elif event.note == 14 or event.note == 21 or event.note == 26 or event.note == 33:
-						#note_scene = g_yellow_note_scene
 						note_scene = g_hover_note_scene
 					elif event.note == 15 or event.note == 22 or event.note == 27 or event.note == 34:
-						#note_scene = g_blue_note_scene
 						note_scene = g_rocks_scene
 
 				var note_instance = note_scene.instantiate()
@@ -446,7 +466,7 @@ func _on_note_event(channel, event):
 						Core.sound_effect(sfx, "artemis-hit")
 						artemis_animtree.get("parameters/playback").travel("Hit_003")
 						tweens[note_instance] = tween
-						note_on_hit(note_instance)
+						note_on_hit(note_instance, "Artemis")
 					)
 				elif note_scene == g_rocks_scene:
 					Core.cooldown(2, func():
@@ -525,7 +545,7 @@ func change_indicator(note, old, new):
 	if note:
 		note.get_node(old).name = new
 
-func note_on_hit(note):
+func note_on_hit(note, player):
 	var anim_tree = note.get_node("AnimationTree")
 	var anim_player = note.get_node("AnimationPlayer")
 	var anim = anim_tree.get("parameters/playback")
@@ -535,18 +555,38 @@ func note_on_hit(note):
 	if note.get_node_or_null("Great"):
 		note.get_node("Indicator").mesh.material.albedo_texture = great_texture
 		notes_score += note_values["great"]
+		if player == "Apollo":
+			apollo_notes_score += note_values["great"]
+		else:
+			artemis_notes_score += note_values["great"]
 	elif note.get_node_or_null("Good"):
 		note.get_node("Indicator").mesh.material.albedo_texture = good_texture
 		notes_score += note_values["good"]
+		if player == "Apollo":
+			apollo_notes_score += note_values["good"]
+		else:
+			artemis_notes_score += note_values["good"]
 	elif note.get_node_or_null("Bad"):
 		note.get_node("Indicator").mesh.material.albedo_texture = bad_texture
 		notes_score += note_values["bad"]
+		if player == "Apollo":
+			apollo_notes_score += note_values["bad"]
+		else:
+			artemis_notes_score += note_values["bad"]
 	elif note.get_node_or_null("Stellar"):
 		note.get_node("Indicator").mesh.material.albedo_texture = stellar_texture
 		notes_score += note_values["stellar"]
+		if player == "Apollo":
+			apollo_notes_score += note_values["stellar"]
+		else:
+			artemis_notes_score += note_values["stellar"]
 	elif note.get_node_or_null("Miss"):
 		note.get_node("Indicator").mesh.material.albedo_texture = miss_texture
 		notes_score += note_values["miss"]
+		if player == "Apollo":
+			apollo_notes_score += note_values["miss"]
+		else:
+			artemis_notes_score += note_values["miss"]
 
 func apollo_afterimage_effect():
 	var apollo_effect = apollo_afterimage.instantiate()
@@ -582,7 +622,7 @@ func _input(event):
 			if canhit["d_top"].size() > 0:
 					#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_top"].pop_front()
-				note_on_hit(note)
+				note_on_hit(note, "Apollo")
 		elif event.is_action_pressed("apollo-bottom"):
 			Core.sound_effect(sfx, "apollo-move")
 			if char_lanes["apollo"]["current"] != "bottom":
@@ -595,7 +635,7 @@ func _input(event):
 			if canhit["d_bottom"].size() > 0:
 					#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_bottom"].pop_front()
-				note_on_hit(note)
+				note_on_hit(note, "Apollo")
 		elif event.is_action_pressed("apollo-left"):
 			Core.sound_effect(sfx, "apollo-move")
 			if char_lanes["apollo"]["current"] != "left":
@@ -608,7 +648,7 @@ func _input(event):
 			if canhit["d_left"].size() > 0:
 					#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_left"].pop_front()
-				note_on_hit(note)
+				note_on_hit(note, "Apollo")
 		elif event.is_action_pressed("apollo-right"): 
 			Core.sound_effect(sfx, "apollo-move")
 			if char_lanes["apollo"]["current"] != "right":
@@ -621,14 +661,13 @@ func _input(event):
 			if canhit["d_right"].size() > 0:
 				#Core.sound_effect(sfx, "apollo-hit")
 				var note = canhit["d_right"].pop_front()
-				note_on_hit(note)
+				note_on_hit(note, "Apollo")
 
 	# Artemis Single Movement
 	if !artemis_notes_disabled:
 		if event.is_action_pressed("artemis-left"):
 			Core.sound_effect(sfx, "artemis-moveleft")
 			var next_pos = get_next_lane("left")
-			print(next_pos)
 			if artemis_tween and artemis_tween.is_running():
 				artemis_tween.kill()
 			artemis_tween = get_tree().create_tween()
@@ -642,7 +681,6 @@ func _input(event):
 		elif event.is_action_pressed("artemis-right"):
 			Core.sound_effect(sfx, "artemis-moveright")
 			var next_pos = get_next_lane("right")
-			print(next_pos)
 			if artemis_tween and artemis_tween.is_running():
 				artemis_tween.kill()
 			artemis_tween = get_tree().create_tween()
@@ -660,31 +698,16 @@ func _input(event):
 			if canhit[curr_lane]["green"].size() > 0:
 				Core.sound_effect(sfx, "artemis-hit")
 				var note = canhit[curr_lane]["green"].pop_front()
-				note_on_hit(note)
+				note_on_hit(note, "Artemis")
 		elif event.is_action_pressed("artemis-red"):
 			var curr_lane = get_curr_canhit_lane()
 			artemis_animtree.get("parameters/playback").travel("Hit_002")
 			if canhit[curr_lane]["red"].size() > 0:
 				Core.sound_effect(sfx, "artemis-hit")
 				var note = canhit[curr_lane]["red"].pop_front()
-				note_on_hit(note)
+				note_on_hit(note, "Artemis")
 		elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red"):
 			artemis_animtree.get("parameters/playback").travel("Forward")
-		#elif event.is_action_pressed("artemis-yellow"):
-			#var curr_lane = get_curr_canhit_lane()
-			#artemis_animtree.get("parameters/playback").travel("Hit_003")
-			#if canhit[curr_lane]["yellow"].size() > 0:
-				#var note = canhit[curr_lane]["yellow"].pop_front()
-				#note_on_hit(note)
-		#elif event.is_action_pressed("artemis-blue"):
-			#var curr_lane = get_curr_canhit_lane()
-			#artemis_animtree.get("parameters/playback").travel("Hit_004")
-			#if canhit[curr_lane]["blue"].size() > 0:
-				#var note = canhit[curr_lane]["blue"].pop_front()
-				#note_on_hit(note)
-		#elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red") \
-		#or event.is_action_released("artemis-yellow") or event.is_action_released("artemis-blue"):
-			#artemis_animtree.get("parameters/playback").travel("Forward")
 
 func get_next_lane(direction):
 	var curr_lane = char_lanes["artemis"]["current"]
@@ -723,17 +746,29 @@ func get_curr_canhit_lane():
 func _process(delta):
 	var progress_ratio = $GUI/HUD/Score/Bar.value / $GUI/HUD/Score/Bar.max_value
 	$GUI/HUD/Score/Glow.position.x = -1498 + $GUI/HUD/Score/Bar.size.x * progress_ratio
+	
 	Core.data["current_score"] = base_score + notes_score
+	Core.data["apollo_current_score"] = apollo_base_score + apollo_notes_score
+	Core.data["artemis_current_score"] = artemis_base_score + artemis_notes_score
+	
 	$GUI/HUD/Score/Bar.value = snapped(Core.data["current_score"], 1)
-	$GUI/HUD/SoloScore/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
-	$GUI/HUD/SoloScore2/Text.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	$GUI/HUD/ApolloScore/Score.text = str("%07d" % snapped(Core.data["apollo_current_score"], 1))
+	$GUI/HUD/ArtemisScore/Score.text = str("%07d" % snapped(Core.data["artemis_current_score"], 1))
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	
 	if Core.data["g_lives"] == 2:
-		$GUI/HUD/Side2/GridContainer/TextureRect3.visible = false
+		$GUI/HUD/ArtemisSide/Lives/Three.visible = false
 	elif Core.data["g_lives"] == 1:
-		$GUI/HUD/Side2/GridContainer/TextureRect2.visible = false
+		$GUI/HUD/ArtemisSide/Lives/Two.visible = false
 	elif Core.data["g_lives"] == 0:
-		$GUI/HUD/Side2/GridContainer/TextureRect.visible = false
+		$GUI/HUD/ArtemisSide/Lives/One.visible = false
+		
+	if Core.data["d_lives"] == 2:
+		$GUI/HUD/ApolloSide/Lives/Three.visible = false
+	elif Core.data["d_lives"] == 1:
+		$GUI/HUD/ApolloSide/Lives/Two.visible = false
+	elif Core.data["d_lives"] == 0:
+		$GUI/HUD/ApolloSide/Lives/One.visible = false
 
 func _on_settings_pressed():
 	if can_pause:
@@ -788,7 +823,11 @@ func on_game_over():
 	can_pause = false
 	midi.stop()
 	Core.data["current_score"] = snapped(Core.data["current_score"], 1)
+	Core.data["apollo_current_score"] = snapped(Core.data["apollo_current_score"], 1)
+	Core.data["artemis_current_score"] = snapped(Core.data["artemis_current_score"], 1)
 	$GUI/End/Score.text = str(Core.data["current_score"])
+	$GUI/End/ApolloScore.text = str(Core.data["apollo_current_score"])
+	$GUI/End/ArtemisScore.text = str(Core.data["artemis_current_score"])
 	if DataEngine.save_info["high_scores"].has(song_name):
 		if Core.data["current_score"] > DataEngine.save_info["high_scores"][song_name]:
 			DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]
@@ -811,7 +850,11 @@ func _on_music_finished():
 		loading(false)
 		can_pause = false
 		Core.data["current_score"] = snapped(Core.data["current_score"], 1)
+		Core.data["apollo_current_score"] = snapped(Core.data["apollo_current_score"], 1)
+		Core.data["artemis_current_score"] = snapped(Core.data["artemis_current_score"], 1)
 		$GUI/End/Score.text = str(Core.data["current_score"])
+		$GUI/End/ApolloScore.text = str(Core.data["apollo_current_score"])
+		$GUI/End/ArtemisScore.text = str(Core.data["artemis_current_score"])
 		if DataEngine.save_info["high_scores"].has(song_name):
 			if Core.data["current_score"] > DataEngine.save_info["high_scores"][song_name]:
 				DataEngine.save_info["high_scores"][song_name] = Core.data["current_score"]

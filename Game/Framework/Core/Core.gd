@@ -10,6 +10,8 @@ var data = {
 	"d_lives": 3,
 	"g_lives": 3,
 	"current_score": 0,
+	"apollo_current_score": 0,
+	"artemis_current_score": 0,
 	"keybinds": {
 		"apollo-left": "A",
 		"apollo-top": "S",
