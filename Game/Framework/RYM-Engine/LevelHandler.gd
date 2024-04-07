@@ -263,11 +263,11 @@ func _ready():
 	$GUI/HUD/Score/Upper/Score.text = "0000000"
 	$GUI/Paused.visible = false
 	
-	# UNCOMMENT TO GENERATE BOMBS FOR LEVEL
-	apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
-	Core.apollo_bomb_note_positions[Core.scene_data["song_name"]] = apollo_bomb_positions
-	
-	apollo_bomb_positions = Core.apollo_bomb_note_positions[Core.scene_data["song_name"]]
+	if Core.scene_data["song_name"] not in Core.apollo_bomb_note_positions:
+		apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
+		Core.apollo_bomb_note_positions[Core.scene_data["song_name"]] = apollo_bomb_positions
+	else:
+		apollo_bomb_positions = Core.apollo_bomb_note_positions[Core.scene_data["song_name"]]
 	apollo_curr_note_num = 0
 	
 	if Core.data["apollo"] and Core.data["artemis"]:
@@ -283,6 +283,8 @@ func _ready():
 		$GUI/HUD/Score/Upper/Apollo.visible = true
 		$GUI/HUD/ArtemisScore.visible = true
 		$GUI/HUD/ArtemisSide.visible = true
+		$GUI/HUD/ArtemisScore.position.y = 528
+		$GUI/HUD/ApolloScore.position.y = 528
 		$GUI/HUD/Score/Upper/Artemis.visible = true
 		$GUI/HUD/ApolloSide/Lives/One.visible = true
 		$GUI/HUD/ApolloSide/Lives/Two.visible = true
@@ -321,11 +323,13 @@ func _ready():
 		apollo_notes_disabled = false
 		artemis_notes_disabled = true
 		$GUI/HUD/Score/Upper/Score.visible = false
-		$GUI/HUD/ApolloScore.visible = true
+		$GUI/HUD/ApolloScore.visible = false
 		$GUI/HUD/ApolloSide.visible = true
 		$GUI/HUD/Score/Upper/Apollo.visible = true
-		$GUI/HUD/ArtemisScore.visible = false
+		$GUI/HUD/ArtemisScore.visible = true
 		$GUI/HUD/ArtemisSide.visible = false
+		$GUI/HUD/ArtemisScore.position.y = 578
+		$GUI/HUD/ApolloScore.position.y = 578
 		$GUI/HUD/Score/Upper/Artemis.visible = false
 		$GUI/HUD/ApolloSide/Lives/One.visible = true
 		$GUI/HUD/ApolloSide/Lives/Two.visible = true
@@ -357,12 +361,14 @@ func _ready():
 		apollo_notes_disabled = true
 		artemis_notes_disabled = false
 		$GUI/HUD/Score/Upper/Score.visible = false
-		$GUI/HUD/ApolloScore.visible = false
+		$GUI/HUD/ApolloScore.visible = true
 		$GUI/HUD/ApolloSide.visible = false
 		$GUI/HUD/Score/Upper/Apollo.visible = false
-		$GUI/HUD/ArtemisScore.visible = true
+		$GUI/HUD/ArtemisScore.visible = false
 		$GUI/HUD/ArtemisSide.visible = true
 		$GUI/HUD/Score/Upper/Artemis.visible = true
+		$GUI/HUD/ArtemisScore.position.y = 578
+		$GUI/HUD/ApolloScore.position.y = 578
 		$GUI/HUD/ApolloSide/Lives/One.visible = false
 		$GUI/HUD/ApolloSide/Lives/Two.visible = false
 		$GUI/HUD/ApolloSide/Lives/Three.visible = false
@@ -581,7 +587,7 @@ func _on_note_event(channel, event):
 					Core.cooldown(2, func():
 						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
 							change_indicator(note_instance, "Miss", "Stellar")
-						Core.sound_effect(sfx, "artemis-hit")
+						#Core.sound_effect(sfx, "artemis-hit")
 						artemis_animtree.get("parameters/playback").travel("Hit_003")
 						tweens[note_instance] = tween
 						note_on_hit(note_instance, "Artemis")
@@ -814,14 +820,14 @@ func _input(event):
 			var curr_lane = get_curr_canhit_lane()
 			artemis_animtree.get("parameters/playback").travel("Hit_001")
 			if canhit[curr_lane]["green"].size() > 0:
-				Core.sound_effect(sfx, "artemis-hit")
+				#Core.sound_effect(sfx, "artemis-hit")
 				var note = canhit[curr_lane]["green"].pop_front()
 				note_on_hit(note, "Artemis")
 		elif event.is_action_pressed("artemis-red"):
 			var curr_lane = get_curr_canhit_lane()
 			artemis_animtree.get("parameters/playback").travel("Hit_002")
 			if canhit[curr_lane]["red"].size() > 0:
-				Core.sound_effect(sfx, "artemis-hit")
+				#Core.sound_effect(sfx, "artemis-hit")
 				var note = canhit[curr_lane]["red"].pop_front()
 				note_on_hit(note, "Artemis")
 		elif event.is_action_released("artemis-green") or event.is_action_released("artemis-red"):
@@ -870,9 +876,13 @@ func _process(delta):
 	Core.data["artemis_current_score"] = artemis_base_score + artemis_notes_score
 	
 	$GUI/HUD/Score/Bar.value = snapped(Core.data["current_score"], 1)
-	$GUI/HUD/ApolloScore/Score.text = str("%07d" % snapped(Core.data["apollo_current_score"], 1))
-	$GUI/HUD/ArtemisScore/Score.text = str("%07d" % snapped(Core.data["artemis_current_score"], 1))
 	$GUI/HUD/Score/Upper/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	if !Core.data["apollo"] or !Core.data["artemis"]:
+		$GUI/HUD/ApolloScore/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
+		$GUI/HUD/ArtemisScore/Score.text = str("%07d" % snapped(Core.data["current_score"], 1))
+	else:
+		$GUI/HUD/ApolloScore/Score.text = str("%07d" % snapped(Core.data["apollo_current_score"], 1))
+		$GUI/HUD/ArtemisScore/Score.text = str("%07d" % snapped(Core.data["artemis_current_score"], 1))
 	
 	if Core.data["g_lives"] == 2:
 		$GUI/HUD/ArtemisSide/Lives/Three.visible = false
