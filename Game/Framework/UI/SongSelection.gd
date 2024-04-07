@@ -57,6 +57,7 @@ func update_song():
 		$CanvasLayer/Previous.modulate = Color("ffffff82")
 
 func _ready():
+	Core.prev_scene_path = ""
 	$Music.volume_db = Core.data["settings"]["music-volume"]
 	$SFX.volume_db = Core.data["settings"]["sfx-volume"]
 	$CanvasLayer/Start.grab_focus()

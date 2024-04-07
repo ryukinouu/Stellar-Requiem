@@ -77,7 +77,7 @@ func ui_effect(type, subtype):
 			ui_instance.text = "+" + str(round(data["hit_note_score"])) + "!"
 			additions.add_child(ui_instance)
 
-var prev_scene_path
+var prev_scene_path = ""
 
 func save_state(scene_path):
 	prev_scene_path = scene_path
