@@ -41,11 +41,13 @@ extends Node3D
 @export var wav_delay : float = 6.0
 @export var music_first : bool = false
 
-var d_note_scene = load("res://Game/Scenes/Notes/Note.tscn")
-var g_green_note_scene = load("res://Game/Scenes/Notes/GreenNote.tscn")
-var g_red_note_scene = load("res://Game/Scenes/Notes/RedNote.tscn")
-var g_hover_note_scene = load("res://Game/Scenes/Notes/HoverNote.tscn")
-var g_rocks_scene = load("res://Game/Scenes/Notes/Rocks.tscn")
+var green_note_scene = load("res://Game/Scenes/Notes/GreenNote.tscn")
+var red_note_scene = load("res://Game/Scenes/Notes/RedNote.tscn")
+var yellow_note_scene = load("res://Game/Scenes/Notes/YellowNote.tscn")
+var blue_note_scene = load("res://Game/Scenes/Notes/BlueNote.tscn")
+var hover_note_scene = load("res://Game/Scenes/Notes/HoverNote.tscn")
+var bomb_note_scene = load("res://Game/Scenes/Notes/BombNote.tscn")
+var rocks_scene = load("res://Game/Scenes/Notes/Rocks.tscn")
 
 var apollo_afterimage = load("res://Game/Scenes/Core/Apollo_Afterimage.tscn")
 var miss_texture = load("res://Assets/Textures/Indicators/MISS.png")
@@ -135,6 +137,10 @@ var char_lanes = {
 	},
 }
 
+var level_seed = str(drum_notes) + str(guitar_notes)
+var apollo_bomb_percentage = 0.5
+var apollo_bomb_positions
+var apollo_curr_note_num
 var artemis_tween
 
 var delta_stellar = 0.1
@@ -180,6 +186,16 @@ func get_lane(direction):
 	elif direction == "g_right":
 		return g_lane_right
 
+func generate_bomb_positions(min_val, max_val, num):
+	var rng = RandomNumberGenerator.new()
+	rng.seed = int(level_seed)
+	assert(max_val - min_val + 1 >= num)
+	var positions = []
+	for i in range(min_val, max_val):
+		positions.append(i)
+	positions.shuffle()
+	return positions.slice(0, num - 1)
+
 func loading(out):
 	if out:
 		$GUI/Loading.color = Color.BLACK
@@ -219,10 +235,19 @@ func _ready():
 	sfx.volume_db = Core.data["settings"]["sfx-volume"]
 	Core.data["g_lives"] = 3
 	Core.data["d_lives"] = 3
-	#if Core.scene_data["tutorial"]:
-		#$GUI/HUD/Tutorial.visible = true
-		#$GUI/HUD/Tutorial2.visible = true
-	
+	Core.save_state("")
+	var file = FileAccess.open("res://Game/Framework/RYM-Engine/bomb_positions.json", FileAccess.READ)
+	if file:
+		var json_text = file.get_as_text()
+		file.close()
+		Core.apollo_bomb_note_positions = JSON.parse_string(json_text)
+		if Core.apollo_bomb_note_positions != null:
+			print("Data loaded successfully!")
+		else:
+			print("Failed to parse JSON.")
+	else:
+		print("Failed to open file for reading.")
+
 	var anim = anim_player.get_animation("Playing")
 	var tmain_pos = anim.find_track("Main:position", 0)
 	var kmain_pos = anim.track_find_key(tmain_pos, 600.0, true)
@@ -235,15 +260,7 @@ func _ready():
 	$GUI/End.visible = false
 	$GUI/HUD/Score/SongProgress.value = 0
 	$GUI/HUD/Score/Bar.value = 0
-	$GUI/HUD/ApolloScore/Score.text = "0000000"
-	$GUI/HUD/ArtemisScore/Score.text = "0000000"
 	$GUI/HUD/Score/Upper/Score.text = "0000000"
-	$GUI/HUD/ApolloSide/Lives/One.visible = true
-	$GUI/HUD/ApolloSide/Lives/Two.visible = true
-	$GUI/HUD/ApolloSide/Lives/Three.visible = true
-	$GUI/HUD/ArtemisSide/Lives/One.visible = true
-	$GUI/HUD/ArtemisSide/Lives/Two.visible = true
-	$GUI/HUD/ArtemisSide/Lives/Three.visible = true
 	$GUI/Paused.visible = false
 	
 	if Core.data["apollo"] and Core.data["artemis"]:
@@ -256,10 +273,27 @@ func _ready():
 		$GUI/HUD/Score/Upper/Score.visible = true
 		$GUI/HUD/ApolloScore.visible = true
 		$GUI/HUD/ApolloSide.visible = true
-		$GUI/HUD/Score/Upper/Player1.visible = true
+		$GUI/HUD/Score/Upper/Apollo.visible = true
 		$GUI/HUD/ArtemisScore.visible = true
 		$GUI/HUD/ArtemisSide.visible = true
-		$GUI/HUD/Score/Upper/Player2.visible = true
+		$GUI/HUD/Score/Upper/Artemis.visible = true
+		$GUI/HUD/ApolloSide/Lives/One.visible = true
+		$GUI/HUD/ApolloSide/Lives/Two.visible = true
+		$GUI/HUD/ApolloSide/Lives/Three.visible = true
+		$GUI/HUD/ArtemisSide/Lives/One.visible = true
+		$GUI/HUD/ArtemisSide/Lives/Two.visible = true
+		$GUI/HUD/ArtemisSide/Lives/Three.visible = true
+		$GUI/End/ApolloScoreHeader.visible = true
+		$GUI/End/ApolloScore.visible = true
+		$GUI/End/ArtemisScoreHeader.visible = true
+		$GUI/End/ArtemisScore.visible = true
+
+		if level_seed not in Core.apollo_bomb_note_positions:
+			apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
+			Core.apollo_bomb_note_positions[level_seed] = apollo_bomb_positions
+		else:
+			apollo_bomb_positions = Core.apollo_bomb_note_positions[level_seed]
+		apollo_curr_note_num = 0
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(0, 25, -20))
 		Core.cooldown(2, func():
@@ -289,10 +323,27 @@ func _ready():
 		$GUI/HUD/Score/Upper/Score.visible = false
 		$GUI/HUD/ApolloScore.visible = true
 		$GUI/HUD/ApolloSide.visible = true
-		$GUI/HUD/Score/Upper/Player1.visible = true
+		$GUI/HUD/Score/Upper/Apollo.visible = true
 		$GUI/HUD/ArtemisScore.visible = false
 		$GUI/HUD/ArtemisSide.visible = false
-		$GUI/HUD/Score/Upper/Player2.visible = false
+		$GUI/HUD/Score/Upper/Artemis.visible = false
+		$GUI/HUD/ApolloSide/Lives/One.visible = true
+		$GUI/HUD/ApolloSide/Lives/Two.visible = true
+		$GUI/HUD/ApolloSide/Lives/Three.visible = true
+		$GUI/HUD/ArtemisSide/Lives/One.visible = false
+		$GUI/HUD/ArtemisSide/Lives/Two.visible = false
+		$GUI/HUD/ArtemisSide/Lives/Three.visible = false
+		$GUI/End/ApolloScoreHeader.visible = false
+		$GUI/End/ApolloScore.visible = false
+		$GUI/End/ArtemisScoreHeader.visible = false
+		$GUI/End/ArtemisScore.visible = false
+
+		if !(Core.apollo_bomb_note_positions.has(level_seed)):
+			apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
+			Core.apollo_bomb_note_positions[level_seed] = apollo_bomb_positions
+		else:
+			apollo_bomb_positions = Core.apollo_bomb_note_positions[level_seed]
+		apollo_curr_note_num = 0
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(21, 16, -14))
 		Core.cooldown(2, func():
@@ -315,10 +366,20 @@ func _ready():
 		$GUI/HUD/Score/Upper/Score.visible = false
 		$GUI/HUD/ApolloScore.visible = false
 		$GUI/HUD/ApolloSide.visible = false
-		$GUI/HUD/Score/Upper/Player1.visible = false
+		$GUI/HUD/Score/Upper/Apollo.visible = false
 		$GUI/HUD/ArtemisScore.visible = true
 		$GUI/HUD/ArtemisSide.visible = true
-		$GUI/HUD/Score/Upper/Player2.visible = true
+		$GUI/HUD/Score/Upper/Artemis.visible = true
+		$GUI/HUD/ApolloSide/Lives/One.visible = false
+		$GUI/HUD/ApolloSide/Lives/Two.visible = false
+		$GUI/HUD/ApolloSide/Lives/Three.visible = false
+		$GUI/HUD/ArtemisSide/Lives/One.visible = true
+		$GUI/HUD/ArtemisSide/Lives/Two.visible = true
+		$GUI/HUD/ArtemisSide/Lives/Three.visible = true
+		$GUI/End/ApolloScoreHeader.visible = false
+		$GUI/End/ApolloScore.visible = false
+		$GUI/End/ArtemisScoreHeader.visible = false
+		$GUI/End/ArtemisScore.visible = false
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(-21, 16, -14))
 		Core.cooldown(2, func():
@@ -409,22 +470,86 @@ func _on_note_event(channel, event):
 				if note_direction.substr(0, 2) == "d_":
 					if apollo_notes_disabled:
 						return
-					note_scene = d_note_scene
+					apollo_curr_note_num += 1
+
+					if event.note == 36:
+						note_scene = red_note_scene
+					elif event.note == 38:
+						note_scene = yellow_note_scene
+					elif event.note == 40:
+						note_scene = blue_note_scene
+					elif event.note == 41:
+						note_scene = green_note_scene
+
+					var curr_row
+					if typeof(apollo_curr_note_num) != typeof(apollo_bomb_positions[0]):
+						curr_row = float(apollo_curr_note_num)
+					else:
+						curr_row = apollo_curr_note_num
+
+					if curr_row in apollo_bomb_positions:
+						var pos_bomb_directions = ["d_left", "d_top", "d_bottom", "d_right"]
+						pos_bomb_directions.erase(mapping[event.note])
+						var bomb_direction = pos_bomb_directions[randi() % 3]
+						var bomb_instance = bomb_note_scene.instantiate()
+
+						var mesh_instance = bomb_instance.get_node("Rocks")
+						if mesh_instance and mesh_instance is MeshInstance3D:
+							var mesh = mesh_instance.mesh
+							if mesh:
+								for surface in range(mesh.get_surface_count()):
+									var mat = mesh.surface_get_material(surface)
+									if mat:
+										var new_mat = mat.duplicate()
+										mesh.surface_set_material(surface, new_mat)
+
+						get_lane(bomb_direction).add_child(bomb_instance)
+						bomb_instance.position.z = spawn_distance
+
+						var tween = get_tree().create_tween()
+						tween.tween_property(
+							bomb_instance, 
+							"position:z", 
+							-spawn_distance, 
+							2 * 2
+						)
+						tween.tween_callback(bomb_instance.queue_free)
+
+						Core.cooldown(2, func():
+							if char_lanes["apollo"]["current"] == bomb_direction.substr(2, bomb_direction.length() - 1):
+								Core.data["d_lives"] -= 1
+								Core.sound_effect(sfx, "lose-life")
+								if Core.data["d_lives"] == 0:
+									tween = get_tree().create_tween()
+									tween.tween_property(
+										music, 
+										"pitch_scale", 
+										0, 
+										1
+									)
+									tween.tween_callback(func():
+										music.pitch_scale = 1
+										music.stop()
+									)
+									on_game_over()
+									Core.sound_effect(sfx, "game-over")
+						)
+
 				elif note_direction.substr(0, 2) == "g_":
 					if artemis_notes_disabled:
 						return
-					
+
 					if event.note == 12 or event.note == 19 or event.note == 24 or event.note == 31:
-						note_scene = g_green_note_scene
+						note_scene = green_note_scene
 					elif event.note == 13 or event.note == 20 or event.note == 25 or event.note == 32:
-						note_scene = g_red_note_scene
+						note_scene = red_note_scene
 					elif event.note == 14 or event.note == 21 or event.note == 26 or event.note == 33:
-						note_scene = g_hover_note_scene
+						note_scene = hover_note_scene
 					elif event.note == 15 or event.note == 22 or event.note == 27 or event.note == 34:
-						note_scene = g_rocks_scene
+						note_scene = rocks_scene
 
 				var note_instance = note_scene.instantiate()
-				if note_scene != g_rocks_scene:
+				if note_scene != rocks_scene:
 					var mesh_instance_paths = ["Sphere", "Sphere_001", "Sphere_002", "Sphere_003", "Sphere_004"]
 					for mesh_instance_path in mesh_instance_paths:
 						var mesh_instance = note_instance.get_node("DefaultNoteWhite/Armature/Skeleton3D/" + mesh_instance_path)
@@ -446,10 +571,10 @@ func _on_note_event(channel, event):
 								if mat:
 									var new_mat = mat.duplicate()
 									mesh.surface_set_material(surface, new_mat)
-				
+
 				get_lane(note_direction).add_child(note_instance)
 				note_instance.position.z = spawn_distance
-				
+
 				var tween = get_tree().create_tween()
 				tween.tween_property(
 					note_instance, 
@@ -459,7 +584,7 @@ func _on_note_event(channel, event):
 				)
 				tween.tween_callback(note_instance.queue_free)
 				
-				if note_scene == g_hover_note_scene:
+				if note_scene == hover_note_scene:
 					Core.cooldown(2, func():
 						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
 							change_indicator(note_instance, "Miss", "Stellar")
@@ -468,7 +593,7 @@ func _on_note_event(channel, event):
 						tweens[note_instance] = tween
 						note_on_hit(note_instance, "Artemis")
 					)
-				elif note_scene == g_rocks_scene:
+				elif note_scene == rocks_scene:
 					Core.cooldown(2, func():
 						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
 							Core.data["g_lives"] -= 1
@@ -508,7 +633,7 @@ func _on_note_event(channel, event):
 						)
 					)
 				
-				if note_scene != g_hover_note_scene and note_scene != g_rocks_scene:
+				if note_scene != hover_note_scene and note_scene != rocks_scene:
 					Core.cooldown(2 - hit_delta, func():
 						change_indicator(note_instance, "Miss", "Miss")
 						Core.cooldown(delta_miss, func():
@@ -770,18 +895,33 @@ func _process(delta):
 	elif Core.data["d_lives"] == 0:
 		$GUI/HUD/ApolloSide/Lives/One.visible = false
 
-func _on_settings_pressed():
-	if can_pause:
-		paused = !paused
-		get_tree().paused = paused
-		$GUI/Paused.visible = paused
+func _on_pause_pressed():
+	paused = true
+	get_tree().paused = paused
+	$GUI/Paused.visible = paused
 
 func _on_unpause_pressed():
 	paused = false
 	get_tree().paused = paused
 	$GUI/Paused.visible = paused
 
+func _on_settings_pressed():
+	Core.save_bomb_positions()
+	if can_pause:
+		Core.save_state(get_tree().current_scene.scene_file_path)
+		
+		paused = !paused
+		get_tree().paused = paused
+		$GUI/Paused.visible = false
+		var state_machine = anim_tree.get("parameters/playback")
+		can_pause = false
+		loading(false)
+		Core.cooldown(1, func():
+			get_tree().change_scene_to_file("res://Game/Scenes/Menu/Settings.tscn")
+		)
+
 func _on_restart_pressed():
+	Core.save_bomb_positions()
 	get_tree().paused = false
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("Restart")
@@ -792,6 +932,7 @@ func _on_restart_pressed():
 	)
 
 func _on_exit_pressed():
+	Core.save_bomb_positions()
 	get_tree().paused = false
 	var state_machine = anim_tree.get("parameters/playback")
 	can_pause = false
@@ -801,6 +942,7 @@ func _on_exit_pressed():
 	)
 
 func _on_return_pressed():
+	Core.save_bomb_positions()
 	get_tree().paused = false
 	var state_machine = anim_tree.get("parameters/playback")
 	can_pause = false
@@ -810,6 +952,7 @@ func _on_return_pressed():
 	)
 
 func _on_retry_pressed():
+	Core.save_bomb_positions()
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("Restart")
 	can_pause = false
@@ -819,6 +962,7 @@ func _on_retry_pressed():
 	)
 
 func on_game_over():
+	Core.save_bomb_positions()
 	loading(false)
 	can_pause = false
 	midi.stop()
@@ -847,6 +991,7 @@ func on_game_over():
 func _on_music_finished():
 	Core.sound_effect(sfx, "song-complete")
 	Core.cooldown(0.2, func():
+		Core.save_bomb_positions()
 		loading(false)
 		can_pause = false
 		Core.data["current_score"] = snapped(Core.data["current_score"], 1)

@@ -47,11 +47,15 @@ func simplify_button_name(button_text: String) -> String:
 	return button_text
 
 func _on_back_button_pressed():
-	var state_machine = anim_tree.get("parameters/playback")
-	state_machine.travel("LoadOut")
-	Core.cooldown(0.5, func():
-		get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
-	)
+	if Core.prev_scene_path != "":
+		get_tree().change_scene_to_file(Core.prev_scene_path)
+		var state = Core.load_state()
+	else:
+		var state_machine = anim_tree.get("parameters/playback")
+		state_machine.travel("LoadOut")
+		Core.cooldown(0.5, func():
+			get_tree().change_scene_to_file("res://Game/Scenes/Menu/Menu.tscn")
+		)
 
 func _on_brightness_value_changed(value):
 	Core.data["settings"]["brightness"] = value
