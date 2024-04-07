@@ -10,6 +10,8 @@ var data = {
 	"d_lives": 3,
 	"g_lives": 3,
 	"current_score": 0,
+	"apollo_current_score": 0,
+	"artemis_current_score": 0,
 	"keybinds": {
 		"apollo-left": "A",
 		"apollo-top": "S",
@@ -74,3 +76,23 @@ func ui_effect(type, subtype):
 			var ui_instance = ui_scene.instantiate()
 			ui_instance.text = "+" + str(round(data["hit_note_score"])) + "!"
 			additions.add_child(ui_instance)
+
+var prev_scene_path = ""
+
+func save_state(scene_path):
+	prev_scene_path = scene_path
+
+func load_state():
+	return {"previous scene": prev_scene_path}
+
+var apollo_bomb_note_positions = {}
+
+func save_bomb_positions():
+	var file = FileAccess.open("res://Game/Framework/RYM-Engine/bomb_positions.json", FileAccess.WRITE)
+	if file:
+		var json_text = JSON.stringify(apollo_bomb_note_positions)
+		file.store_string(json_text)
+		file.close()
+		print("Data saved successfully.")
+	else:
+		print("Failed to open file for writing.")
