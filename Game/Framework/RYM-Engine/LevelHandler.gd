@@ -263,6 +263,13 @@ func _ready():
 	$GUI/HUD/Score/Upper/Score.text = "0000000"
 	$GUI/Paused.visible = false
 	
+	# UNCOMMENT TO GENERATE BOMBS FOR LEVEL
+	apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
+	Core.apollo_bomb_note_positions[Core.scene_data["song_name"]] = apollo_bomb_positions
+	
+	apollo_bomb_positions = Core.apollo_bomb_note_positions[Core.scene_data["song_name"]]
+	apollo_curr_note_num = 0
+	
 	if Core.data["apollo"] and Core.data["artemis"]:
 		total_notes = guitar_notes + drum_notes
 		apollo.position = Vector3(3, -2, 0)
@@ -287,13 +294,6 @@ func _ready():
 		$GUI/End/ApolloScore.visible = true
 		$GUI/End/ArtemisScoreHeader.visible = true
 		$GUI/End/ArtemisScore.visible = true
-
-		if level_seed not in Core.apollo_bomb_note_positions:
-			apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
-			Core.apollo_bomb_note_positions[level_seed] = apollo_bomb_positions
-		else:
-			apollo_bomb_positions = Core.apollo_bomb_note_positions[level_seed]
-		apollo_curr_note_num = 0
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(0, 25, -20))
 		Core.cooldown(2, func():
@@ -337,13 +337,6 @@ func _ready():
 		$GUI/End/ApolloScore.visible = false
 		$GUI/End/ArtemisScoreHeader.visible = false
 		$GUI/End/ArtemisScore.visible = false
-
-		if !(Core.apollo_bomb_note_positions.has(level_seed)):
-			apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
-			Core.apollo_bomb_note_positions[level_seed] = apollo_bomb_positions
-		else:
-			apollo_bomb_positions = Core.apollo_bomb_note_positions[level_seed]
-		apollo_curr_note_num = 0
 		
 		anim.track_set_key_value(tcam_pos, kcam_pos, Vector3(21, 16, -14))
 		Core.cooldown(2, func():
@@ -491,7 +484,7 @@ func _on_note_event(channel, event):
 						var pos_bomb_directions = ["d_left", "d_top", "d_bottom", "d_right"]
 						pos_bomb_directions.erase(mapping[event.note])
 						var bomb_direction = pos_bomb_directions[randi() % 3]
-						var bomb_instance = bomb_note_scene.instantiate()
+						var bomb_instance = rocks_scene.instantiate()
 
 						var mesh_instance = bomb_instance.get_node("Rocks")
 						if mesh_instance and mesh_instance is MeshInstance3D:
