@@ -9,7 +9,7 @@
 script = ExtResource("2_2fy68")
 title = "Galaxy Candy Shop"
 artist = "Zhehan"
-environment = "res://Game/Scenes/Environments/Testing Room.tscn"
+environment = "res://Game/Scenes/Environments/Rainbow Road.tscn"
 midi = "res://Assets/MIDI/galaxy_candy_shop.mid"
 wav = ExtResource("3_qbiou")
 preview = ExtResource("2_pkl74")

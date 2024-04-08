@@ -9,7 +9,7 @@
 script = ExtResource("2_eafsn")
 title = "Bouncy Notes"
 artist = "Zongfan"
-environment = "res://Game/Scenes/Environments/Testing Room.tscn"
+environment = "res://Game/Scenes/Environments/Golden Cloud.tscn"
 midi = "res://Assets/MIDI/BouncyNotesNew.mid"
 wav = ExtResource("3_0v3r4")
 preview = ExtResource("2_spg1i")
