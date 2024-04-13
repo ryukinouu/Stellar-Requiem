@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bfwgmalqma3fc"]
+
+[ext_resource type="Shader" path="res://Game/Shaders/Glass.gdshader" id="1_hvnfu"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_hvnfu")
+shader_parameter/Color = Vector4(0.578, 0.606, 0.791, 0.3)
+shader_parameter/Shine = 5.0
+shader_parameter/Roughness = 5.0

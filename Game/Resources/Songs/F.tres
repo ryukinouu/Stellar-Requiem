@@ -9,7 +9,7 @@
 script = ExtResource("2_tuaku")
 title = "Teleportation"
 artist = "Zhehan"
-environment = "res://Game/Scenes/Environments/Testing Room.tscn"
+environment = "res://Game/Scenes/Environments/Mech Universe.tscn"
 midi = "res://Assets/MIDI/Teleportation.mid"
 wav = ExtResource("3_csjwx")
 preview = ExtResource("2_gnotx")
