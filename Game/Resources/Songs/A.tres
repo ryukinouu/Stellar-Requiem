@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_7b3kl")
-title = "Music Box"
+title = "Tutorial"
 artist = "Lily"
 environment = "res://Game/Scenes/Environments/Testing Room.tscn"
 midi = "res://Assets/MIDI/music_box_easy.mid"
