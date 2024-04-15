@@ -18,6 +18,7 @@ void fragment() {
     // Interpolate between the grayscale and the original color based on saturation
     vec3 desaturatedColor = mix(grayscale, color, saturation);
 
+    float glowStrength = 1.5 + sin(TIME * 2.0) * 0.5; // Pulsating glow strength
     ALBEDO = desaturatedColor;
-    EMISSION = desaturatedColor * 1.5; // Adjust the glow strength as needed
+    EMISSION = desaturatedColor * glowStrength; // Adjust the glow strength as needed
 }
