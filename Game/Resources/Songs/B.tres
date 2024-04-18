@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Song" load_steps=5 format=3 uid="uid://c5shnpx6o01ac"]
 
-[ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="1_pcbn6"]
+[ext_resource type="Texture2D" uid="uid://ot6mxx7jxp8o" path="res://Assets/Textures/SongCovers/album2.png" id="1_qd7u1"]
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_2fy68"]
 [ext_resource type="AudioStream" uid="uid://duk3y4ybmwi8f" path="res://Assets/Previews/GalaxyCandyShop.wav" id="2_pkl74"]
 [ext_resource type="AudioStream" uid="uid://bv4dpsyd8mbpb" path="res://Assets/Music/GalaxyCandyShop.wav" id="3_qbiou"]
@@ -13,7 +13,7 @@ environment = "res://Game/Scenes/Environments/Rainbow Road.tscn"
 midi = "res://Assets/MIDI/galaxy_candy_shop.mid"
 wav = ExtResource("3_qbiou")
 preview = ExtResource("2_pkl74")
-icon = ExtResource("1_pcbn6")
+icon = ExtResource("1_qd7u1")
 difficulty = 2
 bpm = 155
 length = 124

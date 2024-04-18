@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Song" load_steps=5 format=3 uid="uid://cxlm0qhbpvh0j"]
 
-[ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="1_tyjvj"]
+[ext_resource type="Texture2D" uid="uid://b5cockdt8kscr" path="res://Assets/Textures/SongCovers/album3.png" id="1_68v7e"]
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_2csus"]
 [ext_resource type="AudioStream" uid="uid://cmnjt81dub0nn" path="res://Assets/Previews/TakeItOver.wav" id="2_i4h8x"]
 [ext_resource type="AudioStream" uid="uid://ddf54pliox6wt" path="res://Assets/Music/TakeItOver.wav" id="4_hky2p"]
@@ -13,7 +13,7 @@ environment = "res://Game/Scenes/Environments/Underwater.tscn"
 midi = "res://Assets/MIDI/take_it_over.mid"
 wav = ExtResource("4_hky2p")
 preview = ExtResource("2_i4h8x")
-icon = ExtResource("1_tyjvj")
+icon = ExtResource("1_68v7e")
 difficulty = 4
 bpm = 160
 length = 135

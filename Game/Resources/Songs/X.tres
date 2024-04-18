@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Song" load_steps=5 format=3 uid="uid://sud48cqf5fqs"]
 
-[ext_resource type="Texture2D" uid="uid://dbtda24m2yyxq" path="res://Assets/Textures/Ellipse_174.png" id="1_c2tbh"]
+[ext_resource type="Texture2D" uid="uid://wh2fp25qx3ud" path="res://Assets/Textures/SongCovers/album1.png" id="1_1rpap"]
 [ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_httlx"]
 [ext_resource type="AudioStream" uid="uid://b4ipch6ea8jpy" path="res://Assets/Previews/TheLastDirective.wav" id="2_xc3fq"]
 [ext_resource type="AudioStream" uid="uid://c8siw7tklksdq" path="res://Assets/Music/TheLastDirective.wav" id="3_2rklr"]
@@ -13,7 +13,7 @@ environment = "res://Game/Scenes/Environments/Hellscape.tscn"
 midi = "res://Assets/MIDI/the_last_directive.mid"
 wav = ExtResource("3_2rklr")
 preview = ExtResource("2_xc3fq")
-icon = ExtResource("1_c2tbh")
+icon = ExtResource("1_1rpap")
 difficulty = 5
 bpm = 145
 length = 186
