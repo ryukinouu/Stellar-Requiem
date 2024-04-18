@@ -8,6 +8,7 @@ extends Node3D
 @onready var anim_player = $AnimationPlayer
 @onready var anim_tree = $AnimationTree
 
+@onready var notes_lanes = $Main/Notes
 @onready var d_lane_left = $Main/Notes/d_left
 @onready var d_lane_top = $Main/Notes/d_top
 @onready var d_lane_bottom = $Main/Notes/d_bottom
@@ -168,6 +169,10 @@ var artemis_total_notes = 0
 var artemis_base_score = 0
 var artemis_notes_score = 0
 
+var base_score_tween
+var apollo_score_tween
+var artemis_score_tween
+
 func get_lane(direction):
 	if direction == "d_left":
 		return d_lane_left
@@ -262,6 +267,24 @@ func _ready():
 	$GUI/HUD/Score/Bar.value = 0
 	$GUI/HUD/Score/Upper/Score.text = "0000000"
 	$GUI/Paused.visible = false
+	$GUI/HUD/Score/Bar.value = 0
+	
+	delete_old_visuals()
+	if base_score_tween:
+		base_score_tween.kill()
+	if apollo_score_tween:
+		apollo_score_tween.kill()
+	if artemis_score_tween:
+		artemis_score_tween.kill()
+	
+	$GUI/HUD/ApolloScore/Score.text = "0000000"
+	$GUI/HUD/ArtemisScore/Score.text = "0000000"
+	base_score = 0
+	notes_score = 0
+	apollo_base_score = 0
+	apollo_notes_score = 0
+	artemis_base_score = 0
+	artemis_notes_score = 0
 	
 	if Core.scene_data["song_name"] not in Core.apollo_bomb_note_positions:
 		apollo_bomb_positions = generate_bomb_positions(1, drum_notes, drum_notes * apollo_bomb_percentage)
@@ -421,15 +444,7 @@ func _ready():
 		)
 
 func begin_song():
-	$GUI/HUD/Score/Bar.value = 0
-	$GUI/HUD/ApolloScore/Score.text = "0000000"
-	$GUI/HUD/ArtemisScore/Score.text = "0000000"
-	base_score = 0
-	notes_score = 0
-	apollo_base_score = 0
-	apollo_notes_score = 0
-	artemis_base_score = 0
-	artemis_notes_score = 0
+	paused = false
 	var tween = get_tree().create_tween()
 	tween.tween_property(
 		$GUI/HUD/Score/SongProgress, 
@@ -437,22 +452,22 @@ func begin_song():
 		1000000, 
 		music_length
 	)
-	tween = get_tree().create_tween()
-	tween.tween_property(
+	base_score_tween = get_tree().create_tween()
+	base_score_tween.tween_property(
 		self, 
 		"base_score", 
 		500000, 
 		music_length
 	)
-	tween = get_tree().create_tween()
-	tween.tween_property(
+	apollo_score_tween = get_tree().create_tween()
+	apollo_score_tween.tween_property(
 		self, 
 		"apollo_base_score", 
 		250000, 
 		music_length
 	)
-	tween = get_tree().create_tween()
-	tween.tween_property(
+	artemis_score_tween = get_tree().create_tween()
+	artemis_score_tween.tween_property(
 		self, 
 		"artemis_base_score", 
 		250000, 
@@ -654,6 +669,11 @@ func _on_note_event(channel, event):
 							)
 						)
 					)
+
+func delete_old_visuals():
+	for lane in notes_lanes.get_children():
+		for visual in lane.get_children():
+			visual.free()
 
 func get_note_color(note):
 	if note == 12 or note == 19 or note == 24 or note == 31:
