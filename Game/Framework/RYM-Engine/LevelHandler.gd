@@ -139,7 +139,7 @@ var char_lanes = {
 }
 
 var level_seed = str(drum_notes) + str(guitar_notes)
-var apollo_bomb_percentage = 0.5
+var apollo_bomb_percentage = 0.25
 var apollo_bomb_positions
 var apollo_curr_note_num
 var artemis_tween
