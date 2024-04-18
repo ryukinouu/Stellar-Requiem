@@ -1,8 +1,36 @@
 extends Node
 
 
+var active_timers = []  # List to keep track of all timers
+
 func cooldown(time, exe):
-	get_tree().create_timer(time).connect("timeout", exe)
+	var timer = Timer.new()
+	add_child(timer)
+	timer.timeout.connect(timeout_func.bind(timer, exe))
+	timer.start(time)
+	active_timers.append(timer)
+
+func timeout_func(timer, exe):
+	exe.call()
+	timer.queue_free()
+	active_timers.erase(timer)
+
+func pause_all_timers():
+	for timer in active_timers:
+		if not timer.is_stopped():
+			timer.stop()
+
+func resume_all_timers():
+	for timer in active_timers:
+		if timer.is_stopped() and timer.time_left > 0:
+			timer.start(timer.time_left)
+
+func erase_all_timers():
+	for timer in active_timers:
+		if not timer.is_stopped():
+			timer.stop()
+		timer.queue_free()
+		active_timers.erase(timer)
 
 var data = {
 	"apollo": true,

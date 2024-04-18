@@ -269,7 +269,7 @@ func _ready():
 	$GUI/Paused.visible = false
 	$GUI/HUD/Score/Bar.value = 0
 	
-	delete_old_visuals()
+	delete_last_run()
 	if base_score_tween:
 		base_score_tween.kill()
 	if apollo_score_tween:
@@ -670,7 +670,8 @@ func _on_note_event(channel, event):
 						)
 					)
 
-func delete_old_visuals():
+func delete_last_run():
+	Core.erase_all_timers()
 	for lane in notes_lanes.get_children():
 		for visual in lane.get_children():
 			visual.free()
@@ -690,6 +691,8 @@ func change_indicator(note, old, new):
 		note.get_node(old).name = new
 
 func note_on_hit(note, player):
+	if !note:
+		return
 	var anim_tree = note.get_node("AnimationTree")
 	var anim_player = note.get_node("AnimationPlayer")
 	var anim = anim_tree.get("parameters/playback")
@@ -920,11 +923,13 @@ func _process(delta):
 
 func _on_pause_pressed():
 	paused = true
+	Core.pause_all_timers()
 	get_tree().paused = paused
 	$GUI/Paused.visible = paused
 
 func _on_unpause_pressed():
 	paused = false
+	Core.resume_all_timers()
 	get_tree().paused = paused
 	$GUI/Paused.visible = paused
 
