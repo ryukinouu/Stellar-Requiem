@@ -421,44 +421,43 @@ func _ready():
 		)
 
 func begin_song():
-	if !paused:
-		$GUI/HUD/Score/Bar.value = 0
-		$GUI/HUD/ApolloScore/Score.text = "0000000"
-		$GUI/HUD/ArtemisScore/Score.text = "0000000"
-		base_score = 0
-		notes_score = 0
-		apollo_base_score = 0
-		apollo_notes_score = 0
-		artemis_base_score = 0
-		artemis_notes_score = 0
-		var tween = get_tree().create_tween()
-		tween.tween_property(
-			$GUI/HUD/Score/SongProgress, 
-			"value", 
-			1000000, 
-			music_length
-		)
-		tween = get_tree().create_tween()
-		tween.tween_property(
-			self, 
-			"base_score", 
-			500000, 
-			music_length
-		)
-		tween = get_tree().create_tween()
-		tween.tween_property(
-			self, 
-			"apollo_base_score", 
-			250000, 
-			music_length
-		)
-		tween = get_tree().create_tween()
-		tween.tween_property(
-			self, 
-			"artemis_base_score", 
-			250000, 
-			music_length
-		)
+	$GUI/HUD/Score/Bar.value = 0
+	$GUI/HUD/ApolloScore/Score.text = "0000000"
+	$GUI/HUD/ArtemisScore/Score.text = "0000000"
+	base_score = 0
+	notes_score = 0
+	apollo_base_score = 0
+	apollo_notes_score = 0
+	artemis_base_score = 0
+	artemis_notes_score = 0
+	var tween = get_tree().create_tween()
+	tween.tween_property(
+		$GUI/HUD/Score/SongProgress, 
+		"value", 
+		1000000, 
+		music_length
+	)
+	tween = get_tree().create_tween()
+	tween.tween_property(
+		self, 
+		"base_score", 
+		500000, 
+		music_length
+	)
+	tween = get_tree().create_tween()
+	tween.tween_property(
+		self, 
+		"apollo_base_score", 
+		250000, 
+		music_length
+	)
+	tween = get_tree().create_tween()
+	tween.tween_property(
+		self, 
+		"artemis_base_score", 
+		250000, 
+		music_length
+	)
 
 func _on_note_event(channel, event):
 	if event.type == SMF.MIDIEventType.note_on:
@@ -925,53 +924,15 @@ func _on_settings_pressed():
 		)
 
 func _on_restart_pressed():
-	loading(true)
 	Core.save_bomb_positions()
+	get_tree().paused = false
 	var state_machine = anim_tree.get("parameters/playback")
 	state_machine.travel("Restart")
-	can_pause = true
-	Core.cooldown(1, func():
-		reset_game()
-		get_tree().reload_current_scene()
-	)
-
-func reset_game():
-	# Reset gameplay variables
-	total_notes = 0
-	base_score = 0
-	notes_score = 0
-	apollo_base_score = 0
-	apollo_notes_score = 0
-	artemis_base_score = 0
-	artemis_notes_score = 0
-	paused = false
 	can_pause = false
-
-	# Reset lives back to the start
-	#Core.data["g_lives"] = 3
-	#Core.data["d_lives"] = 3
-#
-	## Reset UI elements that may have changed during gameplay
-	#$GUI/HUD/Score/Bar.value = 0
-	#$GUI/HUD/Score/Upper/Score.text = "0000000"
-	#$GUI/HUD/ApolloScore/Score.text = "0000000"
-	#$GUI/HUD/ArtemisScore/Score.text = "0000000"
-	#$GUI/HUD/ApolloSide/Lives/One.visible = true
-	#$GUI/HUD/ApolloSide/Lives/Two.visible = true
-	#$GUI/HUD/ApolloSide/Lives/Three.visible = true
-	#$GUI/HUD/ArtemisSide/Lives/One.visible = true
-	#$GUI/HUD/ArtemisSide/Lives/Two.visible = true
-	#$GUI/HUD/ArtemisSide/Lives/Three.visible = true
-#
-	## Ensure these settings are back to default
-	#apollo.position = Vector3(3, -2, 0)
-	#artemis.position = Vector3(-3, -2, 0)
-	#apollo_notes_disabled = false
-	#artemis_notes_disabled = false
-#
-	## Reactivate any animations or timers if necessary
-	#anim_tree.active = true
-	#score_timer.start()
+	loading(false)
+	Core.cooldown(1, func():
+		_ready()
+	)
 
 func _on_exit_pressed():
 	Core.save_bomb_positions()
@@ -994,15 +955,14 @@ func _on_return_pressed():
 	)
 
 func _on_retry_pressed():
-	#Core.save_bomb_positions()
-	#var state_machine = anim_tree.get("parameters/playback")
-	#state_machine.travel("Restart")
-	#can_pause = false
-	#loading(false)
-	#Core.cooldown(1, func():
-		#_ready()
-	#)
-	_on_restart_pressed()
+	Core.save_bomb_positions()
+	var state_machine = anim_tree.get("parameters/playback")
+	state_machine.travel("Restart")
+	can_pause = false
+	loading(false)
+	Core.cooldown(1, func():
+		_ready()
+	)
 
 func on_game_over():
 	Core.save_bomb_positions()
