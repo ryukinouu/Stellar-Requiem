@@ -48,7 +48,7 @@ var yellow_note_scene = load("res://Game/Scenes/Notes/YellowNote.tscn")
 var blue_note_scene = load("res://Game/Scenes/Notes/BlueNote.tscn")
 var hover_note_scene = load("res://Game/Scenes/Notes/HoverNote.tscn")
 var bomb_note_scene = load("res://Game/Scenes/Notes/BombNote.tscn")
-var rocks_scene = load("res://Game/Scenes/Notes/Rocks.tscn")
+var bomb_scene
 
 var apollo_afterimage = load("res://Game/Scenes/Core/Apollo_Afterimage.tscn")
 var miss_texture = load("res://Assets/Textures/Indicators/MISS.png")
@@ -92,25 +92,25 @@ var canhit = {
 		"green": [],
 		"red": [],
 		"hover": [],
-		"rocks": []
+		"bombs": []
 	},
 	"g_top": {
 		"green": [],
 		"red": [],
 		"hover": [],
-		"rocks": []
+		"bombs": []
 	},
 	"g_bottom": {
 		"green": [],
 		"red": [],
 		"hover": [],
-		"rocks": []
+		"bombs": []
 	},
 	"g_right": {
 		"green": [],
 		"red": [],
 		"hover": [],
-		"rocks": []
+		"bombs": []
 	}
 }
 var note_values = {
@@ -235,11 +235,12 @@ func _ready():
 	wav_delay = Core.scene_data["wav_delay"]
 	music.stream = Core.scene_data["wav"]
 	midi.file = Core.scene_data["midi"]
-	$WorldEnvironment.environment.adjustment_brightness = Core.data["settings"]["brightness"]
 	music.volume_db = Core.data["settings"]["music-volume"]
 	sfx.volume_db = Core.data["settings"]["sfx-volume"]
 	Core.data["g_lives"] = 3
 	Core.data["d_lives"] = 3
+	bomb_scene = load("res://Game/Scenes/Notes/" + Core.scene_data["obstacle"] + "Bomb.tscn")
+	$WorldEnvironment.environment.adjustment_brightness = Core.data["settings"]["brightness"]
 	Core.save_state("")
 	var file = FileAccess.open("res://Game/Framework/RYM-Engine/bomb_positions.json", FileAccess.READ)
 	if file:
@@ -505,17 +506,17 @@ func _on_note_event(channel, event):
 						var pos_bomb_directions = ["d_left", "d_top", "d_bottom", "d_right"]
 						pos_bomb_directions.erase(mapping[event.note])
 						var bomb_direction = pos_bomb_directions[randi() % 3]
-						var bomb_instance = rocks_scene.instantiate()
+						var bomb_instance = bomb_scene.instantiate()
 
-						var mesh_instance = bomb_instance.get_node("Rocks")
-						if mesh_instance and mesh_instance is MeshInstance3D:
-							var mesh = mesh_instance.mesh
-							if mesh:
-								for surface in range(mesh.get_surface_count()):
-									var mat = mesh.surface_get_material(surface)
-									if mat:
-										var new_mat = mat.duplicate()
-										mesh.surface_set_material(surface, new_mat)
+						for mesh_instance in bomb_instance.get_node("Mesh").get_children():
+							if mesh_instance and mesh_instance is MeshInstance3D:
+								var mesh = mesh_instance.mesh
+								if mesh:
+									for surface in range(mesh.get_surface_count()):
+										var mat = mesh.surface_get_material(surface)
+										if mat:
+											var new_mat = mat.duplicate()
+											mesh.surface_set_material(surface, new_mat)
 
 						get_lane(bomb_direction).add_child(bomb_instance)
 						bomb_instance.position.z = spawn_distance
@@ -560,10 +561,10 @@ func _on_note_event(channel, event):
 					elif event.note == 14 or event.note == 21 or event.note == 26 or event.note == 33:
 						note_scene = hover_note_scene
 					elif event.note == 15 or event.note == 22 or event.note == 27 or event.note == 34:
-						note_scene = rocks_scene
+						note_scene = bomb_scene
 
 				var note_instance = note_scene.instantiate()
-				if note_scene != rocks_scene:
+				if note_scene != bomb_scene:
 					var mesh_instance_paths = ["Sphere", "Sphere_001", "Sphere_002", "Sphere_003", "Sphere_004"]
 					for mesh_instance_path in mesh_instance_paths:
 						var mesh_instance = note_instance.get_node("DefaultNoteWhite/Armature/Skeleton3D/" + mesh_instance_path)
@@ -576,15 +577,15 @@ func _on_note_event(channel, event):
 										var new_mat = mat.duplicate()
 										mesh.surface_set_material(surface, new_mat)
 				else:
-					var mesh_instance = note_instance.get_node("Rocks")
-					if mesh_instance and mesh_instance is MeshInstance3D:
-						var mesh = mesh_instance.mesh
-						if mesh:
-							for surface in range(mesh.get_surface_count()):
-								var mat = mesh.surface_get_material(surface)
-								if mat:
-									var new_mat = mat.duplicate()
-									mesh.surface_set_material(surface, new_mat)
+					for mesh_instance in note_instance.get_node("Mesh").get_children():
+						if mesh_instance and mesh_instance is MeshInstance3D:
+							var mesh = mesh_instance.mesh
+							if mesh:
+								for surface in range(mesh.get_surface_count()):
+									var mat = mesh.surface_get_material(surface)
+									if mat:
+										var new_mat = mat.duplicate()
+										mesh.surface_set_material(surface, new_mat)
 
 				get_lane(note_direction).add_child(note_instance)
 				note_instance.position.z = spawn_distance
@@ -607,7 +608,7 @@ func _on_note_event(channel, event):
 						tweens[note_instance] = tween
 						note_on_hit(note_instance, "Artemis")
 					)
-				elif note_scene == rocks_scene:
+				elif note_scene == bomb_scene:
 					Core.cooldown(2, func():
 						if char_lanes["artemis"]["current"] == note_direction.substr(2, note_direction.length() - 1):
 							Core.data["g_lives"] -= 1
@@ -647,7 +648,7 @@ func _on_note_event(channel, event):
 						)
 					)
 				
-				if note_scene != hover_note_scene and note_scene != rocks_scene:
+				if note_scene != hover_note_scene and note_scene != bomb_scene:
 					Core.cooldown(2 - hit_delta, func():
 						change_indicator(note_instance, "Miss", "Miss")
 						Core.cooldown(delta_miss, func():
@@ -684,7 +685,7 @@ func get_note_color(note):
 	elif note == 14 or note == 21 or note == 26 or note == 33:
 		return "hover"
 	elif note == 15 or note == 22 or note == 27 or note == 34:
-		return "rocks"
+		return "bombs"
 
 func change_indicator(note, old, new):
 	if note:
@@ -962,6 +963,7 @@ func _on_restart_pressed():
 func _on_exit_pressed():
 	Core.save_bomb_positions()
 	get_tree().paused = false
+	Core.erase_all_timers()
 	var state_machine = anim_tree.get("parameters/playback")
 	can_pause = false
 	loading(false)

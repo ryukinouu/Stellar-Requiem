@@ -1,7 +1,6 @@
 extends Node
 
-
-var active_timers = []  # List to keep track of all timers
+var active_timers = [] 
 
 func cooldown(time, exe):
 	var timer = Timer.new()
@@ -29,7 +28,8 @@ func erase_all_timers():
 	for timer in active_timers:
 		if not timer.is_stopped():
 			timer.stop()
-		timer.queue_free()
+		timer.free()
+		print("Erased bruh")
 		active_timers.erase(timer)
 
 var data = {
@@ -69,7 +69,8 @@ var scene_data = {
 	"music_first": false,
 	"wav_delay": 2.0,
 	"wav": null,
-	"midi": null
+	"midi": null,
+	"obstacle": ""
 }
 
 var sfx = {

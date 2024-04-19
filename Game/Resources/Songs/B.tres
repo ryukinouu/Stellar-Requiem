@@ -13,6 +13,7 @@ environment = "res://Game/Scenes/Environments/Rainbow Road.tscn"
 midi = "res://Assets/MIDI/galaxy_candy_shop.mid"
 wav = ExtResource("3_qbiou")
 preview = ExtResource("2_pkl74")
+obstacle = "Candy"
 icon = ExtResource("1_qd7u1")
 difficulty = 2
 bpm = 155

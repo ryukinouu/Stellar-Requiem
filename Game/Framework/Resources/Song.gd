@@ -9,6 +9,7 @@ class_name Song
 @export_file ("*.mid") var midi : String = ""
 @export var wav : AudioStream
 @export var preview : AudioStream
+@export var obstacle : String = "Rocks"
 
 @export var icon : Texture2D
 @export var difficulty : int = 1
@@ -36,3 +37,4 @@ func init_scene():
 	Core.scene_data["wav_delay"] = wav_delay
 	Core.scene_data["wav"] = wav
 	Core.scene_data["midi"] = midi
+	Core.scene_data["obstacle"] = obstacle

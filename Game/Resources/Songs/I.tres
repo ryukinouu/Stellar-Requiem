@@ -1,19 +1,20 @@
 [gd_resource type="Resource" script_class="Song" load_steps=5 format=3 uid="uid://dkbijkmkkp45y"]
 
-[ext_resource type="Texture2D" uid="uid://h45vetr3y3ob" path="res://Assets/Textures/SongCovers/album5.png" id="1_pvjur"]
-[ext_resource type="AudioStream" uid="uid://bg2vddfj8v04" path="res://Assets/Previews/Teleportation.wav" id="2_gnotx"]
-[ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="2_tuaku"]
-[ext_resource type="AudioStream" uid="uid://dw7ueskogss1m" path="res://Assets/Music/Teleportation.wav" id="3_csjwx"]
+[ext_resource type="Texture2D" uid="uid://h45vetr3y3ob" path="res://Assets/Textures/SongCovers/album5.png" id="1_qdttt"]
+[ext_resource type="AudioStream" uid="uid://bg2vddfj8v04" path="res://Assets/Previews/Teleportation.wav" id="2_scbq4"]
+[ext_resource type="Script" path="res://Game/Framework/Resources/Song.gd" id="3_0s3c7"]
+[ext_resource type="AudioStream" uid="uid://dw7ueskogss1m" path="res://Assets/Music/Teleportation.wav" id="4_4dx87"]
 
 [resource]
-script = ExtResource("2_tuaku")
+script = ExtResource("3_0s3c7")
 title = "Teleportation"
 artist = "Zhehan"
 environment = "res://Game/Scenes/Environments/Mech Universe.tscn"
 midi = "res://Assets/MIDI/Teleportation.mid"
-wav = ExtResource("3_csjwx")
-preview = ExtResource("2_gnotx")
-icon = ExtResource("1_pvjur")
+wav = ExtResource("4_4dx87")
+preview = ExtResource("2_scbq4")
+obstacle = "Cell"
+icon = ExtResource("1_qdttt")
 difficulty = 3
 bpm = 180
 length = 118

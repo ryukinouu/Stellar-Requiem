@@ -6,8 +6,8 @@
 
 [resource]
 resource_name = "DefaultMaterial"
+transparency = 1
 cull_mode = 2
-albedo_color = Color(1, 0.803922, 1, 1)
 albedo_texture = ExtResource("1_o2pom")
 metallic_texture = ExtResource("2_3fsdq")
 metallic_texture_channel = 2

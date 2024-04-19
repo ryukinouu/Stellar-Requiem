@@ -13,6 +13,7 @@ environment = "res://Game/Scenes/Environments/Testing Room.tscn"
 midi = "res://Assets/MIDI/music_box_easy.mid"
 wav = ExtResource("3_we3o2")
 preview = ExtResource("2_w04am")
+obstacle = "Rocks"
 icon = ExtResource("1_1aebm")
 difficulty = 1
 bpm = 80
