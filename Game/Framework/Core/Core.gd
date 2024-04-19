@@ -6,11 +6,6 @@ func do_nothing():
 	pass
 
 func cooldown(time, exe):
-	#if exe == null:
-		#exe = do_nothing()
-		#print("Input Executable Function: ", exe)
-	assert(exe != null, "Executable function cannot be null.")
-	assert(typeof(exe) == TYPE_CALLABLE, "Executable must be callable.")
 	var timer = Timer.new()
 	add_child(timer)
 	timer.timeout.connect(timeout_func.bind(timer, exe))
@@ -42,8 +37,6 @@ func erase_all_timers():
 		if not timer.is_stopped():
 			timer.stop()
 		timer.queue_free()
-		print("Erased bruh")
-		#active_timers.erase(timer)
 	active_timers.clear()
 
 var data = {
