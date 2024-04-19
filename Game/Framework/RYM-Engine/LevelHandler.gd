@@ -982,14 +982,15 @@ func _on_return_pressed():
 	)
 
 func _on_retry_pressed():
-	Core.save_bomb_positions()
-	var state_machine = anim_tree.get("parameters/playback")
-	state_machine.travel("Restart")
-	can_pause = false
-	loading(false)
-	Core.cooldown(1, func():
-		_ready()
-	)
+	#Core.save_bomb_positions()
+	#var state_machine = anim_tree.get("parameters/playback")
+	#state_machine.travel("Restart")
+	#can_pause = false
+	#loading(false)
+	#Core.cooldown(1, func():
+		#_ready()
+	#)
+	_on_restart_pressed()
 
 func on_game_over():
 	Core.save_bomb_positions()

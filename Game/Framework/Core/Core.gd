@@ -2,7 +2,15 @@ extends Node
 
 var active_timers = [] 
 
+func do_nothing():
+	pass
+
 func cooldown(time, exe):
+	#if exe == null:
+		#exe = do_nothing()
+		#print("Input Executable Function: ", exe)
+	assert(exe != null, "Executable function cannot be null.")
+	assert(typeof(exe) == TYPE_CALLABLE, "Executable must be callable.")
 	var timer = Timer.new()
 	add_child(timer)
 	timer.timeout.connect(timeout_func.bind(timer, exe))
@@ -10,6 +18,11 @@ func cooldown(time, exe):
 	active_timers.append(timer)
 
 func timeout_func(timer, exe):
+	if exe.is_null() or not exe.is_valid():
+		print("Callable is null or not valid.")
+		timer.queue_free()
+		active_timers.erase(timer)
+		return
 	exe.call()
 	timer.queue_free()
 	active_timers.erase(timer)
@@ -25,12 +38,13 @@ func resume_all_timers():
 			timer.start(timer.time_left)
 
 func erase_all_timers():
-	for timer in active_timers:
+	for timer in active_timers.duplicate():
 		if not timer.is_stopped():
 			timer.stop()
-		timer.free()
+		timer.queue_free()
 		print("Erased bruh")
-		active_timers.erase(timer)
+		#active_timers.erase(timer)
+	active_timers.clear()
 
 var data = {
 	"apollo": true,
